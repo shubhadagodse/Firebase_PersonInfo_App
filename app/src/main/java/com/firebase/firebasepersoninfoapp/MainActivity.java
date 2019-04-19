@@ -1,9 +1,13 @@
 package com.firebase.firebasepersoninfoapp;
 
+import android.app.DatePickerDialog;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.DatePicker;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -18,7 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
 
     private FirebaseFirestore db;
     private String TAG = " ";
@@ -27,12 +31,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         FirebaseApp.initializeApp(this);
         db = FirebaseFirestore.getInstance();
         initData();
         addData();
         readData();
-
     }
 
     private void initData() {
@@ -79,5 +83,11 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public void setBirthDate(View view) {
+        DatePicker datePicker =new DatePicker();
+        datePicker.show(getSupportFragmentManager(),"date_picker");
+
     }
 }

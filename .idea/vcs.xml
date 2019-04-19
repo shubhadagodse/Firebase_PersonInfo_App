@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Firebase-Person-Info" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Firebase_PersonInfo_App" vcs="Git" />
   </component>
 </project>
