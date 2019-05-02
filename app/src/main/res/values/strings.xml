@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Firebase Person Info App</string>
+    <string-array name="countries_list">
+        <item>China</item>
+        <item>India</item>
+        <item>Mexico</item>
+        <item>USA</item>
+
+    </string-array>
 </resources>
