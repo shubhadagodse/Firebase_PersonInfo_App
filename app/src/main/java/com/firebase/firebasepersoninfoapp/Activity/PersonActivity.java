@@ -1,4 +1,4 @@
-package com.firebase.firebasepersoninfoapp;
+package com.firebase.firebasepersoninfoapp.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,17 +9,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.firebase.firebasepersoninfoapp.Activity.CountryStateActivity;
-import com.firebase.firebasepersoninfoapp.Activity.DateActivity;
+import com.firebase.firebasepersoninfoapp.R;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import android.view.Menu;
 
 public class PersonActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private String TAG = " ";
     private Button bSetDate, bSetCountry;
+    private Button b_aPerson_Done, b_aPerson_Cancel;
     private TextView tvBirthDate, tvCountry;
     private String firstName;
     private String lastName;
@@ -88,8 +89,28 @@ public class PersonActivity extends AppCompatActivity {
 
         initData();
 
+//        b_aPerson_Cancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
+
+//        b_aPerson_Done.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                saveData();
+//            }
+//        });
+
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
 
     private void initData() {
         String firstName = findViewById(R.id.a_main_tv_fname).toString();
@@ -185,11 +206,6 @@ public class PersonActivity extends AppCompatActivity {
         });
 
 
-//        Intent intent =new Intent(this, DateActivity.class);
-//        startActivityForResult(intent, 1);
-//        startActivity(intent);
-//        onActivityResult(1,1,intent);
-
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -209,8 +225,8 @@ public class PersonActivity extends AppCompatActivity {
         if (requestCode == 2) {
             if(resultCode == RESULT_OK) {
                 String country = data.getStringExtra("RESULT");
-                Log.i("country==",country);
                 tvCountry.setText(" "+country);
+                //Log.i("country==",country);
 
             }
             if (resultCode == RESULT_CANCELED) {
@@ -218,20 +234,4 @@ public class PersonActivity extends AppCompatActivity {
             }
         }
     }
-
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == 2) {
-//            if(resultCode == RESULT_OK) {
-//                String country = data.getStringExtra("RESULT");
-//                Log.i("country==",country);
-//                tvCountry.setText(" "+country);
-//
-//            }
-//            if (resultCode == RESULT_CANCELED) {
-//                tvCountry.setText("Nothing selected");
-//            }
-//        }
-//    }
-
 }

@@ -1,12 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--<FrameLayout-->
+        <!--android:id="@+id/A_CountryState_frame1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<ListView-->
+            <!--android:id="@+id/country_list"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginLeft="8dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:layout_marginRight="8dp"-->
+            <!--android:paddingBottom="10dp"-->
+            <!--android:layout_marginBottom="200dp"/>-->
+
+        <!--<Button-->
+            <!--android:id="@+id/a_country_b_Done"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginTop="600dp"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:text="Done" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/a_country_b_Cancel"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="150dp"-->
+            <!--android:layout_marginTop="600dp"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:text="Cancel" />-->
+
+    <!--</FrameLayout>-->
 
     <ListView
         android:id="@+id/country_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="21sp"/>
 
 </LinearLayout>

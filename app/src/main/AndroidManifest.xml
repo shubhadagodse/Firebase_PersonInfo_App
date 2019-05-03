@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CountryStateActivity"></activity>
-        <activity android:name=".DateActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activity.CountryStateActivity"/>
+        <activity android:name=".Activity.DateActivity" />
+        <activity android:name=".Activity.PersonActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

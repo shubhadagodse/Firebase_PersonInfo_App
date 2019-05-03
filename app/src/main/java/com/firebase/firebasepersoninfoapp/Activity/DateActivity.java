@@ -1,4 +1,4 @@
-package com.firebase.firebasepersoninfoapp;
+package com.firebase.firebasepersoninfoapp.Activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
+
+import com.firebase.firebasepersoninfoapp.R;
 
 public class DateActivity extends AppCompatActivity {
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DateActivity">
+    tools:context=".Activity.DateActivity">
 
     <CalendarView
         android:id="@+id/a_date_calendar_view"
