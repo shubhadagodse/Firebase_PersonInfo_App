@@ -1,17 +1,13 @@
 package com.firebase.firebasepersoninfoapp.Activity;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,12 +25,11 @@ public class CountryStateActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_country_state);
-
         bDone = findViewById(R.id.a_country_b_Done);
         bCancel = findViewById(R.id.a_country_b_Cancel);
-
         initFragment();
-//        getCountry(country1);
+        getDataFromCountryListFragment();
+
         bCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,9 +40,19 @@ public class CountryStateActivity extends AppCompatActivity {
 
     }
 
+    public void getDataFromCountryListFragment() {
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null) {
+            if(bundle.getString("data")!= null) {
+                Toast.makeText(getApplicationContext(),"data"+bundle.getString("data"),Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
+
     private void initFragment() {
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction t = manager.beginTransaction();
+        final FragmentManager manager = getSupportFragmentManager();
+        final FragmentTransaction t = manager.beginTransaction();
         final CountryListFragment f1= new CountryListFragment();
         t.add(R.id.A_CountryState_frame1,f1);
         t.commit();
@@ -56,14 +61,21 @@ public class CountryStateActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+//                        Bundle b = new Bundle();
+//                        b.putString("country",country1.getText().toString());
+//                        f1.setArguments(b);
+//                        t.add(R.id.container,f1);
+//                        t.commit();
+
                         Intent intent1 = getIntent();
-                        final String country = intent1.getStringExtra("country");
-                        // Log.i("country==",country);
+                        String country = intent1.getStringExtra("country");
+                        intent1.putExtra("country", String.valueOf(country));
 
                         CountryListFragment countryFragment = new CountryListFragment();
-                        getSupportFragmentManager().beginTransaction().add(R.id.container,countryFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container,countryFragment).commit();
 
-                        Intent intent = new Intent();
+                        Intent intent = getIntent();
+                        country = intent.getStringExtra("country"+country);
                         intent.putExtra("RESULT",country);
                         setResult(RESULT_OK,intent);
                         finish();
@@ -73,7 +85,15 @@ public class CountryStateActivity extends AppCompatActivity {
 
     }
 
-    public void getCountry(String s) {
+    public void receiveCountryFromFragment(String s) {
+        Intent i =getIntent();
+        String country = i.getStringExtra("country");
+        country1 =findViewById(R.id.a_main_tv_country);
+        country1.setText(s);
+
+    }
+
+   /* public void getCountry(String s) {
         final ListView countryList =findViewById(R.id.country_list);
         countryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -90,7 +110,7 @@ public class CountryStateActivity extends AppCompatActivity {
             }
         });
 
-    }
+    }*/
 
     public void getState(String s) {
         FragmentManager manager1 = getSupportFragmentManager();
