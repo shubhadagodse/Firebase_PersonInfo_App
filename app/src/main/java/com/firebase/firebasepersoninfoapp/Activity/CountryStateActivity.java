@@ -25,17 +25,18 @@ public class CountryStateActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_country_state);
-        bDone = findViewById(R.id.a_country_b_Done);
-        bCancel = findViewById(R.id.a_country_b_Cancel);
+
+//        bDone = findViewById(R.id.a_country_fragment_b_Done);
+//        bCancel = findViewById(R.id.a_country_fragment_b_Cancel);
         initFragment();
         getDataFromCountryListFragment();
 
-        bCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+//        bCancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
 
 
     }
@@ -57,30 +58,24 @@ public class CountryStateActivity extends AppCompatActivity {
         t.add(R.id.A_CountryState_frame1,f1);
         t.commit();
 
-        bDone.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-//                        Bundle b = new Bundle();
-//                        b.putString("country",country1.getText().toString());
-//                        f1.setArguments(b);
-//                        t.add(R.id.container,f1);
-//                        t.commit();
-
-                        Intent intent1 = getIntent();
-                        String country = intent1.getStringExtra("country");
-                        intent1.putExtra("country", String.valueOf(country));
-
-                        CountryListFragment countryFragment = new CountryListFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,countryFragment).commit();
-
-                        Intent intent = getIntent();
-                        country = intent.getStringExtra("country"+country);
-                        intent.putExtra("RESULT",country);
-                        setResult(RESULT_OK,intent);
-                        finish();
-                    }
-                });
+//        bDone.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent intent1 = getIntent();
+//                        String country = intent1.getStringExtra("country");
+//                        intent1.putExtra("country", String.valueOf(country));
+//
+//                        CountryListFragment countryFragment = new CountryListFragment();
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.container,countryFragment).commit();
+//
+//                        Intent intent = getIntent();
+//                        country = intent.getStringExtra("country"+country);
+//                        intent.putExtra("RESULT",country);
+//                        setResult(RESULT_OK,intent);
+//                        finish();
+//                    }
+//                });
 
 
     }

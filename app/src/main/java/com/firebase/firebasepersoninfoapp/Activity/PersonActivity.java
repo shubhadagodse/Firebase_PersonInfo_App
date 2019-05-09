@@ -77,6 +77,7 @@ public class PersonActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(PersonActivity.this,CountryStateActivity.class);
                 startActivityForResult(intent,2);
+//                intent.putExtra("country",country);
 
                 String country = intent.getStringExtra("country");
                 tvCountry.setText(country);
