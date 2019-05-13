@@ -15,48 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "484874504040-aolir94uu65pjrcij4vvp7pht85c2chl.apps.googleusercontent.com",
+          "client_id": "484874504040-pk48j7t2lh1k4pctqkjnmu52k7gd097j.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.firebase.firebasepersoninfoapp",
-            "certificate_hash": "73f981252ace77ec15a80774a6f7dcd8949b0aae"
-          }
-        },
-        {
-          "client_id": "484874504040-kipoiqnit5ootc700rpcvkdqula5ef7o.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAaM6YHgg4v_ciG_0BVeGnhsjMpo6WrnUg"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "484874504040-kipoiqnit5ootc700rpcvkdqula5ef7o.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:484874504040:android:cabf4c1f2badba71",
-        "android_client_info": {
-          "package_name": "com.firebase.personinfo"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "484874504040-p6pvsae97h1udu0b2gbmrinb1jn4ieg0.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.firebase.personinfo",
-            "certificate_hash": "73f981252ace77ec15a80774a6f7dcd8949b0aae"
+            "certificate_hash": "5d0d3953122db046a361244eec71e44af3cce205"
           }
         },
         {

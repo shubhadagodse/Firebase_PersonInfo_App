@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,20 +24,8 @@ public class CountryStateActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_country_state);
-
-//        bDone = findViewById(R.id.a_country_fragment_b_Done);
-//        bCancel = findViewById(R.id.a_country_fragment_b_Cancel);
         initFragment();
         getDataFromCountryListFragment();
-
-//        bCancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
-
-
     }
 
     public void getDataFromCountryListFragment() {
@@ -84,7 +71,7 @@ public class CountryStateActivity extends AppCompatActivity {
         Intent i =getIntent();
         String country = i.getStringExtra("country");
         country1 =findViewById(R.id.a_main_tv_country);
-        country1.setText(s);
+        country1.setText(country);
 
     }
 

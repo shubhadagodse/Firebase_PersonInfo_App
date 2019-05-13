@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,19 +14,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.firebase.firebasepersoninfoapp.Activity.CountryStateActivity;
-import com.firebase.firebasepersoninfoapp.Activity.MyExListAdapter;
 import com.firebase.firebasepersoninfoapp.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -51,6 +46,7 @@ public class CountryListFragment extends Fragment {
         final View view =inflater.inflate(R.layout.country_listfragment,container,false);
         lv = view.findViewById(R.id.country_list_fragment);
         fillListOfCountries();
+        fillListOfStates();
 //        fillData();
         bDoneCountryListFragment = view.findViewById(R.id.a_country_fragment_b_Done);
         bCancelCountryListFragment = view.findViewById(R.id.a_country_fragment_b_Cancel);
@@ -68,10 +64,53 @@ public class CountryListFragment extends Fragment {
                sendDataToActivity();
            }
        });
+
         return view;
 
     }
 
+    public void fillListOfStates() {
+
+        lv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getContext(),"Item selected is "+position,Toast.LENGTH_SHORT).show();
+                bDoneCountryListFragment.setOnClickListener(
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction transaction =fragmentManager.beginTransaction();
+                        CountryListFragment countryFragment = new CountryListFragment();
+                        transaction.add(R.id.container,countryFragment);
+                        transaction.commit();
+
+                            }
+//                        Intent intent1 = view.getIntent();
+//                        String country = intent1.getStringExtra("country");
+//                        intent1.putExtra("country", String.valueOf(country));
+//
+//                        FragmentManager fragmentManager = getFragmentManager();
+//                        FragmentTransaction transaction =fragmentManager.beginTransaction();
+//                        CountryListFragment countryFragment = new CountryListFragment();
+//                        transaction.replace(R.id.container,countryFragment).commit();
+//
+//                        Intent intent = getIntent();
+//                        country = intent.getStringExtra("country"+country);
+//                        intent.putExtra("RESULT",country);
+//                        setResult(RESULT_OK,intent);
+//                        finish();
+//                    }
+                        });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
 
     public void sendDataToActivity() {
 
@@ -92,10 +131,10 @@ public class CountryListFragment extends Fragment {
                 Intent resultIntent =new Intent();
                 resultIntent.putExtra("RESULT",selectedItem);
 
-                String countryName = lv.getSelectedItem().toString();
-                Log.i("TAG",countryName);
+                selectedItem = (String) lv.getSelectedItem();
+//                Log.i("TAG",selectedItem);
                 CountryStateActivity csObject = (CountryStateActivity)getActivity();
-                csObject.receiveCountryFromFragment(countryName);
+                csObject.receiveCountryFromFragment(selectedItem);
 
                 FragmentTransaction ft1 =getFragmentManager().beginTransaction();
                 ft1.replace(R.id.country_list_fragment,new StateListFragment());

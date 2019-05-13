@@ -2,18 +2,18 @@ package com.firebase.firebasepersoninfoapp.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.firebase.firebasepersoninfoapp.R;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import android.view.Menu;
 
 public class PersonActivity extends AppCompatActivity {
 
@@ -52,7 +52,7 @@ public class PersonActivity extends AppCompatActivity {
                 .build();
         firestore.setFirestoreSettings(settings);
 
-        FirebaseApp.initializeApp(this);
+//        FirebaseApp.initializeApp(this);
         db = FirebaseFirestore.getInstance();
 
         tvBirthDate  = findViewById(R.id.a_main_tv_birthdate);
@@ -111,6 +111,27 @@ public class PersonActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu,menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case 1 :
+                Intent intent = new Intent(PersonActivity.this,PersonActivity.class);
+                startActivityForResult(intent,3);
+                break;
+
+            case 2:
+                Intent intent1 = new Intent(PersonActivity.this,ListOfUsers.class);
+                startActivityForResult(intent1,4);
+                break;
+
+            default:
+                Intent intent2 = new Intent(PersonActivity.this,PersonActivity.class);
+                startActivityForResult(intent2,3);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void initData() {
