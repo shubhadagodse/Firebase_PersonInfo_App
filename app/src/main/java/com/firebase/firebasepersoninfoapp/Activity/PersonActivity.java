@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.firebase.firebasepersoninfoapp.R;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
@@ -52,7 +53,7 @@ public class PersonActivity extends AppCompatActivity {
                 .build();
         firestore.setFirestoreSettings(settings);
 
-//        FirebaseApp.initializeApp(this);
+        FirebaseApp.initializeApp(this);
         db = FirebaseFirestore.getInstance();
 
         tvBirthDate  = findViewById(R.id.a_main_tv_birthdate);
@@ -89,6 +90,9 @@ public class PersonActivity extends AppCompatActivity {
 
 
         initData();
+
+//        Intent listOfUsers = new Intent(PersonActivity.this,ListOfUsers.class);
+//        startActivityForResult(listOfUsers,0);
 
 //        b_aPerson_Cancel.setOnClickListener(new View.OnClickListener() {
 //            @Override

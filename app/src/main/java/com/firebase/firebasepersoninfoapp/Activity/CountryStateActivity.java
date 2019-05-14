@@ -71,7 +71,7 @@ public class CountryStateActivity extends AppCompatActivity {
         Intent i =getIntent();
         String country = i.getStringExtra("country");
         country1 =findViewById(R.id.a_main_tv_country);
-        country1.setText(country);
+//        country1.setText(country);
 
     }
 
@@ -103,6 +103,18 @@ public class CountryStateActivity extends AppCompatActivity {
         p1.setArguments(b1);
         t1.replace(R.id.A_CountryState_frame1,p1);
         t1.commit();
+    }
+
+    public void functionForStates(String s) {
+        FragmentManager fragmentManager =getSupportFragmentManager();
+        FragmentTransaction transaction =fragmentManager.beginTransaction();
+        StateListFragment stateListFragment = new StateListFragment();
+        Bundle b2 = new Bundle();
+        b2.putString("s",s);
+        stateListFragment.setArguments(b2);
+        transaction.replace(R.id.A_CountryState_frame1,stateListFragment);
+        transaction.commit();
+
     }
 }
 

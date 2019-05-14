@@ -45,6 +45,7 @@ public class CountryListFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View view =inflater.inflate(R.layout.country_listfragment,container,false);
         lv = view.findViewById(R.id.country_list_fragment);
+
         fillListOfCountries();
         fillListOfStates();
 //        fillData();
@@ -70,6 +71,15 @@ public class CountryListFragment extends Fragment {
     }
 
     public void fillListOfStates() {
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String s = al.get(position);
+                CountryStateActivity csObject = (CountryStateActivity) getActivity();
+                csObject.functionForStates(s);
+            }
+        });
 
         lv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -134,7 +144,7 @@ public class CountryListFragment extends Fragment {
                 selectedItem = (String) lv.getSelectedItem();
 //                Log.i("TAG",selectedItem);
                 CountryStateActivity csObject = (CountryStateActivity)getActivity();
-                csObject.receiveCountryFromFragment(selectedItem);
+//                csObject.receiveCountryFromFragment(selectedItem);
 
                 FragmentTransaction ft1 =getFragmentManager().beginTransaction();
                 ft1.replace(R.id.country_list_fragment,new StateListFragment());
@@ -159,7 +169,13 @@ public class CountryListFragment extends Fragment {
         Log.i("TAG","onAttach() called");
     }
 
-//    public void fillData() {
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i("TAG"," in onPause of CountryListFragment");
+    }
+
+    //    public void fillData() {
 //
 //        countries = new ArrayList<>();
 //        states = new HashMap<>();

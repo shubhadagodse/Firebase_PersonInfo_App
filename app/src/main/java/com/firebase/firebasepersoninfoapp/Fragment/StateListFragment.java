@@ -4,7 +4,6 @@ package com.firebase.firebasepersoninfoapp.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,19 +38,9 @@ public class StateListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_state_list,container,false);
-        lv = view.findViewById(R.id.country_list_fragment);
-        al = new ArrayList<String>();
-        aa = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,al);
-//        lv.setAdapter(aa);
-        al.add("Beijing Municipality");
-        al.add("Tianjin Municipality");
-        al.add("Hebei");
-        al.add("Shanxi");
-        al.add("Inner Mongolia");
-        al.add("Liaoning");
-        al.add("Jilin");
-        al.add("Heilongjiang");
-        lv.setAdapter(aa);
+        lv = view.findViewById(R.id.stateList);
+
+        fillListOfStates();
 
         lv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -68,7 +57,7 @@ public class StateListFragment extends Fragment {
                             Intent intentForChinaCountry = new Intent(getContext(),CountryStateActivity.class);
                             listOfChina = lv.findViewById(R.id.stateList);
                             al = new ArrayList<String>();
-                            aa = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,al);
+                            aa = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_activated_1,al);
                             lv.setAdapter(aa);
                             al.add("Beijing Municipality");
                             al.add("Tianjin Municipality");
@@ -87,16 +76,38 @@ public class StateListFragment extends Fragment {
                             Intent intentForIndia = new Intent(getContext(),CountryStateActivity.class);
                             listOfIndia = lv.findViewById(R.id.stateList);
                             al = new ArrayList<String>();
-                            aa = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,al);
+                            aa = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_activated_1,al);
                             lv.setAdapter(aa);
-                            al.add("Beijing Municipality");
-                            al.add("Tianjin Municipality");
-                            al.add("Hebei");
-                            al.add("Shanxi");
-                            al.add("Inner Mongolia");
-                            al.add("Liaoning");
-                            al.add("Jilin");
-                            al.add("Heilongjiang");
+                            al.add("Andhra Pradesh");
+                            al.add("Arunachal Pradesh");
+                            al.add("Assam");
+                            al.add("Bihar");
+                            al.add("Chhattisgarh");
+                            al.add("Goa");
+                            al.add("Gujarat");
+                            al.add("Haryana");
+                            al.add("Himachal Pradesh");
+                            al.add("Jammu & Kashmir");
+                            al.add("Jharkhand");
+                            al.add("Karnataka");
+                            al.add("Kerala");
+                            al.add("Madhya Pradesh");
+                            al.add("Maharashtra");
+                            al.add("Manipur");
+                            al.add("Meghalaya");
+                            al.add("Mizoram");
+                            al.add("Nagaland");
+                            al.add("Orissa");
+                            al.add("Punjab");
+                            al.add("Rajasthan");
+                            al.add("Sikkim");
+                            al.add("Tamil Nadu");
+                            al.add("Telangana");
+                            al.add("Tripura");
+                            al.add("Uttar Pradesh");
+                            al.add("Uttarakhand");
+                            al.add("West Bengal");
+
                             lv.setAdapter(aa);
                         }
 
@@ -106,7 +117,7 @@ public class StateListFragment extends Fragment {
                             Intent intentForMexico = new Intent(getContext(),CountryStateActivity.class);
                             listOfMexico = lv.findViewById(R.id.stateList);
                             al = new ArrayList<String>();
-                            aa = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,al);
+                            aa = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_activated_1,al);
                             lv.setAdapter(aa);
                             al.add("Beijing Municipality");
                             al.add("Tianjin Municipality");
@@ -125,7 +136,7 @@ public class StateListFragment extends Fragment {
                             Intent intentForWyoming = new Intent(getContext(),CountryStateActivity.class);
                             listOfWyoming = lv.findViewById(R.id.stateList);
                             al = new ArrayList<String>();
-                            aa = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,al);
+                            aa = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_activated_1,al);
                             lv.setAdapter(aa);
                             al.add("Beijing Municipality");
                             al.add("Tianjin Municipality");
@@ -150,5 +161,25 @@ public class StateListFragment extends Fragment {
 
         return view;
     }
+
+
+    public void fillListOfStates() {
+        try {
+            al = new ArrayList<String>();
+            aa = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, al);
+            lv.setAdapter(aa);
+            al.add("Beijing Municipality");
+            al.add("Tianjin Municipality");
+            al.add("Hebei");
+            al.add("Shanxi");
+            al.add("Inner Mongolia");
+            al.add("Liaoning");
+            al.add("Jilin");
+            al.add("Heilongjiang");
+        }catch (Exception e) {
+            Log.i("TAG","exception==",e);
+        }
+    }
+
 
 }
