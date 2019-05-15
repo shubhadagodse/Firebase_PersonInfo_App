@@ -42,12 +42,18 @@ public class StateListFragment extends Fragment {
 
         fillListOfStates();
 
+
+
+        return view;
+    }
+
+    public void fill() {
         lv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String s = al.get(position);
                 CountryStateActivity cs = new CountryStateActivity();
-               // cs.getCountry(s);
+                // cs.getCountry(s);
                 cs.getState(s);
 
                 switch(position) {
@@ -158,10 +164,7 @@ public class StateListFragment extends Fragment {
             }
         });
 
-
-        return view;
     }
-
 
     public void fillListOfStates() {
         try {
@@ -176,6 +179,7 @@ public class StateListFragment extends Fragment {
             al.add("Liaoning");
             al.add("Jilin");
             al.add("Heilongjiang");
+
         }catch (Exception e) {
             Log.i("TAG","exception==",e);
         }

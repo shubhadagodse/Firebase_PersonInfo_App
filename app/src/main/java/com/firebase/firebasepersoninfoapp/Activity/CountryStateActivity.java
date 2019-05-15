@@ -14,19 +14,25 @@ import com.firebase.firebasepersoninfoapp.Fragment.CountryListFragment;
 import com.firebase.firebasepersoninfoapp.Fragment.StateListFragment;
 import com.firebase.firebasepersoninfoapp.R;
 
-public class CountryStateActivity extends AppCompatActivity {
+public class CountryStateActivity extends AppCompatActivity implements CountryListFragment.FragmentCountryStateListener {
 
     private Button bDone;
     private Button bCancel;
-    private TextView country1, state;
+    private TextView country1, state1;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_country_state);
+        country1 = findViewById(R.id.a_countryState_tv_country);
+        state1 = findViewById(R.id.a_countryState_tv_state);
+
         initFragment();
         getDataFromCountryListFragment();
+
     }
+
 
     public void getDataFromCountryListFragment() {
         Bundle bundle = getIntent().getExtras();
@@ -39,9 +45,9 @@ public class CountryStateActivity extends AppCompatActivity {
     }
 
     private void initFragment() {
-        final FragmentManager manager = getSupportFragmentManager();
-        final FragmentTransaction t = manager.beginTransaction();
-        final CountryListFragment f1= new CountryListFragment();
+         FragmentManager manager = getSupportFragmentManager();
+         FragmentTransaction t = manager.beginTransaction();
+         CountryListFragment f1= new CountryListFragment();
         t.add(R.id.A_CountryState_frame1,f1);
         t.commit();
 
@@ -65,6 +71,13 @@ public class CountryStateActivity extends AppCompatActivity {
 //                });
 
 
+    }
+
+    public void receiveDataFromCountryStateFragment(String country, String state) {
+        country1 = findViewById(R.id.a_main_tv_country);
+        state1 = findViewById(R.id.a_main_tv_state);
+//        country1.setText(country);
+//        state1.setText(state);
     }
 
     public void receiveCountryFromFragment(String s) {
@@ -116,5 +129,11 @@ public class CountryStateActivity extends AppCompatActivity {
         transaction.commit();
 
     }
+
+    @Override
+    public void onInputCountryStateSent(String country, String state) {
+                country1.setText(country);
+                state1.setText(state);
+           }
 }
 

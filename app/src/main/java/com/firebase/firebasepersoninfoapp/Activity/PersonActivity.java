@@ -11,18 +11,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.firebase.firebasepersoninfoapp.Fragment.CountryListFragment;
 import com.firebase.firebasepersoninfoapp.R;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
-public class PersonActivity extends AppCompatActivity {
+public class PersonActivity extends AppCompatActivity implements CountryListFragment.FragmentCountryStateListener {
 
     private FirebaseFirestore db;
     private String TAG = " ";
     private Button bSetDate, bSetCountry;
     private Button b_aPerson_Done, b_aPerson_Cancel;
-    private TextView tvBirthDate, tvCountry;
+    private TextView tvBirthDate, tvCountry, tvState;
     private String firstName;
     private String lastName;
     private String age;
@@ -30,6 +31,8 @@ public class PersonActivity extends AppCompatActivity {
     private String dateOfBirth;
     private String country;
     private String state;
+
+    private TextView country1,state1;
 
     private static final String SHARED_PREFS = "shared_preferences";
     private static final String SHARED_PREFS_FIRSTNAME ="firstName";
@@ -71,6 +74,7 @@ public class PersonActivity extends AppCompatActivity {
         });
 
         tvCountry = findViewById(R.id.a_main_tv_country);
+        tvState = findViewById(R.id.a_main_tv_state);
         bSetCountry = findViewById(R.id.a_main_bSetCountry);
 
         bSetCountry.setOnClickListener(new View.OnClickListener() {
@@ -234,6 +238,14 @@ public class PersonActivity extends AppCompatActivity {
 
     }
 
+
+    public void receiveDataFromCountryStateFragment(String country, String state) {
+        country1 = findViewById(R.id.a_main_tv_country);
+        state1 = findViewById(R.id.a_main_tv_state);
+//        country1.setText(country);
+//        state1.setText(state);
+    }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
@@ -259,5 +271,12 @@ public class PersonActivity extends AppCompatActivity {
                 tvCountry.setText("Nothing selected");
             }
         }
+    }
+
+    @Override
+    public void onInputCountryStateSent(String country, String state) {
+        tvCountry.setText(country);
+        tvState.setText(state);
+
     }
 }

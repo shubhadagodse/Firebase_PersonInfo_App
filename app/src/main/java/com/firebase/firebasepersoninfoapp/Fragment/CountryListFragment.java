@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.firebasepersoninfoapp.Activity.CountryStateActivity;
@@ -26,16 +27,21 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CountryListFragment extends Fragment {
+public class CountryListFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     ListView lv;
-//    List<String> countries;
-//    Map<String,List<String>> states;
+    Spinner s1,s2;
+    String stateArray[] =  null;
+    TextView tvCountry, tvState;
 
     ArrayList<String> al;
     ArrayAdapter<String> aa;
-    Button bDoneCountryListFragment,bCancelCountryListFragment;
+    Button bDoneCountryListFragment,bCancelCountryListFragment,bSendDataToActivity;
+    private FragmentCountryStateListener interfaceListener;
 
+    public interface FragmentCountryStateListener {
+        void onInputCountryStateSent(String country, String state);
+    }
     public CountryListFragment() {
         // Required empty public constructor
     }
@@ -44,13 +50,36 @@ public class CountryListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view =inflater.inflate(R.layout.country_listfragment,container,false);
-        lv = view.findViewById(R.id.country_list_fragment);
+
+        s1 = view.findViewById(R.id.a_countrylistfragment_spinner_country);
+        s2 = view.findViewById(R.id.a_countrylistfragment_spinner_state);
+        tvCountry = view.findViewById(R.id.a_countrylistfragment_tv_country);
+        tvState = view.findViewById(R.id.a_countrylistfragment_tv_state);
 
         fillListOfCountries();
-        fillListOfStates();
-//        fillData();
+        bSendDataToActivity = view.findViewById(R.id.a_country_fragment_b_SendDataToActivity);
         bDoneCountryListFragment = view.findViewById(R.id.a_country_fragment_b_Done);
         bCancelCountryListFragment = view.findViewById(R.id.a_country_fragment_b_Cancel);
+
+        bDoneCountryListFragment.setOnClickListener(this);
+
+        bSendDataToActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String country = s1.getSelectedItem().toString();
+                String state = s2.getSelectedItem().toString();
+                tvCountry.setText("Country : "+country);
+                tvState.setText("State : "+state);
+
+                interfaceListener.onInputCountryStateSent(country,state);
+//                CountryStateActivity cs = (CountryStateActivity) getActivity();
+//                cs.receiveDataFromCountryStateFragment(country,state);
+
+//                PersonActivity personActivity = (PersonActivity) getActivity();
+//                personActivity.receiveDataFromCountryStateFragment(country,state);
+                Log.i("TAG",country+" "+state);
+            }
+        });
 
         bCancelCountryListFragment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,68 +87,21 @@ public class CountryListFragment extends Fragment {
                 onDetach();
             }
         });
-
-        bDoneCountryListFragment.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               sendDataToActivity();
-           }
-       });
-
+        selectCountry();
         return view;
 
     }
 
-    public void fillListOfStates() {
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String s = al.get(position);
-                CountryStateActivity csObject = (CountryStateActivity) getActivity();
-                csObject.functionForStates(s);
-            }
-        });
+    public void selectCountry() {
 
-        lv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(),"Item selected is "+position,Toast.LENGTH_SHORT).show();
-                bDoneCountryListFragment.setOnClickListener(
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
+        s1.setOnItemSelectedListener(CountryListFragment.this);
 
-                        FragmentManager fragmentManager = getFragmentManager();
-                        FragmentTransaction transaction =fragmentManager.beginTransaction();
-                        CountryListFragment countryFragment = new CountryListFragment();
-                        transaction.add(R.id.container,countryFragment);
-                        transaction.commit();
+    }
 
-                            }
-//                        Intent intent1 = view.getIntent();
-//                        String country = intent1.getStringExtra("country");
-//                        intent1.putExtra("country", String.valueOf(country));
-//
-//                        FragmentManager fragmentManager = getFragmentManager();
-//                        FragmentTransaction transaction =fragmentManager.beginTransaction();
-//                        CountryListFragment countryFragment = new CountryListFragment();
-//                        transaction.replace(R.id.container,countryFragment).commit();
-//
-//                        Intent intent = getIntent();
-//                        country = intent.getStringExtra("country"+country);
-//                        intent.putExtra("RESULT",country);
-//                        setResult(RESULT_OK,intent);
-//                        finish();
-//                    }
-                        });
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+    public void setData(String c,String s) {
+        tvCountry.setText(c);
+        tvState.setText(s);
     }
 
     public void sendDataToActivity() {
@@ -147,7 +129,7 @@ public class CountryListFragment extends Fragment {
 //                csObject.receiveCountryFromFragment(selectedItem);
 
                 FragmentTransaction ft1 =getFragmentManager().beginTransaction();
-                ft1.replace(R.id.country_list_fragment,new StateListFragment());
+//                ft1.replace(R.id.country_list_fragment,new StateListFragment());
                 ft1.commit();
             }
         });
@@ -156,7 +138,7 @@ public class CountryListFragment extends Fragment {
     public void fillListOfCountries() {
         al = new ArrayList<String>();
         aa = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_activated_1,al);
-        lv.setAdapter(aa);
+//        lv.setAdapter(aa);
         al.add("China");
         al.add("India");
         al.add("Mexico");
@@ -167,6 +149,18 @@ public class CountryListFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         Log.i("TAG","onAttach() called");
+        if(context instanceof FragmentCountryStateListener) {
+            interfaceListener = (FragmentCountryStateListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+            +"must implement FragmentCountryListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        interfaceListener = null;
     }
 
     @Override
@@ -175,173 +169,47 @@ public class CountryListFragment extends Fragment {
         Log.i("TAG"," in onPause of CountryListFragment");
     }
 
-    //    public void fillData() {
-//
-//        countries = new ArrayList<>();
-//        states = new HashMap<>();
-//        countries.add("China");
-//        countries.add("India");
-//        countries.add("Mexico");
-//        countries.add("Wyoming");
-//
-//        List<String> china =new ArrayList<>();
-//        List<String> india = new ArrayList<>();
-//        List<String> mexico = new ArrayList<>();
-//        List<String> usa = new ArrayList<>();
-//
-//        china.add("Beijing Municipality");
-//        china.add("Tianjin Municipality");
-//        china.add("Hebei");
-//        china.add("Shanxi");
-//        china.add("Inner Mongolia");
-//        china.add("Liaoning");
-//        china.add("Jilin");
-//        china.add("Heilongjiang");
-//        china.add("Shanghai Municipality");
-//        china.add("Jiangsu");
-//        china.add("Zhejiang");
-//        china.add("Anhui");
-//        china.add("Fujian");
-//        china.add("Jiangxi");
-//        china.add("Shandong");
-//        china.add("Henan");
-//        china.add("Hubei");
-//        china.add("Hunan");
-//        china.add("Guangdong");
-//        china.add("Guangxi Zhuang");
-//        china.add("Hainan");
-//        china.add("Chongqing Municipality");
-//        china.add("Sichuan");
-//        china.add("Guizhou");
-//        china.add("Yunnan");
-//        china.add("Tibet Autonomous Region");
-//        china.add("Shaanxi");
-//        china.add("Gansu");
-//        china.add("Qinghai");
-//        china.add("Ninghxia Hui");
-//        china.add("Xiajiang Uyghur");
-//        china.add("Hong Kong");
-//        china.add("Macau");
-//        china.add("Taiwan");
-//
-//        india.add("Andhra Pradesh");
-//        india.add("Arunachal Pradesh");
-//        india.add("Assam");
-//        india.add("Bihar");
-//        india.add("Chhattisgarh");
-//        india.add("Goa");
-//        india.add("Gujarat");
-//        india.add("Haryana");
-//        india.add("Himachal Pradesh");
-//        india.add("Jammu & Kashmir ");
-//        india.add("Jharkhand ");
-//        india.add("Karnataka");
-//        india.add("Kerala");
-//        india.add("Madhya Pradesh ");
-//        india.add("Maharashtra ");
-//        india.add("Manipur ");
-//        india.add("Meghalaya ");
-//        india.add("Mizoram ");
-//        india.add("Nagaland ");
-//        india.add("Orissa");
-//        india.add("Punjab");
-//        india.add("Rajasthan");
-//        india.add("Sikkim");
-//        india.add("Tamil Nadu ");
-//        india.add("Telangana");
-//        india.add("Tripura");
-//        india.add("Uttar Pradesh ");
-//        india.add("Uttarakhand");
-//        india.add("West Bengal ");
-//
-//        mexico.add("Aguascalientes");
-//        mexico.add("Baja California");
-//        mexico.add("Baja California Sur");
-//        mexico.add("Chihuahua");
-//        mexico.add("Colima");
-//        mexico.add("Campeche");
-//        mexico.add("Coahuila");
-//        mexico.add("Chiapas");
-//        mexico.add("Federal District");
-//        mexico.add("Durango");
-//        mexico.add("Guerrero");
-//        mexico.add("Guanajuato");
-//        mexico.add("Hidalgo");
-//        mexico.add("Jalisco");
-//        mexico.add("México State");
-//        mexico.add("Michoacán");
-//        mexico.add("Morelos");
-//        mexico.add("Nayarit");
-//        mexico.add("Nuevo León");
-//        mexico.add("Oaxaca");
-//        mexico.add("Puebla");
-//        mexico.add("Querétaro");
-//        mexico.add("Quintana Roo");
-//        mexico.add("Sinaloa");
-//        mexico.add("San Luis Potosí");
-//        mexico.add("Sonora");
-//        mexico.add("Tabasco");
-//        mexico.add("Tlaxcala");
-//        mexico.add("Tamaulipas");
-//        mexico.add("Veracruz");
-//        mexico.add("Yucatán");
-//        mexico.add("Zacatecas");
-//
-//        usa.add("Alabama");
-//        usa.add("Alaska");
-//        usa.add("Arizona");
-//        usa.add("Arkansas");
-//        usa.add("California");
-//        usa.add("Colorado");
-//        usa.add("Connecticut");
-//        usa.add("Delaware");
-//        usa.add("Florida");
-//        usa.add("Georgia");
-//        usa.add("Hawaii");
-//        usa.add("Idaho");
-//        usa.add("Illinois");
-//        usa.add("Indiana");
-//        usa.add("Iowa");
-//        usa.add("Kansas");
-//        usa.add("Kentucky");
-//        usa.add("Louisiana");
-//        usa.add("Maine");
-//        usa.add("Maryland");
-//        usa.add("Massachusetts");
-//        usa.add("Michigan");
-//        usa.add("Minnesota");
-//        usa.add("Mississippi");
-//        usa.add("Missouri");
-//        usa.add("Montana");
-//        usa.add("Nebraska");
-//        usa.add("Nevada");
-//        usa.add("New Hampshire");
-//        usa.add("New Jersey");
-//        usa.add("New Mexico");
-//        usa.add("New York");
-//        usa.add("North Carolina");
-//        usa.add("North Dakota");
-//        usa.add("Ohio");
-//        usa.add("Oklahoma");
-//        usa.add("Oregon");
-//        usa.add("Pennsylvania");
-//        usa.add("Rhode Island");
-//        usa.add("South Carolina");
-//        usa.add("South Dakota");
-//        usa.add("Tennessee");
-//        usa.add("Texas");
-//        usa.add("Utah");
-//        usa.add("Vermont");
-//        usa.add("Virginia");
-//        usa.add("Washington");
-//        usa.add("West Virginia");
-//        usa.add("Wisconsin");
-//        usa.add("Wyoming");
-//
-//        states.put(countries.get(0),china);
-//        states.put(countries.get(1),india);
-//        states.put(countries.get(2),mexico);
-//        states.put(countries.get(3),usa);
-//    }
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if(position == 0) {
+            stateArray = new String[]{"Beijing Municipality","Tianjin Municipality","Hebei","Shanxi","Inner Mongolia","Liaoning","Jilin","Heilongjiang"};
+        }
+        if (position == 1) {
+            stateArray = new String[]{"Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jammu & Kashmir",
+                    "Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Orissa","Punjab","Rajasthan","Sikkim",
+                    "Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal"};
+        }
+        if(position == 2) {
+            stateArray = new String[]{"Aguascalientes","Baja California","Baja California Sur","Chihuahua","Colima","Campeche","Coahuila","Chiapas","Federal District","Durango"
+                    ,"Guerrero","Guanajuato","Hidalgo","Jalisco","México State","Michoacán","Morelos","Nayarit","Nuevo León","Oaxaca","Puebla","Querétaro","Quintana Roo",
+                    "Sinaloa","San Luis Potosí","Sonora","Tabasco","Tlaxcala","Tamaulipas","Veracruz","Yucatán","Zacatecas"};
+        }
+        if(position == 3) {
+            stateArray = new String[]{"Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois",
+                    "Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska",
+                    "Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota",
+                    "Ohio","Oklahoma","Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont",
+                    "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
+            };
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,stateArray);
+        s2.setAdapter(adapter);
+
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        String country = s1.getSelectedItem().toString();
+        String state = s2.getSelectedItem().toString();
+        tvCountry.setText("Country : "+country);
+        tvState.setText("State : "+state);
+    }
+
 
 }
