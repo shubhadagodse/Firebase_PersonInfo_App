@@ -1,5 +1,6 @@
 package com.firebase.firebasepersoninfoapp.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.firebasepersoninfoapp.Fragment.CountryListFragment;
-import com.firebase.firebasepersoninfoapp.Fragment.StateListFragment;
 import com.firebase.firebasepersoninfoapp.R;
 
 public class CountryStateActivity extends AppCompatActivity implements CountryListFragment.FragmentCountryStateListener {
@@ -50,27 +50,6 @@ public class CountryStateActivity extends AppCompatActivity implements CountryLi
          CountryListFragment f1= new CountryListFragment();
         t.add(R.id.A_CountryState_frame1,f1);
         t.commit();
-
-//        bDone.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Intent intent1 = getIntent();
-//                        String country = intent1.getStringExtra("country");
-//                        intent1.putExtra("country", String.valueOf(country));
-//
-//                        CountryListFragment countryFragment = new CountryListFragment();
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.container,countryFragment).commit();
-//
-//                        Intent intent = getIntent();
-//                        country = intent.getStringExtra("country"+country);
-//                        intent.putExtra("RESULT",country);
-//                        setResult(RESULT_OK,intent);
-//                        finish();
-//                    }
-//                });
-
-
     }
 
     public void receiveDataFromCountryStateFragment(String country, String state) {
@@ -88,50 +67,13 @@ public class CountryStateActivity extends AppCompatActivity implements CountryLi
 
     }
 
-   /* public void getCountry(String s) {
-        final ListView countryList =findViewById(R.id.country_list);
-        countryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                if(position == 0) {
-                    FragmentManager manager0 =getSupportFragmentManager();
-                    FragmentTransaction t0 = manager0.beginTransaction();
-                    StateListFragment s1 =new StateListFragment();
-                    Toast.makeText(getApplicationContext(),"State from country "+position+"is selected",Toast.LENGTH_SHORT).show();
-                 }
-                Log.i("Country at position ",position+"is selected");
-                Toast.makeText(getApplicationContext(),"Country at "+position+"is selected",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }*/
-
-    public void getState(String s) {
-        FragmentManager manager1 = getSupportFragmentManager();
-        FragmentTransaction t1 =manager1.beginTransaction();
-        StateListFragment p1 = new StateListFragment();
-        Bundle b1 = new Bundle();
-        b1.putString("country1",s);
-        p1.setArguments(b1);
-        t1.replace(R.id.A_CountryState_frame1,p1);
-        t1.commit();
-    }
-
-    public void functionForStates(String s) {
-        FragmentManager fragmentManager =getSupportFragmentManager();
-        FragmentTransaction transaction =fragmentManager.beginTransaction();
-        StateListFragment stateListFragment = new StateListFragment();
-        Bundle b2 = new Bundle();
-        b2.putString("s",s);
-        stateListFragment.setArguments(b2);
-        transaction.replace(R.id.A_CountryState_frame1,stateListFragment);
-        transaction.commit();
-
-    }
-
     @Override
     public void onInputCountryStateSent(String country, String state) {
+        Intent intent = new Intent();
+        intent.putExtra("message country",country);
+        intent.putExtra("message state",state);
+        setResult(Activity.RESULT_OK,intent);
+        finish();
                 country1.setText(country);
                 state1.setText(state);
            }
