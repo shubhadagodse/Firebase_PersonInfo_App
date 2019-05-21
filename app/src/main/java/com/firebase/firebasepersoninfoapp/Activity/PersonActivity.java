@@ -71,6 +71,17 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
         openDateActivity();
         openCountryStateActivity();
 
+        tvFirstName = findViewById(R.id.a_main_tv_fname);
+        tvLastName = findViewById(R.id.a_main_tv_lname);
+        tvAge = findViewById(R.id.a_main_tv_age);
+        tvEmail =findViewById(R.id.a_main_tv_email);
+        tvPhone = findViewById(R.id.a_main_tv_phone);
+        tvBirthDate = findViewById(R.id.a_main_tv_birthdate);
+        tvCountry = findViewById(R.id.a_main_tv_country);
+        tvState = findViewById(R.id.a_main_tv_state);
+
+
+
         b_a_PersonActivity_Done = findViewById(R.id.bSubmit);
         b_a_PersonActivity_Done.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,14 +89,14 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
 
                 CollectionReference dbUsers = db.collection("users");
                 Users users = new Users(
-                        SHARED_PREFS_FIRSTNAME,
-                        SHARED_PREFS_LASTNAME,
-                        SHARED_PREFS_AGE,
-                        SHARED_PREFS_PHONE,
-                        SHARED_PREFS_DATEOFBIRTH,
-                        SHARED_PREFS_EMAIL,
-                        SHARED_PREFS_COUNTRY,
-                        SHARED_PREFS_STATE
+                        tvFirstName.getText().toString(),
+                        tvLastName.getText().toString(),
+                        tvAge.getText().toString(),
+                        tvEmail.getText().toString(),
+                        tvPhone.getText().toString(),
+                        tvBirthDate.getText().toString(),
+                        tvCountry.getText().toString(),
+                        tvState.getText().toString()
                 );
                 dbUsers.add(users)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -129,21 +140,44 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case 1 :
-                Intent intent = new Intent(PersonActivity.this,PersonActivity.class);
-                startActivityForResult(intent,3);
-                break;
-
-            case 2:
-                Intent intent1 = new Intent(PersonActivity.this,ListOfUsers.class);
-                startActivityForResult(intent1,4);
-                break;
-
-            default:
+        int id = item.getItemId();
+        if(id == R.id.listOfUsers) {
+            Toast.makeText(this,"List Of Users clicked",Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,ListOfUsers.class));
+//            Intent intentForListOfUsers = new Intent(PersonActivity.this,ListOfUsers.class);
+//            startActivityForResult(intentForListOfUsers,1001);
+        }
+        else
+        if (id == R.id.userCreationForm) {
+            Toast.makeText(this,"User Creation Form clicked",Toast.LENGTH_SHORT).show();
+//            startActivity(new Intent(this,PersonActivity.class));
+            Intent intentForUserCreation = new Intent(PersonActivity.this,PersonActivity.class);
+            startActivityForResult(intentForUserCreation,1000);
+        }
+        else {
                 Intent intent2 = new Intent(PersonActivity.this,PersonActivity.class);
                 startActivityForResult(intent2,3);
         }
+//        Intent intent3 =  new Intent(this,ListOfUsers.class);
+//        startActivity(intent3);
+//        Log.i("TAG","intent value "+intent3);
+//
+//        switch (item.getItemId()) {
+//            case 1 :
+//                Log.i("TAG","Item selected is"+item.getItemId());
+//                Intent intent = new Intent(PersonActivity.this,PersonActivity.class);
+//                startActivityForResult(intent,3);
+//                break;
+//
+//            case 2:
+//                Intent intent1 = new Intent(PersonActivity.this,ListOfUsers.class);
+//                startActivityForResult(intent1,4);
+//                break;
+//
+//            default:
+//                Intent intent2 = new Intent(PersonActivity.this,PersonActivity.class);
+//                startActivityForResult(intent2,3);
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -190,15 +224,16 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
     private void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         SharedPreferences.Editor editor =sharedPreferences.edit();
-
-        editor.putString(SHARED_PREFS_FIRSTNAME,firstName);
-        editor.putString(SHARED_PREFS_LASTNAME,lastName);
-        editor.putString(SHARED_PREFS_AGE,age);
-        editor.putString(SHARED_PREFS_EMAIL,email);
-        editor.putString(SHARED_PREFS_PHONE,phone);
-        editor.putString(SHARED_PREFS_DATEOFBIRTH,dateOfBirth);
-        editor.putString(SHARED_PREFS_COUNTRY,country);
-        editor.putString(SHARED_PREFS_STATE,state);
+        initData();
+        editor.putString(SHARED_PREFS_FIRSTNAME, String.valueOf(tvFirstName));
+        Log.i("TAG","fname"+firstName.trim());
+        editor.putString(SHARED_PREFS_LASTNAME, String.valueOf(tvLastName));
+        editor.putString(SHARED_PREFS_AGE, String.valueOf(tvAge));
+        editor.putString(SHARED_PREFS_EMAIL, String.valueOf(tvEmail));
+        editor.putString(SHARED_PREFS_PHONE, String.valueOf(tvPhone));
+        editor.putString(SHARED_PREFS_DATEOFBIRTH, String.valueOf(tvBirthDate));
+        editor.putString(SHARED_PREFS_COUNTRY, String.valueOf(tvCountry));
+        editor.putString(SHARED_PREFS_STATE, String.valueOf(tvState));
         editor.apply();
         editor.commit();
     }

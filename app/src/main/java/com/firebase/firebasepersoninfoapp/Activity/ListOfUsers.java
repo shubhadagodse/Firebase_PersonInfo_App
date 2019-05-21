@@ -1,10 +1,20 @@
 package com.firebase.firebasepersoninfoapp.Activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.firebase.firebasepersoninfoapp.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 //import com.firebase.ui.database.FirebaseListAdapter;
 //import com.firebase.ui.database.FirebaseListOptions;
@@ -15,6 +25,11 @@ public class ListOfUsers extends AppCompatActivity {
 
     private static final String TAG = "";
     ListView lv;
+    FirebaseDatabase database;
+    DatabaseReference ref;
+    ArrayList<String> ulist;
+    ArrayAdapter<String> uadapter;
+    Users user;
 //    FirebaseListAdapter listAdapter;
 
     @Override
@@ -22,7 +37,14 @@ public class ListOfUsers extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_users);
 
+        user = new Users();
         lv = findViewById(R.id.list_of_users_from_firebase);
+        database = FirebaseDatabase.getInstance();
+        ref = database.getReference("users");
+        ulist = new ArrayList<>();
+        uadapter = new ArrayAdapter<>(this,R.layout.users,R.id.list_of_users_from_firebase,ulist);
+
+        addValueEventListener();
 
 //        Query query = FirebaseDatabase.getInstance().getReference().child("Users");
 //        FirebaseListOptions<Users> options = new FirebaseListOptions.Builder<Users>()
@@ -54,7 +76,37 @@ public class ListOfUsers extends AppCompatActivity {
 //                state.setText(usr.getState().toString());
 //
             }
-        };
+
+    private void addValueEventListener() {
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                    user = ds.getValue(Users.class);
+                    ulist.add(user.getFirstname());
+                    ulist.add(user.getLastname());
+                    ulist.add(user.getAge());
+                    ulist.add(user.getEmail());
+                    ulist.add(user.getPhone());
+                    ulist.add(user.getBirthdate());
+                    ulist.add(user.getCountry());
+                    ulist.add(user.getState());
+//                    user = ds.getValue(Users.class);
+//                    ulist.add(user.getFirstname()+" "+user.getPhone()+" "+user.getCountry());
+                    Log.i("TAG","List of users"+ulist);
+//                    Intent intentForListOfUsers = getIntent();
+//                    intentForListOfUsers.putExtra(String.valueOf(ulist),1001);
+                }
+                lv.setAdapter(uadapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+};
 //        lv.setAdapter(listAdapter);
 //
 //        initialize();
