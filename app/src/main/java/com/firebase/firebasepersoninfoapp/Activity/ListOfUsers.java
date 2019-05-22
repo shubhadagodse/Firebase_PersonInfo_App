@@ -1,13 +1,18 @@
 package com.firebase.firebasepersoninfoapp.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.firebase.firebasepersoninfoapp.R;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +32,7 @@ public class ListOfUsers extends AppCompatActivity {
     ListView lv;
     FirebaseDatabase database;
     DatabaseReference ref;
-    ArrayList<String> ulist;
+    private ArrayList<String> ulist;
     ArrayAdapter<String> uadapter;
     Users user;
 //    FirebaseListAdapter listAdapter;
@@ -44,7 +49,70 @@ public class ListOfUsers extends AppCompatActivity {
         ulist = new ArrayList<>();
         uadapter = new ArrayAdapter<>(this,R.layout.users,R.id.list_of_users_from_firebase,ulist);
 
-        addValueEventListener();
+//        addValueEventListener();
+
+
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                ref.push().setValue(user.getFirstname());
+                ref.push().setValue(user.getLastname());
+                ref.push().setValue(user.getAge());
+                ref.push().setValue(user.getEmail());
+                ref.push().setValue(user.getPhone());
+                ref.push().setValue(user.getBirthdate());
+                ref.push().setValue(user.getCountry());
+                ref.push().setValue(user.getState());
+            }
+        });
+        Log.i("TAG","ref list==="+ref);
+
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                user = dataSnapshot.getValue(Users.class);
+//                Log.i("TAG",user.getFirstname());
+                ulist.add(user.getFirstname());
+                ulist.add(user.getLastname());
+                ulist.add(user.getAge());
+                ulist.add(user.getEmail());
+                ulist.add(user.getPhone());
+                ulist.add(user.getBirthdate());
+                ulist.add(user.getCountry());
+                ulist.add(user.getState());
+
+                lv.setAdapter(uadapter);
+
+                uadapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                user = dataSnapshot.getValue(Users.class);
+                ulist.remove(user);
+
+                uadapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
 //        Query query = FirebaseDatabase.getInstance().getReference().child("Users");
 //        FirebaseListOptions<Users> options = new FirebaseListOptions.Builder<Users>()
@@ -75,7 +143,7 @@ public class ListOfUsers extends AppCompatActivity {
 //                country.setText(usr.getCountry().toString());
 //                state.setText(usr.getState().toString());
 //
-            }
+    }
 
     private void addValueEventListener() {
         ref.addValueEventListener(new ValueEventListener() {
@@ -94,8 +162,8 @@ public class ListOfUsers extends AppCompatActivity {
 //                    user = ds.getValue(Users.class);
 //                    ulist.add(user.getFirstname()+" "+user.getPhone()+" "+user.getCountry());
                     Log.i("TAG","List of users"+ulist);
-//                    Intent intentForListOfUsers = getIntent();
-//                    intentForListOfUsers.putExtra(String.valueOf(ulist),1001);
+                    Intent intentForListOfUsers = getIntent();
+                    intentForListOfUsers.putExtra(String.valueOf(ulist),1001);
                 }
                 lv.setAdapter(uadapter);
             }
