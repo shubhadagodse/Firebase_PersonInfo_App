@@ -3,16 +3,12 @@ package com.firebase.firebasepersoninfoapp.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.firebase.firebasepersoninfoapp.R;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,11 +16,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
-//import com.firebase.ui.database.FirebaseListAdapter;
-//import com.firebase.ui.database.FirebaseListOptions;
-//import com.google.firebase.database.FirebaseDatabase;
-//import com.google.firebase.database.Query;
 
 public class ListOfUsers extends AppCompatActivity {
 
@@ -35,6 +26,7 @@ public class ListOfUsers extends AppCompatActivity {
     private ArrayList<String> ulist;
     ArrayAdapter<String> uadapter;
     Users user;
+    private String userID;
 //    FirebaseListAdapter listAdapter;
 
     @Override
@@ -45,15 +37,15 @@ public class ListOfUsers extends AppCompatActivity {
         user = new Users();
         lv = findViewById(R.id.list_of_users_from_firebase);
         database = FirebaseDatabase.getInstance();
-        ref = database.getReference("users");
+        ref = database.getReference().child("users");
         ulist = new ArrayList<>();
-        uadapter = new ArrayAdapter<>(this,R.layout.users,R.id.list_of_users_from_firebase,ulist);
+        uadapter = new ArrayAdapter<String>(this,R.layout.users,R.id.first_name,ulist);
+//        userID = database.getUId();
+        addValueEventListener();
 
-//        addValueEventListener();
 
 
-
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       /* lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -72,9 +64,11 @@ public class ListOfUsers extends AppCompatActivity {
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Log.i("TAG","User info=="+user.getFirstname());
+                Log.i("TAG","USER=="+user);
 
                 user = dataSnapshot.getValue(Users.class);
-//                Log.i("TAG",user.getFirstname());
+                Log.i("TAG","User info=="+user.getFirstname());
                 ulist.add(user.getFirstname());
                 ulist.add(user.getLastname());
                 ulist.add(user.getAge());
@@ -112,45 +106,19 @@ public class ListOfUsers extends AppCompatActivity {
 
             }
         });
-
-
-//        Query query = FirebaseDatabase.getInstance().getReference().child("Users");
-//        FirebaseListOptions<Users> options = new FirebaseListOptions.Builder<Users>()
-//                .setLayout(R.layout.users)
-//                .setLifecycleOwner(ListOfUsers.this)
-//                .setQuery(query,Users.class)
-//                .build();
-
-//        listAdapter = new FirebaseListAdapter(options) {
-//            @Override
-//            protected void populateView(View v, Object model, int position) {
-//                TextView  firstname = v.findViewById(R.id.first_name);
-//                TextView lastname = v.findViewById(R.id.last_name);
-//                TextView age = v.findViewById(R.id.age);
-//                TextView email = v.findViewById(R.id.email);
-//                TextView phone = v.findViewById(R.id.phone);
-//                TextView birthdate = v.findViewById(R.id.birth_date);
-//                TextView country = v.findViewById(R.id.country);
-//                TextView state = v.findViewById(R.id.state);
-//
-//                Users usr = (Users) model;
-//                firstname.setText(usr.getFirstname().toString());
-//                lastname.setText(usr.getLastname().toString());
-//                age.setText(usr.getAge().toString());
-//                email.setText(usr.getEmail().toString());
-//                phone.setText(usr.getPhone().toString());
-//                birthdate.setText(usr.getBirthdate().toString());
-//                country.setText(usr.getCountry().toString());
-//                state.setText(usr.getState().toString());
-//
+        */
     }
 
     private void addValueEventListener() {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                    user = ds.getValue(Users.class);
+                    ulist.clear();
+                   user = ds.getValue(Users.class);
+                   ulist.add(user.toString());
+//                   user.setFirstname(ds.child(userID).getValue(Users.class).getFirstname());
+
                     ulist.add(user.getFirstname());
                     ulist.add(user.getLastname());
                     ulist.add(user.getAge());
@@ -159,13 +127,39 @@ public class ListOfUsers extends AppCompatActivity {
                     ulist.add(user.getBirthdate());
                     ulist.add(user.getCountry());
                     ulist.add(user.getState());
-//                    user = ds.getValue(Users.class);
-//                    ulist.add(user.getFirstname()+" "+user.getPhone()+" "+user.getCountry());
+
                     Log.i("TAG","List of users"+ulist);
+
                     Intent intentForListOfUsers = getIntent();
                     intentForListOfUsers.putExtra(String.valueOf(ulist),1001);
                 }
                 lv.setAdapter(uadapter);
+            }
+
+            private void showData(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                    Users usr = new Users();
+                    usr.setFirstname(dataSnapshot.child(String.valueOf(user)).getValue(Users.class).getFirstname());
+                    usr.setLastname(dataSnapshot.child(String.valueOf(user)).getValue(Users.class).getLastname());
+                    usr.setAge(dataSnapshot.child(String.valueOf(user)).getValue(Users.class).getAge());
+                    usr.setEmail(dataSnapshot.child(String.valueOf(user)).getValue(Users.class).getEmail());
+                    usr.setPhone(dataSnapshot.child(String.valueOf(user)).getValue(Users.class).getPhone());
+                    usr.setBirthdate(dataSnapshot.child(String.valueOf(user)).getValue(Users.class).getBirthdate());
+                    usr.setCountry(dataSnapshot.child(String.valueOf(user)).getValue(Users.class).getCountry());
+                    usr.setState(dataSnapshot.child(String.valueOf(user)).getValue(Users.class).getState());
+
+                    ArrayList<String> array = new ArrayList<>();
+                    array.add(usr.getFirstname().toString());
+                    array.add(usr.getLastname().toString());
+                    array.add(usr.getAge().toString());
+                    array.add(usr.getEmail().toString());
+                    array.add(usr.getPhone().toString());
+                    array.add(usr.getBirthdate().toString());
+                    array.add(usr.getCountry().toString());
+                    array.add(usr.getState().toString());
+
+                    lv.setAdapter(uadapter);
+                }
             }
 
             @Override
@@ -174,77 +168,4 @@ public class ListOfUsers extends AppCompatActivity {
             }
         });
     }
-};
-//        lv.setAdapter(listAdapter);
-//
-//        initialize();
-//        addData();
-//        readData();
-//    }
-
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        listAdapter.startListening();
-//    }
-//
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        listAdapter.stopListening();
-//    }
-//
-//    public void initialize() {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//    }
-//
-//    private void addData() {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//         Create a new user with a first and last name
-//        Map<String, Object> user = new HashMap<>();
-//        user.put("firstname", "Ada");
-//        user.put("lastname", "Lovelace");
-//        user.put("age", 25);
-//        user.put("email","ada@gmail.com");
-//        user.put("phone","8888202071");
-//        user.put("birthDate","05/09/1994");
-//        user.put("country","US");
-//        user.put("state","New York");
-
-// Add a new document with a generated ID
-//        db.collection("users")
-//                .add(user)
-//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                    @Override
-//                    public void onSuccess(DocumentReference documentReference) {
-//                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w(TAG, "Error adding document", e);
-//                    }
-//                });
-//
-//    }
-
-//    private void readData() {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        db.collection("users")
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                Log.d(TAG, document.getId() + " => " + document.getData());
-//                            }
-//                        } else {
-//                            Log.w(TAG, "Error getting documents.", task.getException());
-//                        }
-//                    }
-//                });
-//    }
-//
-//}
+}

@@ -52,6 +52,8 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
     private static final String SHARED_PREFS_COUNTRY ="country";
     private static final String SHARED_PREFS_STATE ="state";
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,7 +133,6 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
 //        });
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu,menu);
@@ -143,9 +144,9 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
         int id = item.getItemId();
         if(id == R.id.listOfUsers) {
             Toast.makeText(this,"List Of Users clicked",Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this,ListOfUsers.class));
-//            Intent intentForListOfUsers = new Intent(PersonActivity.this,ListOfUsers.class);
-//            startActivityForResult(intentForListOfUsers,1001);
+//            startActivity(new Intent(this,ListOfUsers.class));
+            Intent intentForListOfUsers = new Intent(PersonActivity.this,ListOfUsers.class);
+            startActivityForResult(intentForListOfUsers,1001);
         }
         else
         if (id == R.id.userCreationForm) {

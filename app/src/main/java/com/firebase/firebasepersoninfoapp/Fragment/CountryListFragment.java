@@ -71,6 +71,9 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
                 tvCountry.setText("Country : "+country);
                 tvState.setText("State : "+state);
 
+                Log.i("TAG","Country=="+tvCountry.getText());
+                Log.i("TAG","State=="+tvState.getText());
+
                 interfaceListener.onInputCountryStateSent(country,state);
 //                CountryStateActivity cs = (CountryStateActivity) getActivity();
 //                cs.receiveDataFromCountryStateFragment(country,state);
