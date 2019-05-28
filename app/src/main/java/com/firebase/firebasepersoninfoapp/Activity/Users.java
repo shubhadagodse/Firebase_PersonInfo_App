@@ -10,6 +10,20 @@ public class Users {
     private String country;
     private String state;
 
+    @Override
+    public String toString() {
+        return "Users{" +
+                "firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", age='" + age + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", birthdate='" + birthdate + '\'' +
+                ", country='" + country + '\'' +
+                ", state='" + state + '\'' +
+                '}';
+    }
+
     public Users() {
 
     }
