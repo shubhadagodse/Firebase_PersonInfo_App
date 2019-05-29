@@ -114,23 +114,6 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
                 });
             }
         });
-
-//        Intent listOfUsers = new Intent(PersonActivity.this,ListOfUsers.class);
-//        startActivityForResult(listOfUsers,0);
-
-//        b_aPerson_Cancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
-
-//        b_aPerson_Done.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                saveData();
-//            }
-//        });
     }
 
     @Override
@@ -159,26 +142,6 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
                 Intent intent2 = new Intent(PersonActivity.this,PersonActivity.class);
                 startActivityForResult(intent2,3);
         }
-//        Intent intent3 =  new Intent(this,ListOfUsers.class);
-//        startActivity(intent3);
-//        Log.i("TAG","intent value "+intent3);
-//
-//        switch (item.getItemId()) {
-//            case 1 :
-//                Log.i("TAG","Item selected is"+item.getItemId());
-//                Intent intent = new Intent(PersonActivity.this,PersonActivity.class);
-//                startActivityForResult(intent,3);
-//                break;
-//
-//            case 2:
-//                Intent intent1 = new Intent(PersonActivity.this,ListOfUsers.class);
-//                startActivityForResult(intent1,4);
-//                break;
-//
-//            default:
-//                Intent intent2 = new Intent(PersonActivity.this,PersonActivity.class);
-//                startActivityForResult(intent2,3);
-//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -264,9 +227,6 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
                 intent.putExtra("country",country);
                 intent.putExtra("state",state);
                 startActivityForResult(intent,2);
-//                intent.putExtra("country",country);
-
-//                String country = intent.getStringExtra("country");
                 tvCountry.setText(country);
                 tvState.setText(state);
                 saveData();

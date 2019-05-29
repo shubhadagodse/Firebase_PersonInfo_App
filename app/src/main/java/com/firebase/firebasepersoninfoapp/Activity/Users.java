@@ -1,6 +1,6 @@
 package com.firebase.firebasepersoninfoapp.Activity;
 
-public class Users {
+public class Users extends UserId{
     private String firstname;
     private String lastname;
     private String age;
