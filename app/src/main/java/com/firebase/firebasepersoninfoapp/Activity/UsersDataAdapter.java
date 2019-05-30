@@ -13,7 +13,6 @@ import com.firebase.firebasepersoninfoapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class UsersDataAdapter extends RecyclerView.Adapter<UsersDataAdapter.ViewHolder> {
 
@@ -21,6 +20,7 @@ public class UsersDataAdapter extends RecyclerView.Adapter<UsersDataAdapter.View
     public List<Users> userList = new ArrayList<Users>();
     public Context context;
     LayoutInflater inflater;
+    ArrayList<Users> users;
 
     public UsersDataAdapter(Context context, List<Users> usersList) {
         this.getUsersList = usersList;
@@ -42,14 +42,14 @@ public class UsersDataAdapter extends RecyclerView.Adapter<UsersDataAdapter.View
             super(itemView);
             mview = itemView;
 
-            tvfname = mview.findViewById(R.id.first_name);
-            tvlname = mview.findViewById(R.id.last_name);
-            tvage = mview.findViewById(R.id.age);
-            tvemail = mview.findViewById(R.id.email);
-            tvphone = mview.findViewById(R.id.phone);
-            tvbirthdate = mview.findViewById(R.id.birth_date);
-            tvcountry = mview.findViewById(R.id.country);
-            tvstate = mview.findViewById(R.id.state);
+            tvfname = mview.findViewById(R.id.tv_f_name);
+            tvlname = mview.findViewById(R.id.tv_l_name);
+            tvage = mview.findViewById(R.id.tv_age);
+            tvemail = mview.findViewById(R.id.tv_email);
+            tvphone = mview.findViewById(R.id.tv_phone);
+            tvbirthdate = mview.findViewById(R.id.tv_birthdate);
+            tvcountry = mview.findViewById(R.id.tv_country);
+            tvstate = mview.findViewById(R.id.tv_state);
         }
 
 
@@ -58,14 +58,14 @@ public class UsersDataAdapter extends RecyclerView.Adapter<UsersDataAdapter.View
             if(view == null) {
                 holder = new ViewHolder(view);
                 view = inflater.inflate(R.layout.download_data,null);
-                holder.tvfname = view.findViewById(R.id.first_name);
-                holder.tvlname = view.findViewById(R.id.last_name);
-                holder.tvage = view.findViewById(R.id.age);
-                holder.tvemail = view.findViewById(R.id.email);
-                holder.tvphone = view.findViewById(R.id.phone);
-                holder.tvbirthdate = view.findViewById(R.id.birth_date);
-                holder.tvcountry = view.findViewById(R.id.country);
-                holder.tvstate = view.findViewById(R.id.state);
+                holder.tvfname = view.findViewById(R.id.tv_f_name);
+                holder.tvlname = view.findViewById(R.id.tv_l_name);
+                holder.tvage = view.findViewById(R.id.tv_age);
+                holder.tvemail = view.findViewById(R.id.tv_email);
+                holder.tvphone = view.findViewById(R.id.tv_phone);
+                holder.tvbirthdate = view.findViewById(R.id.tv_birthdate);
+                holder.tvcountry = view.findViewById(R.id.tv_country);
+                holder.tvstate = view.findViewById(R.id.tv_state);
 
                 view.setTag(holder);
             }
@@ -92,24 +92,6 @@ public class UsersDataAdapter extends RecyclerView.Adapter<UsersDataAdapter.View
             return  view;
         }
 
-        public void filter(String charText) {
-
-            charText = charText.toLowerCase(Locale.getDefault());
-            getUsersList.clear();
-            if(charText.length() == 0) {
-                getUsersList.addAll(userList);
-            }
-//            else {
-//                for(Users u:userList) {
-//                    if(u.getFirstname().toLowerCase(Locale.getDefault()))
-//                        .contains(charText) {
-//                        userList.add(u);
-//                    }
-//                }
-//            }
-            notifyDataSetChanged();
-        }
-
     }
 
 
@@ -118,7 +100,7 @@ public class UsersDataAdapter extends RecyclerView.Adapter<UsersDataAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.users,viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.download_data,viewGroup,false);
 //        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.download_data,viewGroup,false);
 
         return new ViewHolder(view);

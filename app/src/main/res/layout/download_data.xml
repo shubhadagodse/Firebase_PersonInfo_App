@@ -4,126 +4,102 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
 
-    <TextView
-        android:id="@+id/tv_f_name"
-        android:layout_width="78dp"
-        android:layout_height="37dp"
-        android:layout_alignParentStart="true"
-        android:padding="8dp"
-        android:text="TextView"
-        android:textSize="14sp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="27dp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_margin="8dp"
+        tools:ignore="MissingConstraints">
 
-    <TextView
-        android:id="@+id/tv_l_name"
-        android:layout_width="79dp"
-        android:layout_height="39dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="12dp"
-        android:padding="8dp"
-        android:text="TextView"
-        app:layout_constraintTop_toBottomOf="@+id/tv_f_name"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="18dp" />
+        <TextView
+            android:id="@+id/tv_f_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:padding="8dp"
+            />
 
-    <TextView
-        android:id="@+id/tv_phone"
-        android:layout_width="80dp"
-        android:layout_height="37dp"
-        android:padding="8dp"
-        android:text="TextView"
-        android:textSize="14sp"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="128dp"
-        tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/tv_l_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:padding="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_f_name"/>
 
-
-    <TextView
-        android:id="@+id/tv_country"
-        android:layout_width="81dp"
-        android:layout_height="36dp"
-        android:padding="8dp"
-        android:text="TextView"
-        android:textSize="14sp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="174dp" />
-
-    <!--<TextView-->
-        <!--android:id="@+id/tv_l_name"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:padding="8dp"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:text="TextView" />-->
+        <TextView
+            android:id="@+id/tv_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:padding="8dp"
+            android:text="TextView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp" />
 
 
-    <!--<TextView-->
-        <!--android:id="@+id/tv_age"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:padding="8dp"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:text="TextView" />-->
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:padding="8dp"
+            android:text="TextView"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="186dp" />
 
 
-    <!--<TextView-->
-        <!--android:id="@+id/tv_email"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:padding="8dp"-->
-        <!--android:text="TextView" />-->
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:padding="8dp"
+            android:text="TextView"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="229dp" />
 
 
-    <!--<TextView-->
-        <!--android:id="@+id/tv_phone"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:padding="8dp"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:text="TextView" />-->
+        <TextView
+            android:id="@+id/tv_birthdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:padding="8dp"
+            android:text="TextView"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="277dp" />
 
 
-    <!--<TextView-->
-        <!--android:id="@+id/tv_birthdate"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:padding="8dp"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:text="TextView" />-->
+        <TextView
+            android:id="@+id/tv_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:padding="8dp"
+            android:text="TextView"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="323dp" />
 
 
-    <!--<TextView-->
-        <!--android:id="@+id/tv_country"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:padding="8dp"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:text="TextView" />-->
-
-
-    <!--<TextView-->
-        <!--android:id="@+id/tv_state"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:padding="8dp"-->
-        <!--android:text="TextView" />-->
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="TextView"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="373dp" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

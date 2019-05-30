@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp"
@@ -7,51 +7,51 @@
     android:padding="10dp"
     android:background="?android:attr/selectableItemBackground">
 
-    <android.support.v7.widget.RecyclerView
+    <ListView
         android:id="@+id/a_users_rv_ulist"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/first_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <!--<TextView-->
+            <!--android:id="@+id/first_name"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
 
-        <TextView
-            android:id="@+id/last_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <!--<TextView-->
+            <!--android:id="@+id/last_name"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
 
-        <TextView
-            android:id="@+id/age"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <!--<TextView-->
+            <!--android:id="@+id/age"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
 
-        <TextView
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <!--<TextView-->
+            <!--android:id="@+id/email"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
 
-        <TextView
-            android:id="@+id/phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <!--<TextView-->
+            <!--android:id="@+id/phone"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
 
-        <TextView
-            android:id="@+id/birth_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <!--<TextView-->
+            <!--android:id="@+id/birth_date"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
 
-        <TextView
-            android:id="@+id/country"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <!--<TextView-->
+            <!--android:id="@+id/country"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
 
-        <TextView
-            android:id="@+id/state"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </android.support.v7.widget.RecyclerView>
+        <!--<TextView-->
+            <!--android:id="@+id/state"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+    </ListView>
 
 
-</RelativeLayout>
+</LinearLayout>
