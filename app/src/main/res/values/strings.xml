@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">Firebase Person Info App</string>
+    <string name="firstname">Firstname : </string>
+    <string name="lastname">Lastname : </string>
+    <string name="age">Age : </string>
+    <string name="email">Email : </string>
+    <string name="phone">Phone : </string>
+    <string name="birthdate">Birthdate : </string>
+    <string name="country">Country : </string>
+    <string name="state">State : </string>
     <string name="selectCountry">Select Country</string>
     <string-array name="countries_list">
         <item>China</item>

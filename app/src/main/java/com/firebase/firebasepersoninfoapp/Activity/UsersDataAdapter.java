@@ -13,8 +13,7 @@ import com.firebase.firebasepersoninfoapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-public class UsersDataAdapter extends RecyclerView.Adapter<UsersDataAdapter.ViewHolder> {
+    public class UsersDataAdapter extends RecyclerView.Adapter<UsersDataAdapter.ViewHolder> {
 
     public List<Users> getUsersList;
     public List<Users> userList = new ArrayList<Users>();
@@ -133,4 +132,5 @@ public class UsersDataAdapter extends RecyclerView.Adapter<UsersDataAdapter.View
     public int getItemCount() {
         return getUsersList.size();
     }
+
 }

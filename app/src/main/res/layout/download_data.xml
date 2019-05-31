@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -20,7 +20,7 @@
             android:id="@+id/tv_f_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text="@string/firstname"
             android:padding="8dp"
             />
 
@@ -28,9 +28,9 @@
             android:id="@+id/tv_l_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:padding="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_f_name"/>
+            android:text="@string/lastname"
+            android:padding="8dp"/>
+            <!--app:layout_constraintTop_toBottomOf="@+id/tv_f_name"/>-->
 
         <TextView
             android:id="@+id/tv_age"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:padding="8dp"
-            android:text="TextView"
+            android:text="@string/age"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="16dp" />
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:padding="8dp"
-            android:text="TextView"
+            android:text="@string/email"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="186dp" />
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:padding="8dp"
-            android:text="TextView"
+            android:text="@string/phone"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="229dp" />
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:padding="8dp"
-            android:text="TextView"
+            android:text="@string/birthdate"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="277dp" />
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:padding="8dp"
-            android:text="TextView"
+            android:text="@string/country"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="323dp" />
@@ -97,9 +97,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="TextView"
+            android:text="@string/state"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="373dp" />
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

@@ -1,20 +1,18 @@
 package com.firebase.firebasepersoninfoapp.Activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.firebase.firebasepersoninfoapp.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -52,32 +50,32 @@ public class ListOfUsers extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_users);
 
-       recyclerView = findViewById(R.id.list_of_users_from_firebase);
-        recyclerView.setLayoutManager(new LinearLayoutManager(ListOfUsers.this));
-        list = new ArrayList<Users>();
-        reference = FirebaseDatabase.getInstance().getReference().child("users");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
-                    Users u = dataSnapshot1.getValue(Users.class);
-                    list.add(u);
-                    Log.i("TAG","List="+list);
-                }
-
-                usersDataAdapter = new UsersDataAdapter(ListOfUsers.this,list);
-                recyclerView.setAdapter(usersDataAdapter);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(ListOfUsers.this,"Something went wrong...Cancelled",Toast.LENGTH_SHORT).show();
-            }
-        });
+//       recyclerView = findViewById(R.id.list_of_users_from_firebase);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(ListOfUsers.this));
+//        list = new ArrayList<Users>();
+//        reference = FirebaseDatabase.getInstance().getReference().child("users");
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
+//                    Users u = dataSnapshot1.getValue(Users.class);
+//                    list.add(u);
+//                    Log.i("TAG","List="+list);
+//                }
+//
+//                usersDataAdapter = new UsersDataAdapter(ListOfUsers.this,list);
+//                recyclerView.setAdapter(usersDataAdapter);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Toast.makeText(ListOfUsers.this,"Something went wrong...Cancelled",Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
         userList = new ArrayList<>();
-        usersDataAdapter = new UsersDataAdapter(getApplicationContext(), (ArrayList<Users>) userList);
+        usersDataAdapter = new UsersDataAdapter(getApplicationContext(), userList);
 
         database = FirebaseFirestore.getInstance();
         ref = database.collection("users").document();
@@ -88,15 +86,68 @@ public class ListOfUsers extends AppCompatActivity {
         listOfUsers.setAdapter(usersDataAdapter);
         Log.i("TAG","List Of Users == "+listOfUsers);
 
-        usersDataAdapter.startListening();
+//        usersDataAdapter.startListening();
 
+
+        initRecyclerview();
         receiveData();
-//
+        readSingleUser();
+//        getData();
+
 //        Intent intentForListOfUsers = getIntent();
 //        intentForListOfUsers.putExtra("listOfUsers", String.valueOf(listOfUsers));
-//        startActivityForResult(intentForListOfUsers,1001);
+//        startActivityForResult(intentForListOfUsers,1);
 
 
+    }
+
+    private void readSingleUser() {
+        DocumentReference u = database.collection("user").document("1rdu6SPnz8wRySFFz7Ql");
+        u.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    StringBuilder data =  new StringBuilder("");
+                    data.append("First Name :").append(doc.getString("firstname"));
+                    data.append("\n");
+
+
+                }
+            }
+        });
+
+    }
+
+//    private void getData() {
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        CollectionReference usersCollectionRef = db.collection("users");
+//        Query usersQuery = usersCollectionRef
+//                .whereEqualTo("userId", FirebaseAuth.getInstance().getCurrentUser().getUid());
+//
+//        usersQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if(task.isSuccessful()) {
+//                    for(QueryDocumentSnapshot document : task.getResult()) {
+//                        Users user = document.toObject(Users.class);
+//                        userList.add(user);
+//                    }
+//                    usersDataAdapter.notifyDataSetChanged();
+//                }
+//                else {
+////                    makeSnackBarMessages("Query Failed... Check logs");
+//                }
+//            }
+//        });
+//    }
+
+    private void initRecyclerview() {
+        if(usersDataAdapter == null) {
+            usersDataAdapter = new UsersDataAdapter(this,userList);
+        }
+        listOfUsers.setLayoutManager(new LinearLayoutManager(this));
+        listOfUsers.setAdapter(usersDataAdapter);
     }
 
     private void receiveData() {
@@ -129,7 +180,7 @@ public class ListOfUsers extends AppCompatActivity {
                     Log.i("TAG","User info== "+fname+" "+lname+" "+age+" "+email+" "+phone+" "+birthdate+" "+country+" "+state);
                     String s =String.valueOf(Users.class);
 //                    return +fname+" "+lname+" "+age+" "+email+" "+phone+" "+birthdate+" "+country+" "+state;
-
+//                    return;
 
                 }
 
@@ -146,4 +197,5 @@ public class ListOfUsers extends AppCompatActivity {
         });
 
     }
+
 }
