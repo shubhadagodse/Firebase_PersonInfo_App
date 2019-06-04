@@ -6,13 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.View;
 
 import com.firebase.firebasepersoninfoapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -28,77 +28,57 @@ import javax.annotation.Nullable;
 
 public class ListOfUsers extends AppCompatActivity {
 
-    private static final String TAG = "";
-    ListView lv;
     FirebaseFirestore database;
-    DocumentReference ref;
-    private ArrayList<String> ulist;
-    ArrayAdapter<String> uadapter;
-    Users user;
+//    DocumentReference ref;
+    DatabaseReference ref;
     RecyclerView listOfUsers;
-    UsersDataAdapter usersDataAdapter;
+//    UsersDataAdapter usersDataAdapter;
+    MyRecyclerViewAdapter usersDataAdapter;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
-    List<Users> userList;
-
-
-    DatabaseReference reference;
-    RecyclerView recyclerView;
-    ArrayList<Users> list;
+    List<String> userList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_users);
 
-//       recyclerView = findViewById(R.id.list_of_users_from_firebase);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(ListOfUsers.this));
-//        list = new ArrayList<Users>();
-//        reference = FirebaseDatabase.getInstance().getReference().child("users");
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
-//                    Users u = dataSnapshot1.getValue(Users.class);
-//                    list.add(u);
-//                    Log.i("TAG","List="+list);
-//                }
-//
-//                usersDataAdapter = new UsersDataAdapter(ListOfUsers.this,list);
-//                recyclerView.setAdapter(usersDataAdapter);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Toast.makeText(ListOfUsers.this,"Something went wrong...Cancelled",Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        mRecyclerView = findViewById(R.id.list_of_users_from_firebase);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setHasFixedSize(true);
+        mAdapter = new MyRecyclerViewAdapter(getDataSet());
+        mRecyclerView.setAdapter(mAdapter);
 
-
-        userList = new ArrayList<>();
-        usersDataAdapter = new UsersDataAdapter(getApplicationContext(), userList);
-
+        userList = new ArrayList<String>();
         database = FirebaseFirestore.getInstance();
-        ref = database.collection("users").document();
-
-        listOfUsers = findViewById(R.id.list_of_users_from_firebase);
-        listOfUsers.setHasFixedSize(true);
-        listOfUsers.setLayoutManager(new LinearLayoutManager(this));
-        listOfUsers.setAdapter(usersDataAdapter);
-        Log.i("TAG","List Of Users == "+listOfUsers);
-
-//        usersDataAdapter.startListening();
-
+        ref = FirebaseDatabase.getInstance().getReference().child("users");
 
         initRecyclerview();
         receiveData();
-        readSingleUser();
-//        getData();
+//        readSingleUser();
+    }
 
-//        Intent intentForListOfUsers = getIntent();
-//        intentForListOfUsers.putExtra("listOfUsers", String.valueOf(listOfUsers));
-//        startActivityForResult(intentForListOfUsers,1);
+    private ArrayList<Users> getDataSet() {
+    ArrayList result = new ArrayList<Users>();
+    for (int index = 0; index <20; index++ ) {
+//        Users obj = new Users("users sdvs"+index,"sdsdsefd"+index);
+//        result.add(index, obj);
+    }
+        return result;
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((MyRecyclerViewAdapter)mAdapter).setOnItemClickListener(new MyRecyclerViewAdapter.MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Log.i("TAG","Clicked on item : "+position);
+            }
+        });
     }
 
     private void readSingleUser() {
@@ -119,35 +99,13 @@ public class ListOfUsers extends AppCompatActivity {
 
     }
 
-//    private void getData() {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        CollectionReference usersCollectionRef = db.collection("users");
-//        Query usersQuery = usersCollectionRef
-//                .whereEqualTo("userId", FirebaseAuth.getInstance().getCurrentUser().getUid());
-//
-//        usersQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if(task.isSuccessful()) {
-//                    for(QueryDocumentSnapshot document : task.getResult()) {
-//                        Users user = document.toObject(Users.class);
-//                        userList.add(user);
-//                    }
-//                    usersDataAdapter.notifyDataSetChanged();
-//                }
-//                else {
-////                    makeSnackBarMessages("Query Failed... Check logs");
-//                }
-//            }
-//        });
-//    }
 
     private void initRecyclerview() {
         if(usersDataAdapter == null) {
-            usersDataAdapter = new UsersDataAdapter(this,userList);
+//            usersDataAdapter = new UsersDataAdapter(this,userList);
         }
-        listOfUsers.setLayoutManager(new LinearLayoutManager(this));
-        listOfUsers.setAdapter(usersDataAdapter);
+//        listOfUsers.setLayoutManager(new LinearLayoutManager(this));
+//        listOfUsers.setAdapter(usersDataAdapter);
     }
 
     private void receiveData() {
@@ -157,11 +115,11 @@ public class ListOfUsers extends AppCompatActivity {
                 for (DocumentChange dc: queryDocumentSnapshots.getDocumentChanges()) {
                     if(dc.getType() == DocumentChange.Type.ADDED) {
                         String userId = dc.getDocument().getId();
-                        Users u = dc.getDocument().toObject(Users.class).withId(userId);
-                        userList.add(u);
+//                        String u = dc.getDocument().toObject(Users.class).withId(userId);
+//                        userList.add(u);
                         Log.i("TAG","user info ="+userList.size());
 
-                        usersDataAdapter.notifyDataSetChanged();
+//                        usersDataAdapter.notifyDataSetChanged();
                     }
                 }
                 Log.i("TAG","User list size = "+userList.size());
@@ -185,13 +143,13 @@ public class ListOfUsers extends AppCompatActivity {
                 }
 
 
-                    ref.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                            documentSnapshot.contains("firstname");
-
-                        }
-                    });
+//                    ref.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+//                        @Override
+//                        public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+//                            documentSnapshot.contains("firstname");
+//
+//                        }
+//                    });
 
             }
         });

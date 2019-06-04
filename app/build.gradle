@@ -38,6 +38,7 @@ dependencies {
     implementation "com.savvi.datepicker:rangepicker:1.2.0"
     implementation 'com.google.firebase:firebase-database:17.0.0'
     implementation 'com.google.firebase:firebase-auth:17.0.0'
+
 //    implementation 'com.google.firebase:firebase-database:17.0.0'
 //    implementation 'play-services-basement:16.1.0'
 //    implementation'com.google.firebase:firebase-auth:17.0.0'
