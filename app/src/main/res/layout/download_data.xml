@@ -5,20 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="8dp">
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="1"
-        android:layout_margin="8dp"
-        tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/tv_f_name"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/firstname"
             android:padding="8dp"
@@ -26,7 +18,7 @@
 
         <TextView
             android:id="@+id/tv_l_name"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lastname"
             android:padding="8dp"/>
@@ -101,5 +93,4 @@
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="373dp" />
-    </LinearLayout>
 </LinearLayout>

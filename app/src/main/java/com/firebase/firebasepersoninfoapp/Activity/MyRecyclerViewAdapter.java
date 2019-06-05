@@ -1,5 +1,6 @@
 package com.firebase.firebasepersoninfoapp.Activity;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,11 +11,17 @@ import android.widget.TextView;
 
 import com.firebase.firebasepersoninfoapp.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.UsersHolder> {
-    private ArrayList<Users> uArrayList;
+    private List<Users> uArrayList;
+    Context ctx;
     private static MyClickListener myClickListener;
+
+    public MyRecyclerViewAdapter(Context context, List<Users> userList) {
+        this.ctx = context;
+        this.uArrayList = userList;
+    }
 
     public class UsersHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView fname,lname,age,email,phone,bdate,country,state;
@@ -44,15 +51,15 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         this.myClickListener = myClickListener;
     }
 
-    public MyRecyclerViewAdapter(ArrayList<Users> myDataset) {
-        uArrayList = myDataset;
-    }
+//    public MyRecyclerViewAdapter(ArrayList<Users> myDataset) {
+//        uArrayList = myDataset;
+//    }
 
 
     @NonNull
     @Override
     public UsersHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View v = LayoutInflater.from(parent.getContext())
+        View v = LayoutInflater.from(ctx)
                 .inflate(R.layout.download_data,parent,false);
         UsersHolder usersHolder = new UsersHolder(v);
         return usersHolder;
@@ -83,6 +90,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     @Override
     public int getItemCount() {
+//        return data.length;
         return uArrayList.size();
     }
 
