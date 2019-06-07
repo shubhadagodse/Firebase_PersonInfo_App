@@ -6,8 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.firebase.firebasepersoninfoapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +35,7 @@ public class ListOfUsers extends AppCompatActivity {
     MyRecyclerViewAdapter usersDataAdapter;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
+    private ArrayList<Users> uArrayList;
 
     List<Users> userList = new ArrayList<>();
 
@@ -42,9 +47,12 @@ public class ListOfUsers extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.list_of_users_from_firebase);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        usersDataAdapter = new MyRecyclerViewAdapter((ArrayList<Users>) userList);
+        mRecyclerView.setAdapter(mAdapter);
 
         userList = new ArrayList<>();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
+        ref.keepSynced(true);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -64,7 +72,43 @@ public class ListOfUsers extends AppCompatActivity {
             }
         });
         database = FirebaseFirestore.getInstance();
+        uArrayList = new ArrayList<>();
         receiveData();
+        loadDataFromFirebase();
+    }
+
+    private void loadDataFromFirebase() {
+        if(uArrayList.size() > 0)
+            uArrayList.clear();
+
+        database.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for(DocumentSnapshot querySnapshot: task.getResult()) {
+                            Users user = new Users(querySnapshot.getString("firtsname"),
+                                    querySnapshot.getString("lastname"),
+                                    querySnapshot.getString("age"),
+                                    querySnapshot.getString("email"),
+                                    querySnapshot.getString("phone"),
+                                    querySnapshot.getString("birthdate"),
+                                    querySnapshot.getString("country"),
+                                    querySnapshot.getString("state"));
+
+                            uArrayList.add(user);
+                        }
+                        usersDataAdapter = new MyRecyclerViewAdapter(ListOfUsers.this,uArrayList);
+                        mRecyclerView.setAdapter(usersDataAdapter);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(ListOfUsers.this,"TAG",Toast.LENGTH_SHORT).show();
+                        Log.i("TAG",e.getMessage());
+                    }
+                });
     }
 
     private void receiveData() {
@@ -105,5 +149,4 @@ public class ListOfUsers extends AppCompatActivity {
         });
 
     }
-
 }

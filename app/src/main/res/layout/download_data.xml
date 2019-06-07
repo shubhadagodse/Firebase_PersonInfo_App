@@ -3,25 +3,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    >
 
         <TextView
             android:id="@+id/tv_f_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/firstname"
-            android:padding="8dp"
+            android:text="@string/firstname"/>
+            <!--android:padding="8dp"-->
             />
 
         <TextView
             android:id="@+id/tv_l_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/lastname"
-            android:padding="8dp"/>
+            android:text="@string/lastname"/>
+            <!--android:padding="8dp"-->
             <!--app:layout_constraintTop_toBottomOf="@+id/tv_f_name"/>-->
 
         <TextView
@@ -29,11 +29,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:padding="8dp"
             android:text="@string/age"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="16dp" />
+            tools:ignore="MissingConstraints"/>
+            <!--android:padding="8dp"-->
+        <!--tools:layout_editor_absoluteX="16dp" />-->
 
 
         <TextView
@@ -41,11 +41,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:padding="8dp"
             android:text="@string/email"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="186dp" />
+            tools:ignore="MissingConstraints"/>
+        <!--android:padding="8dp"-->
 
 
         <TextView
@@ -53,11 +51,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:padding="8dp"
             android:text="@string/phone"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="229dp" />
+            tools:ignore="MissingConstraints"/>
+        <!--android:padding="8dp"-->
 
 
         <TextView
@@ -65,11 +61,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:padding="8dp"
             android:text="@string/birthdate"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="277dp" />
+            tools:ignore="MissingConstraints"/>
+        <!--android:padding="8dp"-->
 
 
         <TextView
@@ -77,20 +71,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:padding="8dp"
             android:text="@string/country"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="323dp" />
+            tools:ignore="MissingConstraints" />
+        <!--android:padding="8dp"-->
 
 
         <TextView
             android:id="@+id/tv_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
             android:text="@string/state"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="373dp" />
+            tools:ignore="MissingConstraints"/>
+        <!--android:padding="8dp"-->
 </LinearLayout>

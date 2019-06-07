@@ -11,9 +11,11 @@ import android.widget.TextView;
 
 import com.firebase.firebasepersoninfoapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.UsersHolder> {
+    private ArrayList<Users> listOfUsers;
     private List<Users> uArrayList;
     Context ctx;
     private static MyClickListener myClickListener;
@@ -23,18 +25,22 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         this.uArrayList = userList;
     }
 
+    public MyRecyclerViewAdapter(ArrayList<Users> ulist){
+        listOfUsers = ulist;
+    }
+
     public class UsersHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView fname,lname,age,email,phone,bdate,country,state;
         public UsersHolder(@NonNull View itemView) {
             super(itemView);
-            fname = itemView.findViewById(R.id.a_main_tv_fname);
-            lname = itemView.findViewById(R.id.a_main_tv_lname);
-            age = itemView.findViewById(R.id.a_main_tv_age);
-            email = itemView.findViewById(R.id.a_main_tv_age);
-            phone = itemView.findViewById(R.id.a_main_tv_phone);
-            bdate = itemView.findViewById(R.id.a_main_tv_birthdate);
-            country = itemView.findViewById(R.id.a_main_tv_country);
-            state = itemView.findViewById(R.id.a_main_tv_state);
+            fname = itemView.findViewById(R.id.tv_f_name);
+            lname = itemView.findViewById(R.id.tv_l_name);
+            age = itemView.findViewById(R.id.tv_age);
+            email = itemView.findViewById(R.id.tv_email);
+            phone = itemView.findViewById(R.id.tv_phone);
+            bdate = itemView.findViewById(R.id.tv_birthdate);
+            country = itemView.findViewById(R.id.tv_country);
+            state = itemView.findViewById(R.id.tv_state);
 
             Log.i("TAG","Adding listener");
             itemView.setOnClickListener(this);
@@ -67,6 +73,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     @Override
     public void onBindViewHolder(@NonNull MyRecyclerViewAdapter.UsersHolder usersHolder, int position) {
+
+        Log.i("TAG","Fname=="+usersHolder.fname);
         usersHolder.fname.setText(uArrayList.get(position).getFirstname());
         usersHolder.lname.setText(uArrayList.get(position).getLastname());
         usersHolder.age.setText(uArrayList.get(position).getAge());
@@ -79,7 +87,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
 
     public void addItem(Users users, int  position) {
-        uArrayList.add(users);
+        uArrayList.add(users);;
         notifyItemInserted(position);
     }
 
