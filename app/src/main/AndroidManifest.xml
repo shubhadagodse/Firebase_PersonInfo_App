@@ -20,6 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.UserDetailsActivity" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

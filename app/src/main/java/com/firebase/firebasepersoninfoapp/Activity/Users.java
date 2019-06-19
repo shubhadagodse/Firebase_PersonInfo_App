@@ -1,7 +1,17 @@
 package com.firebase.firebasepersoninfoapp.Activity;
 
 public class Users extends UserId{
+    private String uid;
     private String firstname;
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     private String lastname;
     private String age;
     private String email;

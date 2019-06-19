@@ -12,11 +12,11 @@ import com.firebase.firebasepersoninfoapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -29,7 +29,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-public class ListOfUsers extends AppCompatActivity {
+public class ListOfUsers extends AppCompatActivity implements MyRecyclerViewAdapter.MyClickListener {
 
     FirebaseFirestore database;
     MyRecyclerViewAdapter usersDataAdapter;
@@ -53,15 +53,50 @@ public class ListOfUsers extends AppCompatActivity {
         userList = new ArrayList<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
         ref.keepSynced(true);
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @android.support.annotation.Nullable String s) {
+                Users user = dataSnapshot.getValue(Users.class);
+                user.setUid(dataSnapshot.getKey());
+
+                uArrayList.add(user);
+                usersDataAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @android.support.annotation.Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @android.support.annotation.Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        /**************************************************************************************************************************************************************/
+      /*  ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()) {
                     for(DataSnapshot usr: dataSnapshot.getChildren()) {
                         Users u = usr.getValue(Users.class);
+                        u.setUid(dataSnapshot.getKey());
                         userList.add(u);
+                        usersDataAdapter.notifyDataSetChanged();
                     }
-                    mAdapter = new MyRecyclerViewAdapter(ListOfUsers.this,userList);
+                    mAdapter = new MyRecyclerViewAdapter(ListOfUsers.this, (ArrayList<Users>) userList);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }
@@ -71,6 +106,7 @@ public class ListOfUsers extends AppCompatActivity {
 
             }
         });
+        */
         database = FirebaseFirestore.getInstance();
         uArrayList = new ArrayList<>();
         receiveData();
@@ -141,12 +177,18 @@ public class ListOfUsers extends AppCompatActivity {
                     Log.i("TAG","User info== "+fname+" "+lname+" "+age+" "+email+" "+phone+" "+birthdate+" "+country+" "+state);
                     String s =String.valueOf(Users.class);
 //                    return +fname+" "+lname+" "+age+" "+email+" "+phone+" "+birthdate+" "+country+" "+state;
-//                    return;
+                    return;
 
                 }
 
             }
         });
 
+    }
+
+    @Override
+    public void onItemClick(int position) {
+//        uArrayList.get(position);
+        Log.i("TAG","OnUserClick: clicked!"+position);
     }
 }
