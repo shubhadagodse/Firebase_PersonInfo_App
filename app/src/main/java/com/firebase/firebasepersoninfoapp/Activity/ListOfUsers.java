@@ -1,6 +1,8 @@
 package com.firebase.firebasepersoninfoapp.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -51,13 +53,16 @@ public class ListOfUsers extends AppCompatActivity implements MyRecyclerViewAdap
         mRecyclerView.setAdapter(mAdapter);
 
         userList = new ArrayList<>();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
+        String uid = ref.push().getKey();
+        Log.i("TAG","User id =="+uid);
         ref.keepSynced(true);
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @android.support.annotation.Nullable String s) {
                 Users user = dataSnapshot.getValue(Users.class);
-                user.setUid(dataSnapshot.getKey());
+//                user.setUid(dataSnapshot.getKey());
+                user.setUid(ref.getKey());
 
                 uArrayList.add(user);
                 usersDataAdapter.notifyDataSetChanged();
@@ -188,6 +193,11 @@ public class ListOfUsers extends AppCompatActivity implements MyRecyclerViewAdap
 
     @Override
     public void onItemClick(int position) {
+
+        uArrayList.get(position);
+        Intent intent = new Intent(this,UserDetailsActivity.class);
+        intent.putExtra("user", (Parcelable) uArrayList.get(position));
+        startActivity(intent);
 //        uArrayList.get(position);
         Log.i("TAG","OnUserClick: clicked!"+position);
     }

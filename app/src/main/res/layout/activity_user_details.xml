@@ -16,48 +16,55 @@
 
     <TextView
         android:layout_marginTop="20dp"
-        android:layout_margin="8dp"
         android:id="@+id/a_userdetails_tv_f_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="FirstName : "/>
 
     <TextView
         android:id="@+id/a_userdetails_tv_l_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="LastName : "/>
 
 
     <TextView
         android:id="@+id/a_userdetails_tv_age"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Age : "/>
 
     <TextView
         android:id="@+id/a_userdetails_tv_email"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Email : "/>
 
 
     <TextView
         android:id="@+id/a_userdetails_tv_phone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Phone : "/>
 
 
     <TextView
         android:id="@+id/a_userdetails_tv_bdate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Birthdate : "/>
 
     <TextView
         android:id="@+id/a_userdetails_tv_country"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Country : "/>
 
 
     <TextView
         android:id="@+id/a_userdetails_tv_state"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="State : "/>
 
 </LinearLayout>

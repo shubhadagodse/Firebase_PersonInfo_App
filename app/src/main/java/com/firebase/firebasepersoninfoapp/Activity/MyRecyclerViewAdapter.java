@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.firebasepersoninfoapp.R;
 
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.UsersHolder> {
-    public static final String USER_KEY = "user_key";
+    public static String USER_KEY = "user_key";
     private ArrayList<Users> listOfUsers;
     private List<Users> uArrayList;
     Context ctx;
@@ -34,10 +36,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public class UsersHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView fname, lname, age, email, phone, bdate, country, state;
         MyClickListener myClickListener;
-
+        RelativeLayout relativeLayout;
 
         public UsersHolder(@NonNull View itemView) {
             super(itemView);
+            relativeLayout = itemView.findViewById(R.id.list_of_users_from_firebase);
             fname = itemView.findViewById(R.id.tv_f_name);
             lname = itemView.findViewById(R.id.tv_l_name);
             age = itemView.findViewById(R.id.tv_age);
@@ -82,7 +85,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyRecyclerViewAdapter.UsersHolder usersHolder, int position) {
+    public void onBindViewHolder(@NonNull MyRecyclerViewAdapter.UsersHolder usersHolder, final int position) {
         final Users user = uArrayList.get(position);
 
         Log.i("TAG", "Fname==" + usersHolder.fname);
@@ -91,8 +94,22 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         usersHolder.phone.setText(uArrayList.get(position).getPhone());
         usersHolder.country.setText(uArrayList.get(position).getCountry());
 
-//        usersHolder.fname.setText(user.getFirstname()+" "+user.getLastname()+" "+user.getAge()+" "+user.getPhone()+" "
-//                +user.getEmail()+" "+user.getBirthdate()+" "+user.getCountry()+" "+user.getState());
+        usersHolder.fname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ctx,UserDetailsActivity.class);
+                intent.putExtra("firstname",user.getFirstname());
+                intent.putExtra("lastname",user.getLastname());
+                intent.putExtra("age",user.getAge());
+                intent.putExtra("phone",user.getPhone());
+                intent.putExtra("email",user.getEmail());
+                intent.putExtra("birthdate",user.getBirthdate());
+                intent.putExtra("country",user.getCountry());
+                intent.putExtra("state",user.getState());
+                ctx.startActivity(intent);
+                Toast.makeText(ctx,"You clicked"+uArrayList.get(position),Toast.LENGTH_SHORT).show();
+            }
+        });
 
         usersHolder.lname.setOnClickListener(new View.OnClickListener() {
             @Override
