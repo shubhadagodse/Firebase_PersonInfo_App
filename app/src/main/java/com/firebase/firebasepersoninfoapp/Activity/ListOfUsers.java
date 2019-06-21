@@ -19,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -91,7 +92,7 @@ public class ListOfUsers extends AppCompatActivity implements MyRecyclerViewAdap
         });
 
         /**************************************************************************************************************************************************************/
-      /*  ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()) {
@@ -111,7 +112,7 @@ public class ListOfUsers extends AppCompatActivity implements MyRecyclerViewAdap
 
             }
         });
-        */
+
         database = FirebaseFirestore.getInstance();
         uArrayList = new ArrayList<>();
         receiveData();
@@ -159,11 +160,9 @@ public class ListOfUsers extends AppCompatActivity implements MyRecyclerViewAdap
                 for (DocumentChange dc: queryDocumentSnapshots.getDocumentChanges()) {
                     if(dc.getType() == DocumentChange.Type.ADDED) {
                         String userId = dc.getDocument().getId();
-//                        String u = dc.getDocument().toObject(Users.class).withId(userId);
-//                        userList.add(u);
                         Log.i("TAG","user info ="+userList.size());
 
-//                        usersDataAdapter.notifyDataSetChanged();
+                        usersDataAdapter.notifyDataSetChanged();
                     }
                 }
                 Log.i("TAG","User list size = "+userList.size());
