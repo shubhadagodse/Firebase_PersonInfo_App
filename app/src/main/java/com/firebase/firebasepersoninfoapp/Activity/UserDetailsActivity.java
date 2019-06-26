@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,6 +38,18 @@ public class UserDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
         database = FirebaseFirestore.getInstance();
+
+        DocumentReference ref = database.collection("users").document();
+
+        ref.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
+
+            }
+        });
+
+
+
         recyclerView =findViewById(R.id.list_of_users_from_firebase);
         a_user_details_tv_user = findViewById(R.id.a_userDetails_tv_user);
 
@@ -60,6 +73,7 @@ public class UserDetailsActivity extends AppCompatActivity {
 
         Log.i("TAG", "StringFname==" + stringFname);
 
+
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
         final String USER_KEY = databaseReference.push().getKey();
 
@@ -71,7 +85,6 @@ public class UserDetailsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                 Users user = dataSnapshot.getValue(Users.class);
                 Log.i("TAG", "User in UserDetails==" + user);
-//                showData(dataSnapshot);
 
                 database.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -92,6 +105,16 @@ public class UserDetailsActivity extends AppCompatActivity {
                                 String country = ds.getString("country");
                                 String state = ds.getString("state");
                                 Log.i("TAG", "fname=" + fname);
+
+
+//                            outFname.setText(stringFname);
+//                            outLname.setText(stringLname);
+//                            outAge.setText(stringAge);
+//                            outEmail.setText(stringEmail);
+//                            outPhone.setText(stringPhone);
+//                            outBirthdate.setText(stringBirthdate);
+//                            outCountry.setText(stringCountry);
+//                            outState.setText(stringState);
 
                                 outFname.setText(fname);
                                 outLname.setText(lname);

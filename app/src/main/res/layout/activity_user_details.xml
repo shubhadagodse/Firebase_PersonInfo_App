@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_margin="20dp"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:id="@+id/a_u_details">
 
     <TextView
         android:id="@+id/a_userDetails_tv_user"
