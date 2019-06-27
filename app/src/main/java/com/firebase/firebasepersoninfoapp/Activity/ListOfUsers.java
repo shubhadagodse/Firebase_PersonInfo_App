@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.firebasepersoninfoapp.R;
@@ -181,7 +180,6 @@ public class ListOfUsers extends AppCompatActivity implements MyRecyclerViewAdap
 
                     Log.i("TAG","User info== "+fname+" "+lname+" "+age+" "+email+" "+phone+" "+birthdate+" "+country+" "+state);
                     String s =String.valueOf(Users.class);
-//                    return +fname+" "+lname+" "+age+" "+email+" "+phone+" "+birthdate+" "+country+" "+state;
                     return;
 
                 }
@@ -191,19 +189,8 @@ public class ListOfUsers extends AppCompatActivity implements MyRecyclerViewAdap
 
     }
 
-    /*@Override
-    public void onItemClick(int position) {
-
-        uArrayList.get(position);
-        Intent intent = new Intent(this,UserDetailsActivity.class);
-        intent.putExtra("user", (Parcelable) uArrayList.get(position));
-        startActivity(intent);
-//        uArrayList.get(position);
-        Log.i("TAG","OnUserClick: clicked!"+position);
-    }*/
-
     @Override
-    public void onItemClick(View view, int position, boolean isLongClick) {
+    public void onItemClick(int position) {
         uArrayList.get(position);
         Intent intent = new Intent(this,UserDetailsActivity.class);
         intent.putExtra("user", (Parcelable) uArrayList.get(position));

@@ -12,8 +12,10 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Activity.ListOfUsers"
             android:parentActivityName=".Activity.PersonActivity"/>
-        <activity android:name=".Activity.CountryStateActivity" />
-        <activity android:name=".Activity.DateActivity" />
+        <activity android:name=".Activity.CountryStateActivity"
+            android:parentActivityName=".Activity.PersonActivity"/>
+        <activity android:name=".Activity.DateActivity"
+            android:parentActivityName=".Activity.PersonActivity"/>
         <activity android:name=".Activity.PersonActivity"
             android:launchMode="singleTop">
             <intent-filter>

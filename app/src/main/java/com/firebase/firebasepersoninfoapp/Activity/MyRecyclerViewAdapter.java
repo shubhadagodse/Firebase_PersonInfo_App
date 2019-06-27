@@ -8,9 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.firebasepersoninfoapp.R;
 
@@ -22,7 +23,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private ArrayList<Users> listOfUsers;
     private List<Users> uArrayList;
     Context ctx;
-    private static MyClickListener myClickListener;
+    private MyClickListener myClickListener;
+    public void setMyClickListener(AdapterView.OnItemClickListener listener) {
+        myClickListener = (MyClickListener) listener;
+    }
 
     public MyRecyclerViewAdapter(Context context, List<Users> userList) {
         this.ctx = context;
@@ -37,37 +41,39 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         TextView fname, lname, age, email, phone, bdate, country, state;
         MyClickListener myClickListener;
         RelativeLayout relativeLayout;
+        LinearLayout linearLayout;
 
-        public UsersHolder(@NonNull View itemView) {
+        public UsersHolder(@NonNull final View itemView) {
             super(itemView);
+            linearLayout = itemView.findViewById(R.id.linearLayout);
             relativeLayout = itemView.findViewById(R.id.relative);
             fname = itemView.findViewById(R.id.tv_f_name);
             lname = itemView.findViewById(R.id.tv_l_name);
-            age = itemView.findViewById(R.id.tv_age);
-            email = itemView.findViewById(R.id.tv_email);
             phone = itemView.findViewById(R.id.tv_phone);
-            bdate = itemView.findViewById(R.id.tv_birthdate);
             country = itemView.findViewById(R.id.tv_country);
-            state = itemView.findViewById(R.id.tv_state);
 
             Log.i("TAG", "Adding listener");
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    fname.setText(uArrayList.get(getAdapterPosition()).getFirstname());
+                    lname.setText(uArrayList.get(getAdapterPosition()).getLastname());
+                    age.setText(uArrayList.get(getAdapterPosition()).getAge());
+                    email.setText(uArrayList.get(getAdapterPosition()).getEmail());
+                    phone.setText(uArrayList.get(getAdapterPosition()).getPhone());
+                    bdate.setText(uArrayList.get(getAdapterPosition()).getBirthdate());
+                    country.setText(uArrayList.get(getAdapterPosition()).getCountry());
+                    state.setText(uArrayList.get(getAdapterPosition()).getState());
+                }
+            });
+
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             final Users user = uArrayList.get(getAdapterPosition());
-
-            Intent intent = new Intent(ctx,UserDetailsActivity.class);
-            intent.putExtra("firstname",user.getFirstname());
-            intent.putExtra("lastname",user.getLastname());
-            intent.putExtra("age",user.getAge());
-            intent.putExtra("email",user.getEmail());
-            intent.putExtra("phone",user.getPhone());
-            intent.putExtra("birthdate",user.getBirthdate());
-            intent.putExtra("country",user.getCountry());
-            intent.putExtra("state",user.getState());
-            ctx.startActivity(intent);
+            myClickListener.onItemClick(getAdapterPosition());
 
             Log.i("TAG","User in Adapter"+user.getFirstname());
         }
@@ -87,7 +93,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyRecyclerViewAdapter.UsersHolder usersHolder, final int position) {
+    public void onBindViewHolder(final MyRecyclerViewAdapter.UsersHolder usersHolder, final int position) {
         final Users user = uArrayList.get(position);
 
         Log.i("TAG", "Fname before settext==" + usersHolder.fname);
@@ -98,35 +104,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
         Log.i("TAG", "Fname after settext==" + usersHolder.fname);
 
-        usersHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                usersHolder.fname.setText(uArrayList.get(position).getFirstname());
-//                usersHolder.lname.setText(uArrayList.get(position).getLastname());
-//                usersHolder.age.setText(uArrayList.get(position).getAge());
-//                usersHolder.phone.setText(uArrayList.get(position).getPhone());
-//                usersHolder.email.setText(uArrayList.get(position).getEmail());
-//                usersHolder.bdate.setText(uArrayList.get(position).getBirthdate());
-//                usersHolder.country.setText(uArrayList.get(position).getCountry());
-//                usersHolder.state.setText(uArrayList.get(position).getState());
-
-                Intent intent = new Intent(ctx,UserDetailsActivity.class);
-                intent.putExtra("firstname",user.getFirstname());
-                intent.putExtra("lastname",user.getLastname());
-                intent.putExtra("age",user.getAge());
-                intent.putExtra("phone",user.getPhone());
-                intent.putExtra("email",user.getEmail());
-                intent.putExtra("birthdate",user.getBirthdate());
-                intent.putExtra("country",user.getCountry());
-                intent.putExtra("state",user.getState());
-
-                Log.i("TAG","fname=="+user.getFirstname());
-                Log.i("TAG","intent value = "+intent.putExtra("firstname",user.getFirstname()));
-                Toast.makeText(ctx,"You clicked"+uArrayList.get(position), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
        usersHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,11 +111,17 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 Intent intent = new Intent(ctx,UserDetailsActivity.class);
                 Log.i("TAG","userId in adapter=="+uid);
                 intent.putExtra(USER_KEY,uid);
+                intent.putExtra("firstname",uArrayList.get(position).getFirstname());
+                intent.putExtra("lastname",uArrayList.get(position).getLastname());
+                intent.putExtra("age",uArrayList.get(position).getAge());
+                intent.putExtra("email",uArrayList.get(position).getEmail());
+                intent.putExtra("phone",uArrayList.get(position).getPhone());
+                intent.putExtra("birthdate",uArrayList.get(position).getBirthdate());
+                intent.putExtra("country",uArrayList.get(position).getCountry());
+                intent.putExtra("state",uArrayList.get(position).getState());
                 ctx.startActivity(intent);
             }
         });
-
-
     }
 
     public void addItem(Users users, int position) {
@@ -157,6 +140,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
 
     public interface MyClickListener {
-        public void onItemClick(View view, int position , boolean isLongClick);
+        public void onItemClick(int position);
     }
 }
