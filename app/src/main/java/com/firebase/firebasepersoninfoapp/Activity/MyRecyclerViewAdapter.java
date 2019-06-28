@@ -73,7 +73,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         @Override
         public void onClick(View v) {
             final Users user = uArrayList.get(getAdapterPosition());
-            myClickListener.onItemClick(getAdapterPosition());
+//            myClickListener.onItemClick(getAdapterPosition());
 
             Log.i("TAG","User in Adapter"+user.getFirstname());
         }
@@ -111,14 +111,15 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 Intent intent = new Intent(ctx,UserDetailsActivity.class);
                 Log.i("TAG","userId in adapter=="+uid);
                 intent.putExtra(USER_KEY,uid);
-                intent.putExtra("firstname",uArrayList.get(position).getFirstname());
-                intent.putExtra("lastname",uArrayList.get(position).getLastname());
-                intent.putExtra("age",uArrayList.get(position).getAge());
-                intent.putExtra("email",uArrayList.get(position).getEmail());
-                intent.putExtra("phone",uArrayList.get(position).getPhone());
-                intent.putExtra("birthdate",uArrayList.get(position).getBirthdate());
-                intent.putExtra("country",uArrayList.get(position).getCountry());
-                intent.putExtra("state",uArrayList.get(position).getState());
+                intent.putExtra("firstname",user.getFirstname());
+                intent.putExtra("lastname",user.getLastname());
+                intent.putExtra("age",user.getAge());
+                intent.putExtra("email",user.getEmail());
+                intent.putExtra("phone",user.getPhone());
+                intent.putExtra("birthdate",user.getBirthdate());
+                intent.putExtra("country",user.getCountry());
+                intent.putExtra("state",user.getState());
+
                 ctx.startActivity(intent);
             }
         });
