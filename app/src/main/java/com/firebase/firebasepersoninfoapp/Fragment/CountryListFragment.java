@@ -87,6 +87,10 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
         bCancelCountryListFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                onDestroy();
+             /*   FragmentTransaction ft2 = getFragmentManager().beginTransaction();
+                ft2.commit();
+                ft2.detach(CountryListFragment.this);   */
                 onDetach();
             }
         });

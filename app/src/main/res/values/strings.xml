@@ -14,8 +14,17 @@
         <item>India</item>
         <item>Mexico</item>
         <item>USA</item>
-
     </string-array>
+
+    <string name="err_fname">Enter your first name </string>
+    <string name="err_lname">Enter your last name</string>
+    <string name="err_age">Enter your age</string>
+    <string name="err_email">Enter your email</string>
+    <string name="err_phone">Enter your phone</string>
+    <string name="err_birthdate">Enter your birthdate</string>
+    <string name="err_country">Enter your country</string>
+    <string name="err_state">Enter your state</string>
+
 
 
     <!-- TODO: Remove or change this placeholder text -->

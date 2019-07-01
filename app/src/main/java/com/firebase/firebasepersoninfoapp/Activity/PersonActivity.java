@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
+import com.basgeekball.awesomevalidation.utility.custom.SimpleCustomValidation;
 import com.firebase.firebasepersoninfoapp.Fragment.CountryListFragment;
 import com.firebase.firebasepersoninfoapp.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -22,6 +27,11 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class PersonActivity extends AppCompatActivity implements CountryListFragment.FragmentCountryStateListener {
 
@@ -52,12 +62,17 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
     private static final String SHARED_PREFS_COUNTRY ="country";
     private static final String SHARED_PREFS_STATE ="state";
 
+    AwesomeValidation awesomeValidation;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
+
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+
 
         loadData();
 
@@ -82,36 +97,88 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
         tvCountry = findViewById(R.id.a_main_tv_country);
         tvState = findViewById(R.id.a_main_tv_state);
 
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_fname,"[a-zA-Z\\s]+",R.string.err_fname);
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_lname,"[a-zA-Z\\s]+",R.string.err_lname);
+
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_age,"[0-9]+",R.string.err_age);
+
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_email, Patterns.EMAIL_ADDRESS,R.string.err_email);
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_phone, RegexTemplate.TELEPHONE,R.string.err_phone);
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_birthdate, new SimpleCustomValidation() {
+            @Override
+            public boolean compare(String input) {
+                // check if the age is >= 18
+                try {
+                    Calendar calendarBirthday = Calendar.getInstance();
+                    Calendar calendarToday = Calendar.getInstance();
+                    calendarBirthday.setTime(new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(input));
+                    int yearOfToday = calendarToday.get(Calendar.YEAR);
+                    int yearOfBirthday = calendarBirthday.get(Calendar.YEAR);
+                    if (yearOfToday - yearOfBirthday > 18) {
+                        return true;
+                    } else if (yearOfToday - yearOfBirthday == 18) {
+                        int monthOfToday = calendarToday.get(Calendar.MONTH);
+                        int monthOfBirthday = calendarBirthday.get(Calendar.MONTH);
+                        if (monthOfToday > monthOfBirthday) {
+                            return true;
+                        } else if (monthOfToday == monthOfBirthday) {
+                            if (calendarToday.get(Calendar.DAY_OF_MONTH) >= calendarBirthday.get(Calendar.DAY_OF_MONTH)) {
+                                return true;
+                            }
+                        }
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        }, R.string.err_birthdate);
+
+//        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_country,"[a-zA-Z\\s]+",R.string.err_country);
+//        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_state,"[a-zA-Z\\s]+",R.string.err_state);
+
+
 
 
         b_a_PersonActivity_Done = findViewById(R.id.bSubmit);
+        b_a_PersonActivity_Cancel = findViewById(R.id.bCancel);
+
         b_a_PersonActivity_Done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                CollectionReference dbUsers = db.collection("users");
-                Users users = new Users(
-                        tvFirstName.getText().toString(),
-                        tvLastName.getText().toString(),
-                        tvAge.getText().toString(),
-                        tvEmail.getText().toString(),
-                        tvPhone.getText().toString(),
-                        tvBirthDate.getText().toString(),
-                        tvCountry.getText().toString(),
-                        tvState.getText().toString()
-                );
-                dbUsers.add(users)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(PersonActivity.this,"User added to firebase",Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(PersonActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if(awesomeValidation.validate()) {
+                    Toast.makeText(PersonActivity.this,"Data received Successfully",Toast.LENGTH_SHORT).show();
+
+
+                    CollectionReference dbUsers = db.collection("users");
+                    Users users = new Users(
+                            tvFirstName.getText().toString(),
+                            tvLastName.getText().toString(),
+                            tvAge.getText().toString(),
+                            tvEmail.getText().toString(),
+                            tvPhone.getText().toString(),
+                            tvBirthDate.getText().toString(),
+                            tvCountry.getText().toString(),
+                            tvState.getText().toString()
+                    );
+                    dbUsers.add(users)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Toast.makeText(PersonActivity.this,"User added to firebase",Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(PersonActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                else {
+                    Toast.makeText(PersonActivity.this,"Error",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }

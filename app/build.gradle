@@ -39,6 +39,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:17.0.0'
     implementation 'com.google.firebase:firebase-auth:17.0.0'
 
+    implementation 'com.basgeekball:awesome-validation:4.2'
+
+
 //    implementation 'com.google.firebase:firebase-database:17.0.0'
 //    implementation 'play-services-basement:16.1.0'
 //    implementation'com.google.firebase:firebase-auth:17.0.0'
