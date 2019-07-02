@@ -29,9 +29,6 @@ public class DateActivity extends AppCompatActivity {
         calendar = findViewById(R.id.a_date_calendar_view);
         tv_b_date =findViewById(R.id.a_main_tv_birthdate);
 
-        Intent intent = getIntent();
-        final String birthdate = intent.getStringExtra("birthdate");
-
         bCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,33 +39,22 @@ public class DateActivity extends AppCompatActivity {
 
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                     @Override
-                    public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                        String birthdate = dayOfMonth+"/ "+(month+1)+"/ "+year;
-                        Log.i(TAG,"onSelectedDayChange "+birthdate);
+                    public void onSelectedDayChange(@NonNull CalendarView view, final int year, final int month, final int dayOfMonth) {
+                        bDone.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String birthdate = dayOfMonth+"/ "+(month+1)+"/ "+year;
+                                Log.i(TAG,"onSelectedDayChange "+birthdate);
 
-                        Intent resultIntent =new Intent();
-                        resultIntent.putExtra("RESULT",birthdate);
-                        setResult(RESULT_OK,resultIntent);
-                        finish();
+                                Intent resultIntent =new Intent();
+                                resultIntent.putExtra("RESULT",birthdate);
+                                setResult(RESULT_OK,resultIntent);
+                                finish();
 
+                            }
+                        });
                     }
                 });
-
-
-        bDone.setOnClickListener(new View.OnClickListener() {
-            int dayOfMonth, month , year;
-            public void onClick(View view) {
-                String birthdate = dayOfMonth+"/ "+(month+1)+"/ "+year;
-            Log.i(TAG, "date ::"+ birthdate);
-
-            Intent intent = new Intent();
-            intent.putExtra("RESULT","birthdate");
-            setResult(RESULT_OK,intent);
-            finish();
-
-            }
-        });
-
 
     }
 

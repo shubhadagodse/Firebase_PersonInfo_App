@@ -94,8 +94,11 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
         tvEmail =findViewById(R.id.a_main_tv_email);
         tvPhone = findViewById(R.id.a_main_tv_phone);
         tvBirthDate = findViewById(R.id.a_main_tv_birthdate);
+        tvBirthDate.setEnabled(false);
         tvCountry = findViewById(R.id.a_main_tv_country);
+        tvCountry.setEnabled(false);
         tvState = findViewById(R.id.a_main_tv_state);
+        tvState.setEnabled(false);
 
         awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_fname,"[a-zA-Z\\s]+",R.string.err_fname);
         awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_lname,"[a-zA-Z\\s]+",R.string.err_lname);
@@ -103,7 +106,9 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
         awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_age,"[0-9]+",R.string.err_age);
 
         awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_email, Patterns.EMAIL_ADDRESS,R.string.err_email);
-        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_phone, RegexTemplate.TELEPHONE,R.string.err_phone);
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_phone, Patterns.PHONE,R.string.err_phone);
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_country,RegexTemplate.NOT_EMPTY,R.string.err_country);
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_state, RegexTemplate.NOT_EMPTY,R.string.err_state);
         awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_birthdate, new SimpleCustomValidation() {
             @Override
             public boolean compare(String input) {
@@ -134,13 +139,48 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
             }
         }, R.string.err_birthdate);
 
-//        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_country,"[a-zA-Z\\s]+",R.string.err_country);
-//        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_state,"[a-zA-Z\\s]+",R.string.err_state);
-
-
-
+//        tvFirstName.addTextChangedListener(loginTextWatcher);
+//        tvLastName.addTextChangedListener(loginTextWatcher);
+//        tvAge.addTextChangedListener(loginTextWatcher);
+//        tvEmail.addTextChangedListener(loginTextWatcher);
+//        tvPhone.addTextChangedListener(loginTextWatcher);
+//        tvBirthDate.addTextChangedListener(loginTextWatcher);
+//        tvCountry.addTextChangedListener(loginTextWatcher);
+//        tvState.addTextChangedListener(loginTextWatcher);
+//
+//        private TextWatcher loginTextWatcher = new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//                String fname = tvFirstName.getText().toString().trim();
+//                String lname = tvLastName.getText().toString().trim();
+//                String age = tvAge.getText().toString().trim();
+//                String email = tvEmail.getText().toString().trim();
+//                String phn = tvPhone.getText().toString().trim();
+//                String bdate = tvBirthDate.getText().toString().trim();
+//                String country = tvCountry.getText().toString().trim();
+//                String state = tvState.getText().toString().trim();
+//
+//                b_a_PersonActivity_Done.setEnabled();
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        };
 
         b_a_PersonActivity_Done = findViewById(R.id.bSubmit);
+//        b_a_PersonActivity_Done.setEnabled(false);
+
+
+
         b_a_PersonActivity_Cancel = findViewById(R.id.bCancel);
 
         b_a_PersonActivity_Done.setOnClickListener(new View.OnClickListener() {
@@ -203,6 +243,10 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
             Toast.makeText(this,"User Creation Form clicked",Toast.LENGTH_SHORT).show();
 //            startActivity(new Intent(this,PersonActivity.class));
             Intent intentForUserCreation = new Intent(PersonActivity.this,PersonActivity.class);
+            intentForUserCreation.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//            intentForUserCreation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            intentForUserCreation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intentForUserCreation.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivityForResult(intentForUserCreation,1000);
         }
         else {
