@@ -12,9 +12,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.firebase.firebasepersoninfoapp.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,8 +71,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         @Override
         public void onClick(View v) {
             final Users user = uArrayList.get(getAdapterPosition());
-//            myClickListener.onItemClick(getAdapterPosition());
-
             Log.i("TAG","User in Adapter"+user.getFirstname());
         }
     }

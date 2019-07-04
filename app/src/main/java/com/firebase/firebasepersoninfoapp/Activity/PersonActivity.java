@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
-import com.basgeekball.awesomevalidation.utility.custom.SimpleCustomValidation;
 import com.firebase.firebasepersoninfoapp.Fragment.CountryListFragment;
 import com.firebase.firebasepersoninfoapp.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,15 +27,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
-
 public class PersonActivity extends AppCompatActivity implements CountryListFragment.FragmentCountryStateListener {
 
     private FirebaseFirestore db;
-    private String TAG = " ";
     private Button bSetDate, bSetCountry;
     private Button b_a_PersonActivity_Done, b_a_PersonActivity_Cancel;
     private TextView tvFirstName, tvLastName, tvAge, tvEmail, tvPhone, tvBirthDate, tvCountry, tvState;
@@ -49,9 +42,6 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
     private String country;
     private String state;
     private String birthdate;
-
-    private TextView country1,state1;
-
     private static final String SHARED_PREFS = "shared_preferences";
     private static final String SHARED_PREFS_FIRSTNAME ="firstName";
     private static final String SHARED_PREFS_LASTNAME ="lastName";
@@ -61,24 +51,17 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
     private static final String SHARED_PREFS_DATEOFBIRTH ="dateOfBirth";
     private static final String SHARED_PREFS_COUNTRY ="country";
     private static final String SHARED_PREFS_STATE ="state";
-
-    AwesomeValidation awesomeValidation;
-
-
+    private AwesomeValidation awesomeValidation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
-
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-
-
         loadData();
 
         final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setTimestampsInSnapshotsEnabled(true)
                 .build();
         firestore.setFirestoreSettings(settings);
 
@@ -87,110 +70,13 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
         initData();
         openDateActivity();
         openCountryStateActivity();
-
-        tvFirstName = findViewById(R.id.a_main_tv_fname);
-        tvLastName = findViewById(R.id.a_main_tv_lname);
-        tvAge = findViewById(R.id.a_main_tv_age);
-        tvEmail =findViewById(R.id.a_main_tv_email);
-        tvPhone = findViewById(R.id.a_main_tv_phone);
-        tvBirthDate = findViewById(R.id.a_main_tv_birthdate);
-        tvBirthDate.setEnabled(false);
-        tvCountry = findViewById(R.id.a_main_tv_country);
-        tvCountry.setEnabled(false);
-        tvState = findViewById(R.id.a_main_tv_state);
-        tvState.setEnabled(false);
-
-        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_fname,"[a-zA-Z\\s]+",R.string.err_fname);
-        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_lname,"[a-zA-Z\\s]+",R.string.err_lname);
-
-        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_age,"[0-9]+",R.string.err_age);
-
-        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_email, Patterns.EMAIL_ADDRESS,R.string.err_email);
-        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_phone, Patterns.PHONE,R.string.err_phone);
-        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_country,RegexTemplate.NOT_EMPTY,R.string.err_country);
-        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_state, RegexTemplate.NOT_EMPTY,R.string.err_state);
-        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_birthdate, new SimpleCustomValidation() {
-            @Override
-            public boolean compare(String input) {
-                // check if the age is >= 18
-                try {
-                    Calendar calendarBirthday = Calendar.getInstance();
-                    Calendar calendarToday = Calendar.getInstance();
-                    calendarBirthday.setTime(new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(input));
-                    int yearOfToday = calendarToday.get(Calendar.YEAR);
-                    int yearOfBirthday = calendarBirthday.get(Calendar.YEAR);
-                    if (yearOfToday - yearOfBirthday > 18) {
-                        return true;
-                    } else if (yearOfToday - yearOfBirthday == 18) {
-                        int monthOfToday = calendarToday.get(Calendar.MONTH);
-                        int monthOfBirthday = calendarBirthday.get(Calendar.MONTH);
-                        if (monthOfToday > monthOfBirthday) {
-                            return true;
-                        } else if (monthOfToday == monthOfBirthday) {
-                            if (calendarToday.get(Calendar.DAY_OF_MONTH) >= calendarBirthday.get(Calendar.DAY_OF_MONTH)) {
-                                return true;
-                            }
-                        }
-                    }
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                return false;
-            }
-        }, R.string.err_birthdate);
-
-//        tvFirstName.addTextChangedListener(loginTextWatcher);
-//        tvLastName.addTextChangedListener(loginTextWatcher);
-//        tvAge.addTextChangedListener(loginTextWatcher);
-//        tvEmail.addTextChangedListener(loginTextWatcher);
-//        tvPhone.addTextChangedListener(loginTextWatcher);
-//        tvBirthDate.addTextChangedListener(loginTextWatcher);
-//        tvCountry.addTextChangedListener(loginTextWatcher);
-//        tvState.addTextChangedListener(loginTextWatcher);
-//
-//        private TextWatcher loginTextWatcher = new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//                String fname = tvFirstName.getText().toString().trim();
-//                String lname = tvLastName.getText().toString().trim();
-//                String age = tvAge.getText().toString().trim();
-//                String email = tvEmail.getText().toString().trim();
-//                String phn = tvPhone.getText().toString().trim();
-//                String bdate = tvBirthDate.getText().toString().trim();
-//                String country = tvCountry.getText().toString().trim();
-//                String state = tvState.getText().toString().trim();
-//
-//                b_a_PersonActivity_Done.setEnabled();
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        };
-
-        b_a_PersonActivity_Done = findViewById(R.id.bSubmit);
-//        b_a_PersonActivity_Done.setEnabled(false);
-
-
-
-        b_a_PersonActivity_Cancel = findViewById(R.id.bCancel);
+        validation();
 
         b_a_PersonActivity_Done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if(awesomeValidation.validate()) {
-                    Toast.makeText(PersonActivity.this,"Data received Successfully",Toast.LENGTH_SHORT).show();
-
-
                     CollectionReference dbUsers = db.collection("users");
                     Users users = new Users(
                             tvFirstName.getText().toString(),
@@ -223,6 +109,16 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
         });
     }
 
+    private void validation() {
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_fname,"[a-zA-Z\\s]+",R.string.err_fname);
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_lname,"[a-zA-Z\\s]+",R.string.err_lname);
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_age,"[0-9]+",R.string.err_age);
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_email, Patterns.EMAIL_ADDRESS,R.string.err_email);
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_phone, Patterns.PHONE,R.string.err_phone);
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_country, RegexTemplate.NOT_EMPTY,R.string.err_country);
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_state, RegexTemplate.NOT_EMPTY,R.string.err_state);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu,menu);
@@ -234,40 +130,31 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
         int id = item.getItemId();
         if(id == R.id.listOfUsers) {
             Toast.makeText(this,"List Of Users clicked",Toast.LENGTH_SHORT).show();
-//            startActivity(new Intent(this,ListOfUsers.class));
             Intent intentForListOfUsers = new Intent(PersonActivity.this,ListOfUsers.class);
             startActivityForResult(intentForListOfUsers,1001);
-        }
-        else
-        if (id == R.id.userCreationForm) {
-            Toast.makeText(this,"User Creation Form clicked",Toast.LENGTH_SHORT).show();
-//            startActivity(new Intent(this,PersonActivity.class));
-            Intent intentForUserCreation = new Intent(PersonActivity.this,PersonActivity.class);
-            intentForUserCreation.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//            intentForUserCreation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//            intentForUserCreation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intentForUserCreation.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            startActivityForResult(intentForUserCreation,1000);
         }
         else {
                 Intent intent2 = new Intent(PersonActivity.this,PersonActivity.class);
                 startActivityForResult(intent2,3);
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     private void initData() {
-        String firstName = findViewById(R.id.a_main_tv_fname).toString();
-        String lastName = findViewById(R.id.a_main_tv_lname).toString();
-        String age = findViewById(R.id.a_main_tv_age).toString();
-        String email =findViewById(R.id.a_main_tv_email).toString();
-        String phone = findViewById(R.id.a_main_tv_phone).toString();
-        String dateOfBirth = findViewById(R.id.a_main_tv_birthdate).toString();
-        String country = findViewById(R.id.a_main_tv_country).toString();
-        String state = findViewById(R.id.a_main_tv_state).toString();
+        tvFirstName = findViewById(R.id.a_main_tv_fname);
+        tvLastName = findViewById(R.id.a_main_tv_lname);
+        tvAge = findViewById(R.id.a_main_tv_age);
+        tvEmail =findViewById(R.id.a_main_tv_email);
+        tvPhone = findViewById(R.id.a_main_tv_phone);
+        tvBirthDate = findViewById(R.id.a_main_tv_birthdate);
+        tvBirthDate.setEnabled(false);
+        tvCountry = findViewById(R.id.a_main_tv_country);
+        tvCountry.setEnabled(false);
+        tvState = findViewById(R.id.a_main_tv_state);
+        tvState.setEnabled(false);
 
-
+        b_a_PersonActivity_Done = findViewById(R.id.bSubmit);
+        b_a_PersonActivity_Cancel = findViewById(R.id.bCancel);
     }
 
     @Override
@@ -301,7 +188,6 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
         SharedPreferences.Editor editor =sharedPreferences.edit();
         initData();
         editor.putString(SHARED_PREFS_FIRSTNAME, String.valueOf(tvFirstName));
-        Log.i("TAG","fname"+firstName.trim());
         editor.putString(SHARED_PREFS_LASTNAME, String.valueOf(tvLastName));
         editor.putString(SHARED_PREFS_AGE, String.valueOf(tvAge));
         editor.putString(SHARED_PREFS_EMAIL, String.valueOf(tvEmail));

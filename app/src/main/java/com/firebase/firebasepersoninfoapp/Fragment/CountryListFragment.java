@@ -2,10 +2,8 @@ package com.firebase.firebasepersoninfoapp.Fragment;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +11,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.firebasepersoninfoapp.Activity.CountryStateActivity;
 import com.firebase.firebasepersoninfoapp.R;
 
 import java.util.ArrayList;
@@ -27,16 +21,13 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CountryListFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class CountryListFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
-    ListView lv;
-    Spinner s1,s2;
-    String stateArray[] =  null;
-    TextView tvCountry, tvState;
-
-    ArrayList<String> al;
-    ArrayAdapter<String> aa;
-    Button bDoneCountryListFragment,bCancelCountryListFragment,bSendDataToActivity;
+    private Spinner s1,s2;
+    private String stateArray[] =  null;
+    private ArrayList<String> al;
+    private ArrayAdapter<String> aa;
+    private Button bDoneCountryListFragment,bCancelCountryListFragment;
     private FragmentCountryStateListener interfaceListener;
 
     public interface FragmentCountryStateListener {
@@ -53,33 +44,18 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
 
         s1 = view.findViewById(R.id.a_countrylistfragment_spinner_country);
         s2 = view.findViewById(R.id.a_countrylistfragment_spinner_state);
-        tvCountry = view.findViewById(R.id.a_countrylistfragment_tv_country);
-        tvState = view.findViewById(R.id.a_countrylistfragment_tv_state);
 
         fillListOfCountries();
-        bSendDataToActivity = view.findViewById(R.id.a_country_fragment_b_SendDataToActivity);
         bDoneCountryListFragment = view.findViewById(R.id.a_country_fragment_b_Done);
         bCancelCountryListFragment = view.findViewById(R.id.a_country_fragment_b_Cancel);
 
-        bDoneCountryListFragment.setOnClickListener(this);
-
-        bSendDataToActivity.setOnClickListener(new View.OnClickListener() {
+        bDoneCountryListFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String country = s1.getSelectedItem().toString();
                 String state = s2.getSelectedItem().toString();
-                tvCountry.setText("Country : "+country);
-                tvState.setText("State : "+state);
-
-                Log.i("TAG","Country=="+tvCountry.getText());
-                Log.i("TAG","State=="+tvState.getText());
 
                 interfaceListener.onInputCountryStateSent(country,state);
-//                CountryStateActivity cs = (CountryStateActivity) getActivity();
-//                cs.receiveDataFromCountryStateFragment(country,state);
-
-//                PersonActivity personActivity = (PersonActivity) getActivity();
-//                personActivity.receiveDataFromCountryStateFragment(country,state);
                 Log.i("TAG",country+" "+state);
             }
         });
@@ -87,65 +63,20 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
         bCancelCountryListFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                onDestroy();
-             /*   FragmentTransaction ft2 = getFragmentManager().beginTransaction();
-                ft2.commit();
-                ft2.detach(CountryListFragment.this);   */
                 onDetach();
             }
         });
         selectCountry();
         return view;
-
     }
-
 
     public void selectCountry() {
-
         s1.setOnItemSelectedListener(CountryListFragment.this);
-
-    }
-
-    public void setData(String c,String s) {
-        tvCountry.setText(c);
-        tvState.setText(s);
-    }
-
-    public void sendDataToActivity() {
-
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                String selectedItem = (String) parent.getItemAtPosition(position);
-                Log.i("TAG",selectedItem);
-
-                Toast.makeText(getContext(), "selectedItem", Toast.LENGTH_SHORT).show();
-
-                Intent intent =new Intent(getActivity(),CountryStateActivity.class);
-                intent.putExtra("country","defaultState");
-                startActivityForResult(intent,2);
-
-
-                Intent resultIntent =new Intent();
-                resultIntent.putExtra("RESULT",selectedItem);
-
-                selectedItem = (String) lv.getSelectedItem();
-//                Log.i("TAG",selectedItem);
-                CountryStateActivity csObject = (CountryStateActivity)getActivity();
-//                csObject.receiveCountryFromFragment(selectedItem);
-
-                FragmentTransaction ft1 =getFragmentManager().beginTransaction();
-//                ft1.replace(R.id.country_list_fragment,new StateListFragment());
-                ft1.commit();
-            }
-        });
     }
 
     public void fillListOfCountries() {
         al = new ArrayList<String>();
         aa = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_activated_1,al);
-//        lv.setAdapter(aa);
         al.add("China");
         al.add("India");
         al.add("Mexico");
@@ -202,21 +133,11 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,stateArray);
         s2.setAdapter(adapter);
 
-
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-
-    @Override
-    public void onClick(View v) {
-        String country = s1.getSelectedItem().toString();
-        String state = s2.getSelectedItem().toString();
-        tvCountry.setText("Country : "+country);
-        tvState.setText("State : "+state);
-    }
-
 
 }

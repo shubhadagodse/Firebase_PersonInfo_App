@@ -16,7 +16,7 @@ public class DateActivity extends AppCompatActivity {
 
     private String TAG = "DateActivity";
     private Button bDone, bCancel;
-    private TextView tv_b_date;
+    private TextView tvBdate;
     CalendarView calendar;
 
     @Override
@@ -27,7 +27,7 @@ public class DateActivity extends AppCompatActivity {
         bDone = findViewById(R.id.a_date_bDone);
         bCancel = findViewById(R.id.a_date_bCancel);
         calendar = findViewById(R.id.a_date_calendar_view);
-        tv_b_date =findViewById(R.id.a_main_tv_birthdate);
+        tvBdate =findViewById(R.id.a_main_tv_birthdate);
 
         bCancel.setOnClickListener(new View.OnClickListener() {
             @Override

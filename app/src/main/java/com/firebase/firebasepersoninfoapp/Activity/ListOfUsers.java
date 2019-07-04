@@ -95,7 +95,6 @@ public class ListOfUsers extends AppCompatActivity implements MyRecyclerViewAdap
         Intent intent = new Intent(this,UserDetailsActivity.class);
         intent.putExtra("user", (Parcelable) uArrayList.get(position));
         startActivity(intent);
-//        uArrayList.get(position);
         Log.i("TAG","OnUserClick: clicked!"+position);
     }
 }

@@ -5,7 +5,4 @@
     <item android:id="@+id/listOfUsers"
           android:title="@string/list_of_users"
             app:showAsAction="never"/>
-    <item android:id="@+id/userCreationForm"
-        android:title="User Creation Form"
-        app:showAsAction="never"/>
 </menu>

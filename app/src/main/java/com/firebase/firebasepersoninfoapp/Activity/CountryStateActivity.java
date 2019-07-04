@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,11 +14,7 @@ import com.firebase.firebasepersoninfoapp.Fragment.CountryListFragment;
 import com.firebase.firebasepersoninfoapp.R;
 
 public class CountryStateActivity extends AppCompatActivity implements CountryListFragment.FragmentCountryStateListener {
-
-    private Button bDone;
-    private Button bCancel;
     private TextView country1, state1;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,9 +25,7 @@ public class CountryStateActivity extends AppCompatActivity implements CountryLi
 
         initFragment();
         getDataFromCountryListFragment();
-
     }
-
 
     public void getDataFromCountryListFragment() {
         Bundle bundle = getIntent().getExtras();
@@ -50,21 +43,6 @@ public class CountryStateActivity extends AppCompatActivity implements CountryLi
          CountryListFragment f1= new CountryListFragment();
         t.add(R.id.A_CountryState_frame1,f1);
         t.commit();
-    }
-
-    public void receiveDataFromCountryStateFragment(String country, String state) {
-        country1 = findViewById(R.id.a_main_tv_country);
-        state1 = findViewById(R.id.a_main_tv_state);
-//        country1.setText(country);
-//        state1.setText(state);
-    }
-
-    public void receiveCountryFromFragment(String s) {
-        Intent i =getIntent();
-        String country = i.getStringExtra("country");
-        country1 =findViewById(R.id.a_main_tv_country);
-//        country1.setText(country);
-
     }
 
     @Override
