@@ -9,22 +9,29 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.firebase.firebasepersoninfoapp.Fragment.CountryListFragment;
 import com.firebase.firebasepersoninfoapp.R;
 
 public class CountryStateActivity extends AppCompatActivity implements CountryListFragment.FragmentCountryStateListener {
-    private TextView country1, state1;
+    private TextView tvCountry1, tvState1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_country_state);
-        country1 = findViewById(R.id.a_countryState_tv_country);
-        state1 = findViewById(R.id.a_countryState_tv_state);
+        tvCountry1 = findViewById(R.id.a_countryState_tv_country);
+        tvState1 = findViewById(R.id.a_countryState_tv_state);
 
         initFragment();
         getDataFromCountryListFragment();
+    }
+
+    private void initFragment() {
+         FragmentManager manager = getSupportFragmentManager();
+         FragmentTransaction t = manager.beginTransaction();
+         CountryListFragment f1= new CountryListFragment();
+        t.add(R.id.A_CountryState_frame1,f1);
+        t.commit();
     }
 
     public void getDataFromCountryListFragment() {
@@ -37,14 +44,6 @@ public class CountryStateActivity extends AppCompatActivity implements CountryLi
 
     }
 
-    private void initFragment() {
-         FragmentManager manager = getSupportFragmentManager();
-         FragmentTransaction t = manager.beginTransaction();
-         CountryListFragment f1= new CountryListFragment();
-        t.add(R.id.A_CountryState_frame1,f1);
-        t.commit();
-    }
-
     @Override
     public void onInputCountryStateSent(String country, String state) {
         Intent intent = new Intent();
@@ -52,8 +51,8 @@ public class CountryStateActivity extends AppCompatActivity implements CountryLi
         intent.putExtra("message state",state);
         setResult(Activity.RESULT_OK,intent);
         finish();
-                country1.setText(country);
-                state1.setText(state);
+                tvCountry1.setText(country);
+                tvState1.setText(state);
            }
 }
 

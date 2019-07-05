@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.firebase.firebasepersoninfoapp.R;
 
 public class UserDetailsActivity extends AppCompatActivity {
-    TextView outFname, outLname, outAge, outEmail, outPhone, outBirthdate, outCountry, outState;
+    TextView tvFname, tvLname, tvAge, tvEmail, tvPhone, tvBirthdate, tvCountry, tvState;
     String stringFname, stringLname, stringAge, stringPhone, stringEmail, stringCountry, stringState, stringBirthdate;
     RecyclerView recyclerView;
 
@@ -21,14 +21,14 @@ public class UserDetailsActivity extends AppCompatActivity {
 
         recyclerView =findViewById(R.id.list_of_users_from_firebase);
 
-        outFname = findViewById(R.id.a_userdetails_tv_f_name);
-        outLname = findViewById(R.id.a_userdetails_tv_l_name);
-        outAge = findViewById(R.id.a_userdetails_tv_age);
-        outEmail = findViewById(R.id.a_userdetails_tv_email);
-        outPhone = findViewById(R.id.a_userdetails_tv_phone);
-        outBirthdate = findViewById(R.id.a_userdetails_tv_bdate);
-        outCountry = findViewById(R.id.a_userdetails_tv_country);
-        outState = findViewById(R.id.a_userdetails_tv_state);
+        tvFname = findViewById(R.id.a_userdetails_tv_f_name);
+        tvLname = findViewById(R.id.a_userdetails_tv_l_name);
+        tvAge = findViewById(R.id.a_userdetails_tv_age);
+        tvEmail = findViewById(R.id.a_userdetails_tv_email);
+        tvPhone = findViewById(R.id.a_userdetails_tv_phone);
+        tvBirthdate = findViewById(R.id.a_userdetails_tv_bdate);
+        tvCountry = findViewById(R.id.a_userdetails_tv_country);
+        tvState = findViewById(R.id.a_userdetails_tv_state);
 
         stringFname = getIntent().getStringExtra("firstname");
         stringLname = getIntent().getStringExtra("lastname");
@@ -39,14 +39,14 @@ public class UserDetailsActivity extends AppCompatActivity {
         stringCountry = getIntent().getStringExtra("country");
         stringState = getIntent().getStringExtra("state");
 
-        outFname.setText(stringFname);
-        outLname.setText(stringLname);
-        outAge.setText(stringAge);
-        outEmail.setText(stringEmail);
-        outPhone.setText(stringPhone);
-        outBirthdate.setText(stringBirthdate);
-        outCountry.setText(stringCountry);
-        outState.setText(stringState);
+        tvFname.setText(stringFname);
+        tvLname.setText(stringLname);
+        tvAge.setText(stringAge);
+        tvEmail.setText(stringEmail);
+        tvPhone.setText(stringPhone);
+        tvBirthdate.setText(stringBirthdate);
+        tvCountry.setText(stringCountry);
+        tvState.setText(stringState);
 
     }
 

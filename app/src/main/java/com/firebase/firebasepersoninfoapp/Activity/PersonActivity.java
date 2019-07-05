@@ -109,16 +109,6 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
         });
     }
 
-    private void validation() {
-        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_fname,"[a-zA-Z\\s]+",R.string.err_fname);
-        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_lname,"[a-zA-Z\\s]+",R.string.err_lname);
-        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_age,"[0-9]+",R.string.err_age);
-        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_email, Patterns.EMAIL_ADDRESS,R.string.err_email);
-        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_phone, Patterns.PHONE,R.string.err_phone);
-        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_country, RegexTemplate.NOT_EMPTY,R.string.err_country);
-        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_state, RegexTemplate.NOT_EMPTY,R.string.err_state);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu,menu);
@@ -138,23 +128,6 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
                 startActivityForResult(intent2,3);
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void initData() {
-        tvFirstName = findViewById(R.id.a_main_tv_fname);
-        tvLastName = findViewById(R.id.a_main_tv_lname);
-        tvAge = findViewById(R.id.a_main_tv_age);
-        tvEmail =findViewById(R.id.a_main_tv_email);
-        tvPhone = findViewById(R.id.a_main_tv_phone);
-        tvBirthDate = findViewById(R.id.a_main_tv_birthdate);
-        tvBirthDate.setEnabled(false);
-        tvCountry = findViewById(R.id.a_main_tv_country);
-        tvCountry.setEnabled(false);
-        tvState = findViewById(R.id.a_main_tv_state);
-        tvState.setEnabled(false);
-
-        b_a_PersonActivity_Done = findViewById(R.id.bSubmit);
-        b_a_PersonActivity_Cancel = findViewById(R.id.bCancel);
     }
 
     @Override
@@ -181,6 +154,33 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
         dateOfBirth = savedInstanceState.getString(SHARED_PREFS_DATEOFBIRTH);
         country = savedInstanceState.getString(SHARED_PREFS_COUNTRY);
         state = savedInstanceState.getString(SHARED_PREFS_STATE);
+    }
+
+    private void validation() {
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_fname,"[a-zA-Z\\s]+",R.string.err_fname);
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_lname,"[a-zA-Z\\s]+",R.string.err_lname);
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_age,"[0-9]+",R.string.err_age);
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_email, Patterns.EMAIL_ADDRESS,R.string.err_email);
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_phone, Patterns.PHONE,R.string.err_phone);
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_country, RegexTemplate.NOT_EMPTY,R.string.err_country);
+        awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_state, RegexTemplate.NOT_EMPTY,R.string.err_state);
+    }
+
+    private void initData() {
+        tvFirstName = findViewById(R.id.a_main_tv_fname);
+        tvLastName = findViewById(R.id.a_main_tv_lname);
+        tvAge = findViewById(R.id.a_main_tv_age);
+        tvEmail =findViewById(R.id.a_main_tv_email);
+        tvPhone = findViewById(R.id.a_main_tv_phone);
+        tvBirthDate = findViewById(R.id.a_main_tv_birthdate);
+        tvBirthDate.setEnabled(false);
+        tvCountry = findViewById(R.id.a_main_tv_country);
+        tvCountry.setEnabled(false);
+        tvState = findViewById(R.id.a_main_tv_state);
+        tvState.setEnabled(false);
+
+        b_a_PersonActivity_Done = findViewById(R.id.bSubmit);
+        b_a_PersonActivity_Cancel = findViewById(R.id.bCancel);
     }
 
     private void saveData() {

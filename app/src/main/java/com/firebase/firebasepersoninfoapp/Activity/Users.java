@@ -1,15 +1,11 @@
 package com.firebase.firebasepersoninfoapp.Activity;
 
-public class Users extends UserId{
+public class Users {
     private String uid;
     private String firstname;
 
     public String getUid() {
         return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
     }
 
     private String lastname;
@@ -35,10 +31,6 @@ public class Users extends UserId{
                 '}';
     }
 
-    public Users() {
-
-    }
-
     public Users(String firstname, String lastname, String age, String email, String phone, String birthdate, String country, String state) {
         this.firstname = firstname;
         this.lastname = lastname;
@@ -54,48 +46,24 @@ public class Users extends UserId{
         return firstname;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
     public String getLastname() {
         return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
     }
 
     public String getAge() {
         return age;
     }
 
-    public void setAge(String age) {
-        this.age = age;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getBirthdate() {
         return birthdate;
-    }
-
-    public void setBirthdate(String birthdate) {
-        this.birthdate = birthdate;
     }
 
     public String getCountry() {

@@ -31,7 +31,7 @@ public class ListOfUsers extends AppCompatActivity implements MyRecyclerViewAdap
     private RecyclerView.Adapter mAdapter;
     private ArrayList<Users> uArrayList;
 
-    List<Users> userList = new ArrayList<>();
+    private List<Users> userList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

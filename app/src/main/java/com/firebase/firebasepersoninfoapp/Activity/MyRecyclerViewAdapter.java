@@ -121,16 +121,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         });
     }
 
-    public void addItem(Users users, int position) {
-        uArrayList.add(users);
-        notifyItemInserted(position);
-    }
-
-    public void deleteItem(int index) {
-        uArrayList.remove(index);
-        notifyItemRemoved(index);
-    }
-
     @Override
     public int getItemCount() {
         return uArrayList.size();
