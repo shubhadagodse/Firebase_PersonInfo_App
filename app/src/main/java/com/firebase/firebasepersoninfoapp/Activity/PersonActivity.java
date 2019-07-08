@@ -274,6 +274,8 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
 
             }
             if (resultCode == RESULT_CANCELED) {
+//                String countryCanceled = data.getStringExtra("RESULT");
+                finish();
                 tvCountry.setText("Nothing selected");
                 tvState.setText("Nothing selected");
             }

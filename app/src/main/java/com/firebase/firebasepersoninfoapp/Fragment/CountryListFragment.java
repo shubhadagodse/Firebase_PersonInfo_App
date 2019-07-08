@@ -2,8 +2,11 @@ package com.firebase.firebasepersoninfoapp.Fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.firebase.firebasepersoninfoapp.Activity.PersonActivity;
 import com.firebase.firebasepersoninfoapp.R;
 
 import java.util.ArrayList;
@@ -64,6 +68,21 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
             @Override
             public void onClick(View v) {
                 onDetach();
+                onDestroy();
+
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.addToBackStack(null).commit();
+                transaction.remove(CountryListFragment.this);
+                // Fragment closed but Parent activity is displayed.. Not PersonActivity
+
+                Intent intent = new Intent(getActivity(), PersonActivity.class);
+                intent.getExtras();
+                intent.putExtras(intent);
+                getActivity().onBackPressed();
+                startActivityForResult(intent, 2);
+
+
             }
         });
         selectCountry();
