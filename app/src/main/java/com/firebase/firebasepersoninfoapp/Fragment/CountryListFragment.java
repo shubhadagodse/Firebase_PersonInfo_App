@@ -81,8 +81,6 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
                 intent.putExtras(intent);
                 getActivity().onBackPressed();
                 startActivityForResult(intent, 2);
-
-
             }
         });
         selectCountry();

@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
@@ -71,6 +73,7 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
         openDateActivity();
         openCountryStateActivity();
         validation();
+        textWatcherMethod();
 
         b_a_PersonActivity_Done.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +167,46 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
         awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_phone, Patterns.PHONE,R.string.err_phone);
         awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_country, RegexTemplate.NOT_EMPTY,R.string.err_country);
         awesomeValidation.addValidation(PersonActivity.this,R.id.a_main_tv_state, RegexTemplate.NOT_EMPTY,R.string.err_state);
+    }
+
+    private void textWatcherMethod() {
+
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    String fname = tvFirstName.getText().toString().trim();
+                    String lname = tvLastName.getText().toString().trim();
+                    String age = tvAge.getText().toString().trim();
+                    String email = tvEmail.getText().toString().trim();
+                    String phone = tvPhone.getText().toString();
+                    String birthdate = tvBirthDate.getText().toString().trim();
+                    String country = tvCountry.getText().toString().trim();
+                    String state = tvState.getText().toString().trim();
+
+                    b_a_PersonActivity_Done.setEnabled(!fname.isEmpty() && !lname.isEmpty() && !age.isEmpty() && !email.isEmpty()
+                            && !phone.isEmpty() && !birthdate.isEmpty() && !country.isEmpty() && !state.isEmpty());
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+
+        tvFirstName.addTextChangedListener(textWatcher);
+        tvLastName.addTextChangedListener(textWatcher);
+        tvAge.addTextChangedListener(textWatcher);
+        tvEmail.addTextChangedListener(textWatcher);
+        tvPhone.addTextChangedListener(textWatcher);
+        tvBirthDate.addTextChangedListener(textWatcher);
+        tvCountry.addTextChangedListener(textWatcher);
+        tvState.addTextChangedListener(textWatcher);
     }
 
     private void initData() {
@@ -274,7 +317,7 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
 
             }
             if (resultCode == RESULT_CANCELED) {
-//                String countryCanceled = data.getStringExtra("RESULT");
+//                String count  ryCanceled = data.getStringExtra("RESULT");
                 finish();
                 tvCountry.setText("Nothing selected");
                 tvState.setText("Nothing selected");
