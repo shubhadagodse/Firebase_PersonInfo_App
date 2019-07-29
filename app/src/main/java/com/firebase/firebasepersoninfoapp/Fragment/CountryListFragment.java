@@ -23,7 +23,6 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class CountryListFragment extends Fragment implements AdapterView.OnItemSelectedListener {
-
     private static final int FINISH_ACTIVITY_REQUEST_CODE = 001;
     private Spinner s1,s2;
     private String stateArray[] =  null;

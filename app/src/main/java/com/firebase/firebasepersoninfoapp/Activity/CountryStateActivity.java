@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.firebasepersoninfoapp.Fragment.CountryListFragment;
 import com.firebase.firebasepersoninfoapp.R;
@@ -26,7 +25,6 @@ public class CountryStateActivity extends AppCompatActivity implements CountryLi
         tvState1 = findViewById(R.id.a_countryState_tv_state);
 
         initFragment();
-//        getDataFromCountryListFragment();
     }
 
     private void initFragment() {
@@ -35,16 +33,6 @@ public class CountryStateActivity extends AppCompatActivity implements CountryLi
          CountryListFragment f1= new CountryListFragment();
         transaction.add(R.id.A_CountryState_frame1,f1);
         transaction.commit();
-    }
-
-    public void getDataFromCountryListFragment() {
-        Bundle bundle = getIntent().getExtras();
-        if(bundle != null) {
-            if(bundle.getString("data")!= null) {
-                Toast.makeText(getApplicationContext(),"data"+bundle.getString("data"),Toast.LENGTH_SHORT).show();
-            }
-        }
-
     }
 
     @Override
@@ -57,21 +45,5 @@ public class CountryStateActivity extends AppCompatActivity implements CountryLi
                 tvCountry1.setText(country);
                 tvState1.setText(state);
            }
-
-     /* @Override
-    public void onBackPressed() {
-        Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
-        if (fragment != null) {
-            transaction = fragmentManager.beginTransaction();
-            transaction.remove(fragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-
-        }else {
-//            finish();
-            finishAffinity();
-            super.onBackPressed();
-        }
-    }*/
 }
 
