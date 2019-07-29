@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,6 +33,8 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 public class PersonActivity extends AppCompatActivity implements CountryListFragment.FragmentCountryStateListener {
 
+    FragmentManager fragmentManager;
+    FragmentTransaction transaction;
     private FirebaseFirestore db;
     private Button bSetDate, bSetCountry;
     private Button b_a_PersonActivity_Done, b_a_PersonActivity_Cancel;
@@ -74,6 +78,7 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
         openCountryStateActivity();
         validation();
         textWatcherMethod();
+        saveData();
 
         b_a_PersonActivity_Done.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +115,7 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
 
             }
         });
+        saveData();
     }
 
     @Override
@@ -136,14 +142,14 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(SHARED_PREFS_FIRSTNAME,firstName);
-        outState.putString(SHARED_PREFS_LASTNAME, lastName);
-        outState.putString(SHARED_PREFS_AGE, age);
-        outState.putString(SHARED_PREFS_EMAIL, email);
-        outState.putString(SHARED_PREFS_PHONE,phone);
-        outState.putString(SHARED_PREFS_DATEOFBIRTH, dateOfBirth);
-        outState.putString(SHARED_PREFS_COUNTRY,country);
-        outState.putString(SHARED_PREFS_STATE,state);
+        outState.putString(SHARED_PREFS_FIRSTNAME, String.valueOf(tvFirstName));
+        outState.putString(SHARED_PREFS_LASTNAME, String.valueOf(tvLastName));
+        outState.putString(SHARED_PREFS_AGE, String.valueOf(tvAge));
+        outState.putString(SHARED_PREFS_EMAIL, String.valueOf(tvEmail));
+        outState.putString(SHARED_PREFS_PHONE, String.valueOf(tvPhone));
+        outState.putString(SHARED_PREFS_DATEOFBIRTH, String.valueOf(tvBirthDate));
+        outState.putString(SHARED_PREFS_COUNTRY, String.valueOf(tvCountry));
+        outState.putString(SHARED_PREFS_STATE, String.valueOf(tvState));
     }
 
     @Override
@@ -157,6 +163,9 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
         dateOfBirth = savedInstanceState.getString(SHARED_PREFS_DATEOFBIRTH);
         country = savedInstanceState.getString(SHARED_PREFS_COUNTRY);
         state = savedInstanceState.getString(SHARED_PREFS_STATE);
+
+        tvFirstName = findViewById(R.id.tv_f_name);
+        tvFirstName.setText(firstName);
     }
 
     private void validation() {
@@ -245,6 +254,7 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
     private void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         firstName = sharedPreferences.getString(SHARED_PREFS_FIRSTNAME,"");
+        Log.i("TAG","fname== "+firstName);
         lastName = sharedPreferences.getString(SHARED_PREFS_LASTNAME, "");
         age = sharedPreferences.getString(SHARED_PREFS_AGE, "");
         email = sharedPreferences.getString(SHARED_PREFS_EMAIL, "");
@@ -269,7 +279,7 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
                 startActivityForResult(intent,2);
                 tvCountry.setText(country);
                 tvState.setText(state);
-                saveData();
+
             }
         });
 
@@ -317,8 +327,6 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
 
             }
             if (resultCode == RESULT_CANCELED) {
-//                String count  ryCanceled = data.getStringExtra("RESULT");
-                finish();
                 tvCountry.setText("Nothing selected");
                 tvState.setText("Nothing selected");
             }

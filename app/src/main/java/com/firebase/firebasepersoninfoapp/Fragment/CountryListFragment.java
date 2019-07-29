@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import com.firebase.firebasepersoninfoapp.Activity.PersonActivity;
 import com.firebase.firebasepersoninfoapp.R;
 
 import java.util.ArrayList;
@@ -27,6 +24,7 @@ import java.util.ArrayList;
  */
 public class CountryListFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
+    private static final int FINISH_ACTIVITY_REQUEST_CODE = 001;
     private Spinner s1,s2;
     private String stateArray[] =  null;
     private ArrayList<String> al;
@@ -37,18 +35,17 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
     public interface FragmentCountryStateListener {
         void onInputCountryStateSent(String country, String state);
     }
+
     public CountryListFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             final Bundle savedInstanceState) {
         final View view =inflater.inflate(R.layout.country_listfragment,container,false);
-
         s1 = view.findViewById(R.id.a_countrylistfragment_spinner_country);
         s2 = view.findViewById(R.id.a_countrylistfragment_spinner_state);
-
         fillListOfCountries();
         bDoneCountryListFragment = view.findViewById(R.id.a_country_fragment_b_Done);
         bCancelCountryListFragment = view.findViewById(R.id.a_country_fragment_b_Cancel);
@@ -65,27 +62,17 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
         });
 
         bCancelCountryListFragment.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                onDetach();
-                onDestroy();
 
-                FragmentManager manager = getFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.addToBackStack(null).commit();
-                transaction.remove(CountryListFragment.this);
-                // Fragment closed but Parent activity is displayed.. Not PersonActivity
-
-                Intent intent = new Intent(getActivity(), PersonActivity.class);
-                intent.getExtras();
-                intent.putExtras(intent);
                 getActivity().onBackPressed();
-                startActivityForResult(intent, 2);
             }
         });
         selectCountry();
         return view;
     }
+
 
     public void selectCountry() {
         s1.setOnItemSelectedListener(CountryListFragment.this);
@@ -116,6 +103,9 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
     public void onDetach() {
         super.onDetach();
         interfaceListener = null;
+        /*Intent intent =*/ getActivity().getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        Intent intentOfParentActivity = getActivity().getParent().finishActivity(FINISH_ACTIVITY_REQUEST_CODE);
+        Log.i("TAG","In onDetach of CountryListFragment");
     }
 
     @Override

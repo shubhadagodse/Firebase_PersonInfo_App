@@ -9,11 +9,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.firebase.firebasepersoninfoapp.Fragment.CountryListFragment;
 import com.firebase.firebasepersoninfoapp.R;
 
 public class CountryStateActivity extends AppCompatActivity implements CountryListFragment.FragmentCountryStateListener {
     private TextView tvCountry1, tvState1;
+    public static FragmentManager fragmentManager;
+    public static FragmentTransaction transaction;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,15 +26,15 @@ public class CountryStateActivity extends AppCompatActivity implements CountryLi
         tvState1 = findViewById(R.id.a_countryState_tv_state);
 
         initFragment();
-        getDataFromCountryListFragment();
+//        getDataFromCountryListFragment();
     }
 
     private void initFragment() {
          FragmentManager manager = getSupportFragmentManager();
-         FragmentTransaction t = manager.beginTransaction();
+         transaction = manager.beginTransaction();
          CountryListFragment f1= new CountryListFragment();
-        t.add(R.id.A_CountryState_frame1,f1);
-        t.commit();
+        transaction.add(R.id.A_CountryState_frame1,f1);
+        transaction.commit();
     }
 
     public void getDataFromCountryListFragment() {
@@ -54,5 +57,21 @@ public class CountryStateActivity extends AppCompatActivity implements CountryLi
                 tvCountry1.setText(country);
                 tvState1.setText(state);
            }
+
+     /* @Override
+    public void onBackPressed() {
+        Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
+        if (fragment != null) {
+            transaction = fragmentManager.beginTransaction();
+            transaction.remove(fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+
+        }else {
+//            finish();
+            finishAffinity();
+            super.onBackPressed();
+        }
+    }*/
 }
 
