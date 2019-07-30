@@ -185,8 +185,6 @@
         <item>29</item><item>30</item><item>31</item>
     </string-array>
 
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="list_of_users">List Of Users</string>
