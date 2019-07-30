@@ -26,7 +26,7 @@
                 android:text="First Name" />
 
             <EditText
-                android:id="@+id/a_main_tv_fname"
+                android:id="@+id/a_person_et_fname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
@@ -41,7 +41,7 @@
                 android:text="Last Name" />
 
             <EditText
-                android:id="@+id/a_main_tv_lname"
+                android:id="@+id/a_person_et_lname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
@@ -56,7 +56,7 @@
                 android:text="Age" />
 
             <EditText
-                android:id="@+id/a_main_tv_age"
+                android:id="@+id/a_person_et_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
@@ -71,7 +71,7 @@
                 android:text="Email" />
 
             <EditText
-                android:id="@+id/a_main_tv_email"
+                android:id="@+id/a_person_et_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
@@ -86,7 +86,7 @@
                 android:text="Phone" />
 
             <EditText
-                android:id="@+id/a_main_tv_phone"
+                android:id="@+id/a_person_et_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
@@ -101,7 +101,7 @@
                 android:text="Birth Date" />
 
             <EditText
-                android:id="@+id/a_main_tv_birthdate"
+                android:id="@+id/a_person_et_birthdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
@@ -110,7 +110,7 @@
                 android:inputType="date" />
 
             <Button
-                android:id="@+id/a_main_bSetDate"
+                android:id="@+id/a_person_bSetDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.375"
@@ -123,7 +123,7 @@
                 android:text="Country" />
 
             <EditText
-                android:id="@+id/a_main_tv_country"
+                android:id="@+id/a_person_et_country"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
@@ -138,7 +138,7 @@
                 android:text="State(Provience)" />
 
             <EditText
-                android:id="@+id/a_main_tv_state"
+                android:id="@+id/a_person_et_state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
@@ -153,14 +153,14 @@
                 android:text="SET" />
 
             <Button
-                android:id="@+id/bSubmit"
+                android:id="@+id/a_person_bSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.375"
                 android:text="DONE" />
 
             <Button
-                android:id="@+id/bCancel"
+                android:id="@+id/a_person_bCancel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.375"
