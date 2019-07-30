@@ -1,6 +1,4 @@
 package com.firebase.firebasepersoninfoapp.Fragment;
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,12 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-
 import com.firebase.firebasepersoninfoapp.R;
-
 import java.util.ArrayList;
-
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -46,8 +40,8 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
         s1 = view.findViewById(R.id.a_countrylistfragment_spinner_country);
         s2 = view.findViewById(R.id.a_countrylistfragment_spinner_state);
         fillListOfCountries();
-        bDoneCountryListFragment = view.findViewById(R.id.a_country_fragment_b_Done);
-        bCancelCountryListFragment = view.findViewById(R.id.a_country_fragment_b_Cancel);
+        bDoneCountryListFragment = view.findViewById(R.id.f_country_fragment_b_Done);
+        bCancelCountryListFragment = view.findViewById(R.id.f_country_fragment_b_Cancel);
 
         bDoneCountryListFragment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +50,6 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
                 String state = s2.getSelectedItem().toString();
 
                 interfaceListener.onInputCountryStateSent(country,state);
-                Log.i("TAG",country+" "+state);
             }
         });
 
@@ -64,14 +57,12 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
 
             @Override
             public void onClick(View v) {
-
                 getActivity().onBackPressed();
             }
         });
         selectCountry();
         return view;
     }
-
 
     public void selectCountry() {
         s1.setOnItemSelectedListener(CountryListFragment.this);
@@ -89,7 +80,6 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Log.i("TAG","onAttach() called");
         if(context instanceof FragmentCountryStateListener) {
             interfaceListener = (FragmentCountryStateListener) context;
         } else {
@@ -102,9 +92,7 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
     public void onDetach() {
         super.onDetach();
         interfaceListener = null;
-        /*Intent intent =*/ getActivity().getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        Intent intentOfParentActivity = getActivity().getParent().finishActivity(FINISH_ACTIVITY_REQUEST_CODE);
-        Log.i("TAG","In onDetach of CountryListFragment");
+        getActivity().getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
     }
 
     @Override
@@ -138,12 +126,9 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,stateArray);
         s2.setAdapter(adapter);
-
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
-
 }

@@ -33,7 +33,7 @@
     android:orientation="horizontal">
 
     <Button
-    android:id="@+id/a_country_fragment_b_Done"
+    android:id="@+id/f_country_fragment_b_Done"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginLeft="20dp"
@@ -42,7 +42,7 @@
     android:text="Done" />
 
     <Button
-    android:id="@+id/a_country_fragment_b_Cancel"
+    android:id="@+id/f_country_fragment_b_Cancel"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginLeft="150dp"

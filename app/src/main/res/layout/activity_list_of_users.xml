@@ -7,7 +7,7 @@
     tools:context=".Activity.ListOfUsers">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/list_of_users_from_firebase"
+        android:id="@+id/a_list_of_users_from_firebase"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"/>
