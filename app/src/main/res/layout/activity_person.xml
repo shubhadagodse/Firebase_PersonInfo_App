@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
-                android:text="First Name" />
+                android:text="@string/label_firstname" />
 
             <EditText
                 android:id="@+id/a_person_et_fname"
@@ -31,14 +31,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
                 android:ems="10"
-                android:hint="Enter your first name"
+                android:hint="@string/enter_firstname"
                 android:inputType="textPersonName" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
-                android:text="Last Name" />
+                android:text="@string/label_last_name" />
 
             <EditText
                 android:id="@+id/a_person_et_lname"
@@ -46,14 +46,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
                 android:ems="10"
-                android:hint="Enter your last name"
+                android:hint="@string/entre_last_name"
                 android:inputType="textPersonName" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
-                android:text="Age" />
+                android:text="@string/label_age" />
 
             <EditText
                 android:id="@+id/a_person_et_age"
@@ -61,14 +61,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
                 android:ems="10"
-                android:hint="Enter your age"
+                android:hint="@string/enter_age"
                 android:inputType="number" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
-                android:text="Email" />
+                android:text="@string/label_email" />
 
             <EditText
                 android:id="@+id/a_person_et_email"
@@ -76,14 +76,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
                 android:ems="10"
-                android:hint="Enter your email"
+                android:hint="@string/enter_email"
                 android:inputType="textWebEmailAddress" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
-                android:text="Phone" />
+                android:text="@string/label_phone" />
 
             <EditText
                 android:id="@+id/a_person_et_phone"
@@ -91,14 +91,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
                 android:ems="10"
-                android:hint="Enter your phone"
+                android:hint="@string/enter_phone"
                 android:inputType="phone" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
-                android:text="Birth Date" />
+                android:text="@string/label_birthdate" />
 
             <EditText
                 android:id="@+id/a_person_et_birthdate"
@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
                 android:ems="10"
-                android:hint="Enter your birthdate"
+                android:hint="@string/enter_birthdate"
                 android:inputType="date" />
 
             <Button
@@ -114,13 +114,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.375"
-                android:text="SET DATE" />
+                android:text="@string/btn_set_date" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
-                android:text="Country" />
+                android:text="@string/country_label" />
 
             <EditText
                 android:id="@+id/a_person_et_country"
@@ -128,14 +128,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
                 android:ems="10"
-                android:hint="Enter your country" />
+                android:hint="@string/country_hint" />
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
-                android:text="State(Provience)" />
+                android:text="@string/state_name" />
 
             <EditText
                 android:id="@+id/a_person_et_state"
@@ -143,28 +143,28 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
                 android:ems="10"
-                android:hint="Enter your state(provience)" />
+                android:hint="@string/state_hint" />
 
             <Button
                 android:id="@+id/a_main_bSetCountry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.375"
-                android:text="SET" />
+                android:text="@string/btn_set" />
 
             <Button
                 android:id="@+id/a_person_bSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.375"
-                android:text="DONE" />
+                android:text="@string/btn_done"/>
 
             <Button
                 android:id="@+id/a_person_bCancel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.375"
-                android:text="CANCEL" />
+                android:text="@string/btn_cancel" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

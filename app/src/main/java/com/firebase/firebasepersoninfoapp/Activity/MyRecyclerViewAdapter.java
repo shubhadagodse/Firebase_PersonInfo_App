@@ -18,7 +18,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public static String USER_KEY = "user_key";
     private ArrayList<Users> listOfUsers;
     private List<Users> uArrayList;
-    Context ctx;
+    private Context ctx;
     private MyClickListener myClickListener;
 
     public void setMyClickListener(AdapterView.OnItemClickListener listener) {
@@ -41,7 +41,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
         public UsersHolder(@NonNull final View itemView) {
             super(itemView);
-            linearLayout = itemView.findViewById(R.id.linearLayout);
+            linearLayout = itemView.findViewById(R.id.linear_layout);
             relativeLayout = itemView.findViewById(R.id.relative);
             tvFname = itemView.findViewById(R.id.tv_f_name);
             tvLname = itemView.findViewById(R.id.tv_l_name);

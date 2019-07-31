@@ -17,7 +17,6 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class CountryListFragment extends Fragment implements AdapterView.OnItemSelectedListener {
-    private static final int FINISH_ACTIVITY_REQUEST_CODE = 001;
     private Spinner s1,s2;
     private String stateArray[] =  null;
     private ArrayList<String> al;
@@ -37,11 +36,11 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
         final View view =inflater.inflate(R.layout.country_listfragment,container,false);
-        s1 = view.findViewById(R.id.a_countrylistfragment_spinner_country);
-        s2 = view.findViewById(R.id.a_countrylistfragment_spinner_state);
+        s1 = view.findViewById(R.id.a_country_list_fragment_spinner_country);
+        s2 = view.findViewById(R.id.a_country_list_fragment_spinner_state);
         fillListOfCountries();
-        bDoneCountryListFragment = view.findViewById(R.id.f_country_fragment_b_Done);
-        bCancelCountryListFragment = view.findViewById(R.id.f_country_fragment_b_Cancel);
+        bDoneCountryListFragment = view.findViewById(R.id.f_country_fragment_b_done);
+        bCancelCountryListFragment = view.findViewById(R.id.f_country_fragment_b_cancel);
 
         bDoneCountryListFragment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +83,7 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
             interfaceListener = (FragmentCountryStateListener) context;
         } else {
             throw new RuntimeException(context.toString()
-            +"must implement FragmentCountryListener");
+            +R.string.exception);
         }
     }
 

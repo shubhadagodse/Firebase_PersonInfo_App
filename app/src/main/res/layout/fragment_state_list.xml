@@ -10,7 +10,7 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="484dp"
-        android:id="@+id/f_countrystateList"
+        android:id="@+id/f_country_state_list"
         android:textSize = "21sp"/>
 
     <LinearLayout
@@ -19,22 +19,22 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/f_country_fragment_b_Done"
+            android:id="@+id/f_country_fragment_b_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
-            android:text="Done" />
+            android:text="@string/btn_done" />
 
         <Button
-            android:id="@+id/f_country_fragment_b_Cancel"
+            android:id="@+id/f_country_fragment_b_cancel"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginLeft="150dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
-            android:text="Cancel" />
+            android:text="@string/btn_cancel" />
     </LinearLayout>
 
 

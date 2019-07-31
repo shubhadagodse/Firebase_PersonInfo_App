@@ -20,8 +20,8 @@ public class DateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date);
 
-        bDone = findViewById(R.id.a_date_bDone);
-        bCancel = findViewById(R.id.a_date_bCancel);
+        bDone = findViewById(R.id.a_date_btn_done);
+        bCancel = findViewById(R.id.a_date_btn_cancel);
         calendar = findViewById(R.id.a_date_calendar_view);
         tvBdate =findViewById(R.id.a_person_et_birthdate);
 

@@ -21,8 +21,8 @@ import java.util.List;
 
 public class ListOfUsers extends AppCompatActivity implements MyRecyclerViewAdapter.MyClickListener {
 
-    FirebaseFirestore database;
-    MyRecyclerViewAdapter usersDataAdapter;
+    private FirebaseFirestore database;
+    private MyRecyclerViewAdapter usersDataAdapter;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private ArrayList<Users> uArrayList;
@@ -73,7 +73,7 @@ public class ListOfUsers extends AppCompatActivity implements MyRecyclerViewAdap
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ListOfUsers.this,"TAG",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ListOfUsers.this,R.string.toast_tag,Toast.LENGTH_SHORT).show();
                     }
                 });
     }

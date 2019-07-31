@@ -18,8 +18,8 @@ public class CountryStateActivity extends AppCompatActivity implements CountryLi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_country_state);
-        tvCountry = findViewById(R.id.a_countryState_tv_country);
-        tvState = findViewById(R.id.a_countryState_tv_state);
+        tvCountry = findViewById(R.id.a_country_state_tv_country);
+        tvState = findViewById(R.id.a_country_state_tv_state);
         initFragment();
     }
 
@@ -27,7 +27,7 @@ public class CountryStateActivity extends AppCompatActivity implements CountryLi
          FragmentManager manager = getSupportFragmentManager();
          transaction = manager.beginTransaction();
          CountryListFragment f1= new CountryListFragment();
-         transaction.add(R.id.a_CountryState_frame1,f1);
+         transaction.add(R.id.a_country_state_frame,f1);
          transaction.commit();
     }
 
