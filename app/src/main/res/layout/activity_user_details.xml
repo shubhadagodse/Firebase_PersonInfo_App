@@ -25,7 +25,7 @@
         android:id="@+id/a_userdetails_tv_f_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="FirstName : "/>
+        android:text="@string/firstname"/>
     </LinearLayout>
 
     <LinearLayout
@@ -43,7 +43,7 @@
         android:id="@+id/a_userdetails_tv_l_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="LastName : "/>
+        android:text="@string/lastname"/>
     </LinearLayout>
 
     <LinearLayout
@@ -61,7 +61,7 @@
         android:id="@+id/a_userdetails_tv_age"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Age : "/>
+        android:text="@string/age"/>
     </LinearLayout>
 
     <LinearLayout
@@ -79,7 +79,7 @@
         android:id="@+id/a_userdetails_tv_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Email : " />
+        android:text="@string/email" />
     </LinearLayout>
 
     <LinearLayout
@@ -97,7 +97,7 @@
         android:id="@+id/a_userdetails_tv_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Phone : "/>
+        android:text="@string/phone"/>
     </LinearLayout>
 
     <LinearLayout
@@ -115,7 +115,7 @@
         android:id="@+id/a_userdetails_tv_bdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Birthdate : "/>
+        android:text="@string/birthdate"/>
     </LinearLayout>
 
     <LinearLayout
@@ -133,7 +133,7 @@
         android:id="@+id/a_userdetails_tv_country"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Country : "/>
+        android:text="@string/country"/>
     </LinearLayout>
 
     <LinearLayout
@@ -151,7 +151,7 @@
         android:id="@+id/a_userdetails_tv_state"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="State : "/>
+        android:text="@string/state"/>
     </LinearLayout>
 
 </LinearLayout>

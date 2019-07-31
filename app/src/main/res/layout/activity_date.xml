@@ -15,18 +15,17 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:scrollbarStyle="insideOverlay"
-
         android:layout_marginStart="31dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/linear_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/linear_layout"
         android:layout_width="319dp"
         android:layout_height="111dp"
         android:layout_marginStart="16dp"
@@ -40,7 +39,7 @@
         app:layout_constraintVertical_bias="0.215">
 
         <Button
-            android:id="@+id/a_date_bDone"
+            android:id="@+id/a_date_btn_done"
             android:layout_width="122dp"
             android:layout_height="67dp"
             android:layout_marginStart="16dp"
@@ -48,25 +47,25 @@
             android:layout_marginTop="40dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="229dp"
-            android:text="DONE"
+            android:text="@string/btn_done"
             app:layout_constraintBottom_toBottomOf="@id/a_date_calendar_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.185"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <Button
-            android:id="@+id/a_date_bCancel"
+            android:id="@+id/a_date_btn_cancel"
             android:layout_width="122dp"
             android:layout_height="67dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="229dp"
-            android:text="CANCEL"
+            android:text="@string/btn_cancel"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.328"
-            app:layout_constraintStart_toEndOf="@+id/a_date_bDone" />
+            app:layout_constraintStart_toEndOf="@+id/a_date_btn_done" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

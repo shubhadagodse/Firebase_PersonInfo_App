@@ -3,11 +3,6 @@ package com.firebase.firebasepersoninfoapp.Activity;
 public class Users {
     private String uid;
     private String firstname;
-
-    public String getUid() {
-        return uid;
-    }
-
     private String lastname;
     private String age;
     private String email;
@@ -42,6 +37,10 @@ public class Users {
         this.state = state;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
     public String getFirstname() {
         return firstname;
     }
@@ -70,15 +69,7 @@ public class Users {
         return country;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
     public String getState() {
         return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
     }
 }
