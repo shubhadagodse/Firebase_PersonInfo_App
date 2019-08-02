@@ -70,10 +70,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         }
     }
 
-    public void setOnItemClickListener(MyClickListener myClickListener) {
-        this.myClickListener = myClickListener;
-    }
-
     @NonNull
     @Override
     public UsersHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {

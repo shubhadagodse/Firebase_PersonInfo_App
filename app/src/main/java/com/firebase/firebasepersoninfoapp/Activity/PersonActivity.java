@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
-import com.firebase.firebasepersoninfoapp.Fragment.CountryListFragment;
 import com.firebase.firebasepersoninfoapp.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,7 +25,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
-public class PersonActivity extends AppCompatActivity implements CountryListFragment.FragmentCountryStateListener {
+public class PersonActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private Button bSetDate, bSetCountry;
@@ -43,14 +41,15 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
     private String state;
     private String birthdate;
     private static final String SHARED_PREFS = "shared_preferences";
-    private static final String SHARED_PREFS_FIRSTNAME ="firstName";
-    private static final String SHARED_PREFS_LASTNAME ="lastName";
-    private static final String SHARED_PREFS_AGE ="age";
-    private static final String SHARED_PREFS_EMAIL ="email";
-    private static final String SHARED_PREFS_PHONE ="phone";
-    private static final String SHARED_PREFS_DATEOFBIRTH ="dateOfBirth";
-    private static final String SHARED_PREFS_COUNTRY ="country";
-    private static final String SHARED_PREFS_STATE ="state";
+    private static final String SHARED_PREFS_FIRSTNAME = "firstName";
+    private static final String SHARED_PREFS_LASTNAME = "lastName";
+    private static final String SHARED_PREFS_AGE = "age";
+    private static final String SHARED_PREFS_EMAIL = "email";
+    private static final String SHARED_PREFS_PHONE = "phone";
+    private static final String SHARED_PREFS_DATEOFBIRTH = "dateOfBirth";
+    private static final String SHARED_PREFS_COUNTRY = "country";
+    private static final String SHARED_PREFS_STATE = "state";
+    private static final String SHARED_PREF_NOTHING_SELECTED = "Nothing Selected";
     private AwesomeValidation awesomeValidation;
 
     @Override
@@ -71,7 +70,6 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
         openCountryStateActivity();
         validation();
         textWatcherMethod();
-        saveData();
 
         bDone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,42 +102,28 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
                 else {
                     Toast.makeText(PersonActivity.this,R.string.toast_error_message,Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-        saveData();
     }
 
     @Override
-    protected void onPause() {
-        Log.i("TAG","onPause");
+    protected void onStart() {
+        super.onStart();
         loadData();
-        saveData();
-        super.onPause();
+        updateViews();
     }
 
     @Override
     protected void onResume() {
-        saveData();
-        Log.i("TAG","onResume");
-        loadData();
         super.onResume();
+        loadData();
+        updateViews();
     }
 
     @Override
     protected void onStop() {
-        Log.i("TAG","onStop");
-        loadData();
         saveData();
         super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        Log.i("TAG","onDestroy");
-        loadData();
-        saveData();
-        super.onDestroy();
     }
 
     @Override
@@ -196,7 +180,6 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
         tvBirthDate.setText(dateOfBirth);
         tvCountry.setText(country);
         tvState.setText(state);
-
     }
 
     private void validation() {
@@ -232,7 +215,6 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         };
 
@@ -248,7 +230,6 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
 
     private void initData() {
         tvFirstName = findViewById(R.id.a_person_et_fname);
-        Log.i("TAG","firstname from init data =" +tvFirstName.getText().toString());
         tvLastName = findViewById(R.id.a_person_et_lname);
         tvAge = findViewById(R.id.a_person_et_age);
         tvEmail =findViewById(R.id.a_person_et_email);
@@ -266,39 +247,45 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
     private void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         SharedPreferences.Editor editor =sharedPreferences.edit();
-        firstName = tvFirstName.getText().toString();
-        Log.i("TAG","fname savedata == "+firstName);
-        lastName = tvLastName.getText().toString();
-        age = tvAge.getText().toString();
-        email = tvEmail.getText().toString();
-        phone = tvPhone.getText().toString();
-        dateOfBirth = tvBirthDate.getText().toString();
-        country = tvCountry.getText().toString();
-        state = tvState.getText().toString();
-
-        editor.putString(SHARED_PREFS_FIRSTNAME, firstName);
-        Log.i("TAG","Shared pref fname"+SHARED_PREFS_FIRSTNAME);
-        editor.putString(SHARED_PREFS_LASTNAME, lastName);
-        editor.putString(SHARED_PREFS_AGE, age);
-        editor.putString(SHARED_PREFS_EMAIL, email);
-        editor.putString(SHARED_PREFS_PHONE, phone);
-        editor.putString(SHARED_PREFS_DATEOFBIRTH, dateOfBirth);
-        editor.putString(SHARED_PREFS_COUNTRY, country);
-        editor.putString(SHARED_PREFS_STATE, state);
+        editor.putString(SHARED_PREFS_FIRSTNAME, tvFirstName.getText().toString());
+        editor.putString(SHARED_PREFS_LASTNAME, tvLastName.getText().toString());
+        editor.putString(SHARED_PREFS_AGE, tvAge.getText().toString());
+        editor.putString(SHARED_PREFS_EMAIL, tvEmail.getText().toString());
+        editor.putString(SHARED_PREFS_PHONE, tvPhone.getText().toString());
+        editor.putString(SHARED_PREFS_DATEOFBIRTH, tvBirthDate.getText().toString());
+        editor.putString(SHARED_PREFS_COUNTRY, tvCountry.getText().toString());
+        editor.putString(SHARED_PREFS_STATE, tvState.getText().toString());
         editor.apply();
         editor.commit();
     }
 
     private void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        firstName = sharedPreferences.getString(SHARED_PREFS_FIRSTNAME,firstName);
-        lastName = sharedPreferences.getString(SHARED_PREFS_LASTNAME, lastName);
-        age = sharedPreferences.getString(SHARED_PREFS_AGE, age);
-        email = sharedPreferences.getString(SHARED_PREFS_EMAIL, email);
-        phone = sharedPreferences.getString(SHARED_PREFS_PHONE,phone);
-        dateOfBirth = sharedPreferences.getString(SHARED_PREFS_DATEOFBIRTH, dateOfBirth);
-        country = sharedPreferences.getString(SHARED_PREFS_COUNTRY,country);
-        state = sharedPreferences.getString(SHARED_PREFS_STATE,state);
+        firstName = sharedPreferences.getString(SHARED_PREFS_FIRSTNAME,null);
+        lastName = sharedPreferences.getString(SHARED_PREFS_LASTNAME, null);
+        age = sharedPreferences.getString(SHARED_PREFS_AGE, null);
+        email = sharedPreferences.getString(SHARED_PREFS_EMAIL, null);
+        phone = sharedPreferences.getString(SHARED_PREFS_PHONE,null);
+        dateOfBirth = sharedPreferences.getString(SHARED_PREFS_DATEOFBIRTH, null);
+        country = sharedPreferences.getString(SHARED_PREFS_COUNTRY,null);
+        state = sharedPreferences.getString(SHARED_PREFS_STATE,null);
+    }
+
+    private void updateViews() {
+        tvFirstName.setText(firstName);
+        tvLastName.setText(lastName);
+        tvAge.setText(age);
+        tvEmail.setText(email);
+        tvPhone.setText(phone);
+        tvBirthDate.setText(dateOfBirth);
+        tvCountry.setText(country);
+        tvState.setText(state);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
     }
 
     public void openCountryStateActivity() {
@@ -309,8 +296,8 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PersonActivity.this,CountryStateActivity.class);
-                intent.putExtra("country",country);
-                intent.putExtra("state",state);
+                intent.putExtra(SHARED_PREFS_COUNTRY,country);
+                intent.putExtra(SHARED_PREFS_STATE,state);
                 startActivityForResult(intent,2);
                 tvCountry.setText(country);
                 tvState.setText(state);
@@ -326,9 +313,8 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
             public void onClick(View v) {
                 Intent intent = new Intent(PersonActivity.this, DateActivity.class);
                 startActivityForResult(intent,1);
-                birthdate = intent.getStringExtra("birthdate");
+                birthdate = intent.getStringExtra(SHARED_PREFS_DATEOFBIRTH);
                 tvBirthDate.setText(birthdate);
-                saveData();
             }
         });
     }
@@ -338,32 +324,42 @@ public class PersonActivity extends AppCompatActivity implements CountryListFrag
         //DateActivity
         if (requestCode == 1) {
             if(resultCode == RESULT_OK) {
-                String birthdate = data.getStringExtra("RESULT");
-                tvBirthDate.setText(" "+birthdate);
+                String birthdate = data.getStringExtra(SHARED_PREFS_DATEOFBIRTH);
+                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+                SharedPreferences.Editor editor =sharedPreferences.edit();
+                editor.putString(SHARED_PREFS_DATEOFBIRTH,birthdate);
+                editor.apply();
+                editor.commit();
             }
             if (resultCode == RESULT_CANCELED) {
-                tvBirthDate.setText(R.string.nothing_selected);
+                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+                SharedPreferences.Editor editor =sharedPreferences.edit();
+                editor.putString(SHARED_PREFS_DATEOFBIRTH,SHARED_PREF_NOTHING_SELECTED);
+                editor.apply();
+                editor.commit();
             }
         }
 
         //CountryStateActivity
         if (requestCode == 2) {
             if(resultCode == RESULT_OK) {
-                String country = data.getStringExtra("message country");
-                String state = data.getStringExtra("message state");
-                tvCountry.setText(" "+country);
-                tvState.setText(state);
+                String country = data.getStringExtra(SHARED_PREFS_COUNTRY);
+                String state = data.getStringExtra(SHARED_PREFS_STATE);
+                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+                SharedPreferences.Editor editor =sharedPreferences.edit();
+                editor.putString(SHARED_PREFS_COUNTRY, country);
+                editor.putString(SHARED_PREFS_STATE, state);
+                editor.apply();
+                editor.commit();
             }
             if (resultCode == RESULT_CANCELED) {
-                tvCountry.setText(R.string.nothing_selected);
-                tvState.setText(R.string.nothing_selected);
+                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+                SharedPreferences.Editor editor =sharedPreferences.edit();
+                editor.putString(SHARED_PREFS_COUNTRY,SHARED_PREF_NOTHING_SELECTED);
+                editor.putString(SHARED_PREFS_STATE,SHARED_PREF_NOTHING_SELECTED);
+                editor.apply();
+                editor.commit();
             }
         }
-    }
-
-    @Override
-    public void onInputCountryStateSent(String country, String state) {
-        tvCountry.setText(country);
-        tvState.setText(state);
     }
 }

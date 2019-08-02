@@ -11,7 +11,6 @@ public class UserDetailsActivity extends AppCompatActivity {
     private String stringFname, stringLname, stringAge, stringPhone, stringEmail, stringCountry, stringState, stringBirthdate;
     private RecyclerView recyclerView;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

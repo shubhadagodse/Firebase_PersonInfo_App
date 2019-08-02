@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import com.firebase.firebasepersoninfoapp.R;
 import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -53,7 +54,6 @@ public class CountryListFragment extends Fragment implements AdapterView.OnItemS
         });
 
         bCancelCountryListFragment.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 getActivity().onBackPressed();
