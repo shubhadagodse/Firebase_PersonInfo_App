@@ -1,12 +1,14 @@
 package com.firebase.firebasepersoninfoapp.Activity;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import com.firebase.firebasepersoninfoapp.R;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DateActivity extends AppCompatActivity {
     private Button bDone, bCancel;
@@ -25,21 +27,35 @@ public class DateActivity extends AppCompatActivity {
         bCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent cancelIntent = new Intent();
+                cancelIntent.putExtra(SHARED_PREFS_DATEOFBIRTH,SHARED_PREFS_DATEOFBIRTH);
+                setResult(RESULT_CANCELED,cancelIntent);
                 finish();
             }
         });
 
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, final int year, final int month, final int dayOfMonth) {
+            public void onSelectedDayChange(CalendarView view, final int year, final int month, final int dayOfMonth) {
                 bDone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String birthdate = dayOfMonth+"/ "+(month+1)+"/ "+year;
-                        Intent resultIntent =new Intent();
-                        resultIntent.putExtra(SHARED_PREFS_DATEOFBIRTH,birthdate);
-                        setResult(RESULT_OK,resultIntent);
-                        finish();
+
+                        if( calendar.isAttachedToWindow()) {
+                            String birthdate = dayOfMonth+"/ "+(month+1)+"/ "+year;
+                            Intent resultIntent =new Intent();
+                            resultIntent.putExtra(SHARED_PREFS_DATEOFBIRTH,birthdate);
+                            setResult(RESULT_OK,resultIntent);
+                            finish();
+                        }
+                        else {
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                            String selectedDate = sdf.format(new Date(calendar.getDate()));
+                            Intent defaultDateIntent =new Intent();
+                            defaultDateIntent.putExtra(SHARED_PREFS_DATEOFBIRTH,String.valueOf(selectedDate));
+                            setResult(RESULT_OK,defaultDateIntent);
+                            finish();
+                        }
                     }
                 });
             }

@@ -240,8 +240,8 @@ public class PersonActivity extends AppCompatActivity {
         tvCountry.setEnabled(false);
         tvState = findViewById(R.id.a_person_et_state);
         tvState.setEnabled(false);
-        bDone = findViewById(R.id.a_person_bSubmit);
-        bCancel = findViewById(R.id.a_person_bCancel);
+        bDone = findViewById(R.id.a_person_b_submit);
+        bCancel = findViewById(R.id.a_person_b_cancel);
     }
 
     private void saveData() {
@@ -291,7 +291,7 @@ public class PersonActivity extends AppCompatActivity {
     public void openCountryStateActivity() {
         tvCountry = findViewById(R.id.a_person_et_country);
         tvState = findViewById(R.id.a_person_et_state);
-        bSetCountry = findViewById(R.id.a_main_bSetCountry);
+        bSetCountry = findViewById(R.id.a_main_b_set_country);
         bSetCountry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -307,7 +307,7 @@ public class PersonActivity extends AppCompatActivity {
 
     public void openDateActivity() {
         tvBirthDate  = findViewById(R.id.a_person_et_birthdate);
-        bSetDate = findViewById(R.id.a_person_bSetDate);
+        bSetDate = findViewById(R.id.a_person_b_set_date);
         bSetDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -110,7 +110,7 @@
                 android:inputType="date" />
 
             <Button
-                android:id="@+id/a_person_bSetDate"
+                android:id="@+id/a_person_b_set_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.375"
@@ -131,7 +131,6 @@
                 android:hint="@string/country_hint" />
 
             <TextView
-                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.25"
@@ -146,21 +145,21 @@
                 android:hint="@string/state_hint" />
 
             <Button
-                android:id="@+id/a_main_bSetCountry"
+                android:id="@+id/a_main_b_set_country"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.375"
                 android:text="@string/btn_set" />
 
             <Button
-                android:id="@+id/a_person_bSubmit"
+                android:id="@+id/a_person_b_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.375"
                 android:text="@string/btn_done"/>
 
             <Button
-                android:id="@+id/a_person_bCancel"
+                android:id="@+id/a_person_b_cancel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.375"

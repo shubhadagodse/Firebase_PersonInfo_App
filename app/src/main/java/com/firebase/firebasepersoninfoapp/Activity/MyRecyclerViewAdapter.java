@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.UsersHolder> {
-    public static String USER_KEY = "user_key";
     private ArrayList<Users> listOfUsers;
     private List<Users> uArrayList;
     private Context ctx;
@@ -90,9 +89,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
        usersHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String uid = user.getUid();
                 Intent intent = new Intent(ctx,UserDetailsActivity.class);
-                intent.putExtra(USER_KEY,uid);
                 intent.putExtra("firstname",user.getFirstname());
                 intent.putExtra("lastname",user.getLastname());
                 intent.putExtra("age",user.getAge());

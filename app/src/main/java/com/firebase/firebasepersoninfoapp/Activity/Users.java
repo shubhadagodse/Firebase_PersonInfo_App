@@ -1,7 +1,6 @@
 package com.firebase.firebasepersoninfoapp.Activity;
 
 public class Users {
-    private String uid;
     private String firstname;
     private String lastname;
     private String age;
@@ -34,10 +33,6 @@ public class Users {
         this.birthdate = birthdate;
         this.country = country;
         this.state = state;
-    }
-
-    public String getUid() {
-        return uid;
     }
 
     public String getFirstname() {
