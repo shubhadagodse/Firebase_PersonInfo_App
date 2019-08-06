@@ -1,25 +1,19 @@
 package com.firebase.firebasepersoninfoapp.Activity;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.firebase.firebasepersoninfoapp.R;
 
 public class UserDetailsActivity extends AppCompatActivity {
-    TextView tvFname, tvLname, tvAge, tvEmail, tvPhone, tvBirthdate, tvCountry, tvState;
-    String stringFname, stringLname, stringAge, stringPhone, stringEmail, stringCountry, stringState, stringBirthdate;
-    RecyclerView recyclerView;
-
+    private TextView tvFname, tvLname, tvAge, tvEmail, tvPhone, tvBirthdate, tvCountry, tvState;
+    private String stringFname, stringLname, stringAge, stringPhone, stringEmail, stringCountry, stringState, stringBirthdate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
-
-        recyclerView =findViewById(R.id.list_of_users_from_firebase);
 
         tvFname = findViewById(R.id.a_userdetails_tv_f_name);
         tvLname = findViewById(R.id.a_userdetails_tv_l_name);

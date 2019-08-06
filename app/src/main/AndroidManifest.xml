@@ -13,8 +13,6 @@
         <activity android:name=".Activity.ListOfUsers"
             android:parentActivityName=".Activity.PersonActivity"/>
         <activity android:name=".Activity.CountryStateActivity"/>
-            <!--android:parentActivityName=".Activity.PersonActivity"-->
-            <!--android:noHistory="true"/>-->
         <activity android:name=".Activity.DateActivity"
             android:parentActivityName=".Activity.PersonActivity"/>
         <activity android:name=".Activity.PersonActivity"

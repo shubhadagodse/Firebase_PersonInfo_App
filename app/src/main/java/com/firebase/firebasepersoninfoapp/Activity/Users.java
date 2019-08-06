@@ -1,13 +1,7 @@
 package com.firebase.firebasepersoninfoapp.Activity;
 
 public class Users {
-    private String uid;
     private String firstname;
-
-    public String getUid() {
-        return uid;
-    }
-
     private String lastname;
     private String age;
     private String email;
@@ -16,18 +10,17 @@ public class Users {
     private String country;
     private String state;
 
-
     @Override
     public String toString() {
         return "Users{" +
-                "firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", age='" + age + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", birthdate='" + birthdate + '\'' +
-                ", country='" + country + '\'' +
-                ", state='" + state + '\'' +
+                "firstname ='" + firstname + '\'' +
+                ", lastname ='" + lastname + '\'' +
+                ", age ='" + age + '\'' +
+                ", email ='" + email + '\'' +
+                ", phone ='" + phone + '\'' +
+                ", birthdate ='" + birthdate + '\'' +
+                ", country ='" + country + '\'' +
+                ", state ='" + state + '\'' +
                 '}';
     }
 
@@ -70,15 +63,7 @@ public class Users {
         return country;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
     public String getState() {
         return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
     }
 }
